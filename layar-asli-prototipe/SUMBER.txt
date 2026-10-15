@@ -1,0 +1,61 @@
+SOURCES - real insurance-flow app screenshots (research set)
+Downloaded 2026-10-15. All files are real screenshots (or crops of real
+screenshots) - no fake or generated images.
+
+phonepe_quote_comparison.png
+  Source page: https://insurance.phonepe.com/health-insurance
+  Asset: https://insurance.phonepe.com/static/1cb1e458ad2f86a7480ab63fbd89fb58/60605/RenewHealth_Ins_Web_4%402x.png
+  Screen: PhonePe health insurance quote comparison - "Plans for you",
+          Star Health Rs6,930 / Aditya Birla Rs6,943 / Care Rs8,163,
+          SELECT PLAN button. Phone body cropped out.
+
+phonepe_review_buy.png
+  Source: https://insurance.phonepe.com/static/927e87b7db347f498705a17211a3a7f2/60605/RenewHealth_Ins_Web_8%402x.png
+  Screen: PhonePe "Review and buy" - cover amount, policy term, nominee
+          details, declarations, Rs6,930 premium and BUY button.
+
+phonepe_member_selection.png
+  Source: https://insurance.phonepe.com/static/a73838d472c04d69d057192e5487893b/60605/RenewHealth_Ins_Web_2%402x.png
+  Screen: PhonePe member selection + date-of-birth data entry
+          ("Select the persons you want to insure", Myself/Spouse/Children).
+
+phonepe_health_declaration.png
+  Source: https://insurance.phonepe.com/static/a5eb4a085ce57fcee3071d0eb6298a95/60605/RenewHealth_Ins_Web_7%402x.png
+  Screen: PhonePe "Health Declaration" - pre-existing disease questions
+          with Yes/No, CONTINUE button.
+
+phonepe_insurance_hub.png
+  Source: https://insurance.phonepe.com/static/c04962c44b332166c1b9e9264e46b646/18fdf/RenewHealth_Ins_Web_1%402x.png
+  Screen: PhonePe Insurance tab hub - Motor and Travel, Life and Accident,
+          Health, Others categories. (Bonus, hub was already known.)
+
+kakao_insurance_diagnosis.png
+  Source: Kakao Pay official iOS App Store screenshots (KR),
+          page: https://apps.apple.com/kr/app/id1464496236
+          asset: https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/f5/19/dc/f519dca2-f185-c4a7-fe5b-893927d8c12a/ios_1290x2796_6.png/1290x0w.png
+  Screen: Kakao Pay insurance diagnosis (보험진단) - "My insurance, 5
+          diagnosed", monthly premium vs 40,000 KRW average chart.
+          Phone bezel cropped out. Pixel-verified identical to asset.
+
+paytm_insurance_category.png
+  Source: https://insurance-blog-cms.paytminsurance.co.in/main_Banner_4c9f8531ec.png
+          (page: https://paytminsurance.co.in/)
+  Screen: Paytm Insurance Broking in-app screen "Select Insurance
+          Category" with Car Insurance / Bike Insurance rows, cropped
+          out of the "Insurance ka Super Market" banner.
+
+paytm_your_money.png
+  Source: Google Play Store official screenshots of Paytm
+          (package net.one97.paytm),
+          page: https://play.google.com/store/apps/details?id=net.one97.paytm
+          asset: https://play-lh.googleusercontent.com/MzeeyxGryGgVVo2S9ru06aAIWPIyeu5ZvipJBUSzNfPych4IPJfahDlfQDKf5UM5sZHLeWmnLeNQlwlU2EJk
+  Screen: Paytm app "Your Money" panel showing Car Insurance and
+          Health Insurance entries, phone body cropped out.
+
+NOT FOUND (searched, honestly reported):
+- PhonePe standalone UPI payment screen: not found as a public asset;
+  phonepe_review_buy.png (premium + BUY) covers the payment step instead.
+- Kakao Pay insurance market/recommendation/product-list screen: only
+  the 보험진단 diagnosis screen exists among official App Store shots.
+- Paytm car/bike quote-comparison screen: no official screenshot found;
+  paytm_insurance_category.png is the closest (category selection).

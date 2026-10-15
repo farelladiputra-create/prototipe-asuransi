@@ -1,0 +1,1340 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prototipe asuransi: PhonePe, Kakao, Paytm</title>
+<style>
+  :root {
+    --primary: #108EE9;
+    --navy: #0F479E;
+    --success: #00CE64;
+    --success-wash: #DEF9EB;
+    --amber: #F48D1C;
+    --yellow: #FEAE06;
+    --orange: #EA501B;
+    --orange-wash: #FFEAE9;
+    --ink: #313131;
+    --ink-2: #727272;
+    --ink-mute: #A4A4A4;
+    --hairline: #EBEBEB;
+    --canvas: #F5F5F5;
+    --wash: #E9F5FE;
+    --wash-border: #BADFFA;
+    --radius: 12px;
+    --shadow: 0 8px 32px rgba(0,0,0,0.08);
+    --pp: #5F259F;
+    --pp-soft: #F3ECFB;
+    --kk: #FEE500;
+    --kk-ink: #2C2C2C;
+    --kk-soft: #FFF9D6;
+    --pt: #00BAF2;
+    --pt-navy: #0C3B8D;
+    --pt-soft: #E4F6FE;
+    --font: 'Noto Sans', 'SF Pro Text', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: var(--font);
+    background: var(--canvas);
+    color: var(--ink);
+    font-size: 14px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+  .bar {
+    background: var(--primary);
+    color: #fff;
+    padding: 28px 32px 60px;
+  }
+  .bar h1 { font-size: 26px; font-weight: 700; letter-spacing: -0.3px; }
+  .bar .sub { margin-top: 8px; font-size: 14px; opacity: 0.92; max-width: 720px; }
+  .badge-row { display: flex; gap: 8px; margin-top: 16px; flex-wrap: wrap; }
+  .badge {
+    border: 1px solid rgba(255,255,255,0.5);
+    border-radius: 999px;
+    padding: 5px 12px;
+    font-size: 12px;
+    color: #fff;
+    background: rgba(255,255,255,0.14);
+  }
+  .app-pills { display: flex; gap: 8px; margin-top: 18px; flex-wrap: wrap; }
+  .app-pill {
+    border: 1px solid rgba(255,255,255,0.5);
+    border-radius: 999px;
+    padding: 7px 16px;
+    font-size: 13px;
+    font-weight: 700;
+    color: #fff;
+    background: rgba(255,255,255,0.14);
+    cursor: pointer;
+    font-family: var(--font);
+  }
+  .app-pill.on { background: #fff; color: var(--primary); border-color: #fff; }
+  main {
+    max-width: 1060px;
+    margin: -36px auto 0;
+    padding: 0 24px 56px;
+    position: relative;
+    z-index: 1;
+  }
+  .stage {
+    display: grid;
+    grid-template-columns: 392px 1fr;
+    gap: 24px;
+    align-items: start;
+  }
+  @media (max-width: 860px) {
+    .stage { grid-template-columns: 1fr; }
+  }
+
+  .phone-wrap { position: sticky; top: 16px; }
+  @media (max-width: 860px) { .phone-wrap { position: static; } }
+  .phone {
+    background: #111;
+    border-radius: 40px;
+    padding: 12px;
+    box-shadow: var(--shadow);
+  }
+  .screen {
+    background: #fff;
+    border-radius: 30px;
+    overflow: hidden;
+    height: 680px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+  .statusbar {
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    font-size: 11px;
+    font-weight: 700;
+    color: #111;
+    background: #fff;
+    flex-shrink: 0;
+  }
+  .statusbar .batt { letter-spacing: 1px; }
+  .apphead {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    flex-shrink: 0;
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+  }
+  .backbtn {
+    width: 30px; height: 30px;
+    border-radius: 50%;
+    border: none;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 17px;
+    cursor: pointer;
+    font-family: var(--font);
+    flex-shrink: 0;
+  }
+  .backbtn:disabled { opacity: 0.3; cursor: default; }
+  .appname { font-size: 14px; font-weight: 700; }
+  .appsub { font-size: 11px; opacity: 0.7; }
+  .appbody {
+    flex: 1;
+    overflow-y: auto;
+    padding: 14px;
+    display: none;
+  }
+  .appbody.on { display: flex; flex-direction: column; }
+  .appbody.on > * { flex-shrink: 0; }
+  .appbody.on .cta { margin-top: auto; }
+
+  .cta {
+    margin-top: 14px;
+    width: 100%;
+    border: none;
+    border-radius: 10px;
+    padding: 13px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: var(--font);
+    color: #fff;
+  }
+  .hint {
+    font-size: 11px;
+    color: var(--ink-mute);
+    text-align: center;
+    margin-top: 7px;
+  }
+  .footbar {
+    padding: 10px 14px 16px;
+    border-top: 1px solid var(--hairline);
+    background: #fff;
+    flex-shrink: 0;
+  }
+
+  .card {
+    background: #fff;
+    border: 1px solid var(--hairline);
+    border-radius: var(--radius);
+    padding: 12px;
+    margin-bottom: 10px;
+  }
+  .card .t { font-weight: 700; font-size: 13px; }
+  .card .d { font-size: 12px; color: var(--ink-2); margin-top: 3px; }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .tile {
+    border: 1px solid var(--hairline);
+    border-radius: 12px;
+    padding: 12px 10px;
+    text-align: center;
+    font-size: 12px;
+    font-weight: 700;
+    background: #fff;
+    cursor: pointer;
+    font-family: var(--font);
+    color: var(--ink);
+  }
+  .tile .ico { font-size: 22px; display: block; margin-bottom: 6px; }
+  .pill {
+    display: inline-block;
+    border-radius: 999px;
+    padding: 3px 10px;
+    font-size: 11px;
+    font-weight: 700;
+  }
+  .p0 { background: var(--orange-wash); color: var(--orange); }
+  .p1 { background: #FFF4D6; color: #B27700; }
+  .p2 { background: var(--wash); color: var(--navy); }
+  .money {
+    background: #fff;
+    border: 1px solid var(--hairline);
+    border-bottom: 3px solid #7AC2F6;
+    border-radius: 10px;
+    padding: 8px 12px;
+    font-weight: 700;
+    font-size: 13px;
+    display: inline-block;
+    color: var(--ink);
+  }
+  .row { display: flex; align-items: center; gap: 8px; }
+  .grow { flex: 1; }
+  .muted { color: var(--ink-2); font-size: 12px; }
+  .tiny { font-size: 11px; color: var(--ink-mute); }
+
+  .ok-card { background: var(--success-wash); border: 1px solid #B6EFD0; border-radius: 12px; padding: 14px; text-align: center; }
+  .ok-card .tick { width: 44px; height: 44px; border-radius: 50%; background: var(--success); color: #fff; font-size: 22px; display: flex; align-items: center; justify-content: center; margin: 0 auto 8px; }
+  .switch {
+    display: flex; align-items: center; gap: 8px;
+    border: 1.5px solid var(--hairline);
+    background: #fff;
+    border-radius: 10px;
+    padding: 10px 12px;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--ink);
+    cursor: pointer;
+    margin-bottom: 8px;
+    font-family: var(--font);
+    width: 100%;
+    text-align: left;
+  }
+  .switch .knob { margin-left: auto; width: 34px; height: 20px; border-radius: 999px; background: var(--ink-mute); position: relative; flex-shrink: 0; }
+  .switch .knob::after { content: ""; position: absolute; right: 2px; top: 2px; width: 16px; height: 16px; border-radius: 50%; background: #fff; }
+
+  /* PhonePe (dark, ngikutin layar asli) */
+  .screen.pp .statusbar { background: #0B0B0C; color: #fff; }
+  .pp .apphead { background: #101012; color: #fff; border-bottom-color: #222; }
+  .pp .backbtn { background: #2A2A2E; color: #fff; }
+  .pp .appname { color: #fff; }
+  .pp .appsub { color: #8E8E96; }
+  .pp .appbody { background: #0B0B0C; }
+  .pp .bar-brand {
+    background: #1C1C1E;
+    border: 1px solid #2A2A2E;
+    color: #fff;
+    padding: 14px;
+    border-radius: 16px;
+    margin-bottom: 12px;
+  }
+  .pp .bar-brand .big { font-size: 17px; font-weight: 700; }
+  .pp .bar-brand .sm { font-size: 12px; color: #9A9AA0; margin-top: 2px; }
+  .pp .quote-row {
+    background: #1C1C1E;
+    border: 1px solid #2A2A2E;
+    border-radius: 16px;
+    padding: 10px 12px;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #fff;
+  }
+  .pp .logo-dot {
+    width: 34px; height: 34px; border-radius: 50%;
+    background: #2A2040; display: flex; align-items: center; justify-content: center;
+    font-weight: 800; color: #C4A0FF; font-size: 13px; flex-shrink: 0;
+  }
+  .pp .muted { color: #9A9AA0; }
+  .pp .tiny { color: #77777F; }
+  .pp .price { margin-left: auto; font-weight: 800; color: #B98BFF; font-size: 14px; text-align: right; }
+  .pp .price .per { display: block; font-size: 10px; font-weight: 600; color: #9A9AA0; }
+  .pp input.fld {
+    width: 100%;
+    background: #1C1C1E;
+    border: 1.5px solid #2E2E32;
+    border-radius: 12px;
+    padding: 12px;
+    font-size: 14px;
+    font-family: var(--font);
+    margin-bottom: 8px;
+    color: #fff;
+  }
+  .pp input.fld:focus { outline: none; border-color: #7C3AED; }
+  .pp .card {
+    background: #1C1C1E;
+    border: 1px solid #2A2A2E;
+    border-radius: 16px;
+    color: #fff;
+  }
+  .pp .card .t { color: #fff; }
+  .pp .card .d { color: #9A9AA0; }
+  .pp .money {
+    background: #1C1C1E;
+    border: 1px solid #2A2A2E;
+    border-bottom: 3px solid #7C3AED;
+    color: #fff;
+  }
+  .pp .ok-card {
+    background: #0F2418;
+    border: 1px solid #1E4D38;
+    color: #fff;
+  }
+  .pp .ok-card .muted { color: #9A9AA0; }
+  .pp .cta { background: #7C3AED; }
+  .pp .switch {
+    background: #1C1C1E;
+    border: 1.5px solid #7C3AED;
+    color: #C4A0FF;
+  }
+  .pp .switch .knob { background: #7C3AED; }
+
+  /* layar 1 PhonePe ngikutin screenshot asli */
+  .pp-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; }
+  .pp-h1 { font-size: 26px; font-weight: 800; color: #fff; letter-spacing: -0.4px; }
+  .pp-sub { font-size: 13px; color: #9A9AA0; margin-top: 2px; }
+  .pp-mypoli {
+    background: #2C2C2E;
+    border: none;
+    border-radius: 999px;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 9px 14px;
+    cursor: pointer;
+    font-family: var(--font);
+    white-space: nowrap;
+  }
+  .pp-grid { display: flex; gap: 8px; }
+  .pp-col { flex: 1; display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+  .pp-card {
+    background: #1C1C1E;
+    border-radius: 16px;
+    padding: 12px 12px 34px;
+    position: relative;
+    overflow: hidden;
+  }
+  .pp-card.tall { padding-bottom: 46px; }
+  .pp-card .pt { color: #fff; font-size: 14px; font-weight: 700; }
+  .pp-card .ps { color: #A0A0A8; font-size: 11.5px; margin-top: 3px; line-height: 1.35; }
+  .pp-card .pic { position: absolute; right: 8px; bottom: 4px; font-size: 30px; line-height: 1; }
+  .pp-card.tall .pic { font-size: 40px; }
+  .pp-tag {
+    display: inline-block;
+    background: #7C3AED;
+    color: #fff;
+    font-size: 10px;
+    font-weight: 800;
+    border-radius: 999px;
+    padding: 4px 9px;
+    margin-top: 7px;
+  }
+  .pp-explore-h { color: #fff; font-size: 15px; font-weight: 800; margin: 16px 0 10px; }
+  .pp-explore { display: flex; flex-wrap: wrap; gap: 14px 18px; }
+  .pp-circ { width: 64px; text-align: center; }
+  .pp-circ .c {
+    width: 54px; height: 54px; border-radius: 50%;
+    background: #1C1C1E;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px; margin: 0 auto 5px;
+  }
+  .pp-circ .n { font-size: 10px; color: #C8C8CE; line-height: 1.25; }
+
+  /* Kakao */
+  .kk .apphead { background: var(--kk); color: var(--kk-ink); }
+  .kk .backbtn { background: rgba(0,0,0,0.1); color: var(--kk-ink); }
+  .kk .cta { background: var(--kk-ink); }
+  .kk .tabbar {
+    background: var(--kk);
+    border-radius: 12px;
+    padding: 8px;
+    display: flex;
+    gap: 6px;
+    margin-bottom: 12px;
+  }
+  .kk .tab {
+    flex: 1;
+    text-align: center;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 7px 2px;
+    border-radius: 8px;
+    color: var(--kk-ink);
+    cursor: pointer;
+    font-family: var(--font);
+    background: transparent;
+    border: none;
+  }
+  .kk .tab.on { background: var(--kk-ink); color: var(--kk); }
+  .kk .chatline {
+    display: flex; gap: 10px; align-items: center;
+    padding: 10px 4px;
+    border-bottom: 1px solid var(--hairline);
+  }
+  .kk .avatar { width: 38px; height: 38px; border-radius: 50%; background: var(--kk); display:flex; align-items:center; justify-content:center; font-size: 16px; flex-shrink: 0; }
+  .kk .bubble { background: var(--kk-soft); border-radius: 12px; padding: 8px 10px; font-size: 12px; }
+  .kk input.fld {
+    width: 100%;
+    border: 1.5px solid var(--hairline);
+    border-radius: 10px;
+    padding: 12px;
+    font-size: 14px;
+    font-family: var(--font);
+    margin-bottom: 8px;
+    color: var(--ink);
+  }
+  input.fld:focus { outline: none; }
+  .kk input.fld:focus { border-color: var(--kk-ink); }
+  .slider-box { background: var(--kk-soft); border: 1px solid #F3E29A; border-radius: 12px; padding: 12px; margin-bottom: 10px; }
+  .slider-box .lab { font-size: 11px; font-weight: 700; color: var(--kk-ink); display: flex; justify-content: space-between; }
+  .slider-track { height: 6px; background: #EFE3A8; border-radius: 999px; margin: 10px 0 6px; position: relative; }
+  .slider-track .fill { position: absolute; left: 0; top: 0; bottom: 0; width: 55%; background: var(--kk-ink); border-radius: 999px; }
+  .slider-track .knob2 { position: absolute; left: 55%; top: 50%; width: 18px; height: 18px; border-radius: 50%; background: var(--kk); border: 2.5px solid var(--kk-ink); transform: translate(-50%, -50%); }
+  .choice-row { display: flex; gap: 6px; }
+  .choice {
+    flex: 1;
+    border: 1.5px solid var(--hairline);
+    background: #fff;
+    border-radius: 10px;
+    padding: 9px 4px;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: var(--font);
+    color: var(--ink-2);
+  }
+  .choice.on { border-color: var(--kk-ink); background: var(--kk); color: var(--kk-ink); }
+  .kk .msg {
+    background: #fff;
+    border: 1px solid var(--hairline);
+    border-radius: 14px 14px 14px 4px;
+    padding: 10px 12px;
+    font-size: 12.5px;
+    margin-bottom: 8px;
+    max-width: 88%;
+  }
+  .kk .msg .who { font-size: 11px; font-weight: 800; color: var(--kk-ink); margin-bottom: 3px; }
+
+  /* Paytm */
+  .pt .apphead { background: var(--pt-navy); color: #fff; }
+  .pt .backbtn { background: rgba(255,255,255,0.2); color: #fff; }
+  .pt .cta { background: var(--pt); }
+  .pt .hero {
+    background: linear-gradient(135deg, var(--pt-navy), var(--pt));
+    color: #fff;
+    border-radius: 12px;
+    padding: 14px;
+    margin-bottom: 12px;
+  }
+  .pt .hero .big { font-size: 17px; font-weight: 800; }
+  .pt .hero .sm { font-size: 12px; opacity: 0.9; margin-top: 3px; }
+  .pt .verb {
+    border: 1px solid var(--hairline);
+    background: #fff;
+    border-radius: 12px;
+    padding: 11px 10px;
+    font-size: 12.5px;
+    font-weight: 700;
+    text-align: center;
+    cursor: pointer;
+    font-family: var(--font);
+    color: var(--ink);
+  }
+  .pt .verb .ico { display: block; font-size: 18px; margin-bottom: 4px; }
+  .pt input.fld {
+    width: 100%;
+    border: 1.5px solid var(--hairline);
+    border-radius: 10px;
+    padding: 12px;
+    font-size: 14px;
+    font-family: var(--font);
+    margin-bottom: 8px;
+    color: var(--ink);
+  }
+  .pt input.fld:focus { outline: none; border-color: var(--pt); }
+  .pt .quote-row {
+    border: 1px solid var(--hairline);
+    border-radius: 12px;
+    padding: 10px 12px;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #fff;
+  }
+  .pt .logo-dot { width: 34px; height: 34px; border-radius: 50%; background: var(--pt-soft); display:flex; align-items:center; justify-content:center; font-weight:800; color: var(--pt-navy); font-size: 12px; flex-shrink: 0; }
+  .pt .price { margin-left: auto; font-weight: 800; color: var(--pt-navy); font-size: 14px; text-align: right; }
+  .pt .price .per { display: block; font-size: 10px; font-weight: 600; color: var(--ink-2); }
+  .pt .addrow {
+    display: flex; align-items: center; gap: 8px;
+    border: 1.5px solid var(--pt);
+    background: var(--pt-soft);
+    border-radius: 10px;
+    padding: 10px 12px;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--pt-navy);
+    margin-bottom: 8px;
+    cursor: pointer;
+    font-family: var(--font);
+    width: 100%;
+    text-align: left;
+  }
+  .pt .addrow .chk { width: 18px; height: 18px; border-radius: 5px; background: var(--pt); color:#fff; display:flex; align-items:center; justify-content:center; font-size: 12px; flex-shrink: 0; }
+  .pt .policy {
+    display: flex; align-items: center; gap: 10px;
+    border: 1px solid var(--hairline);
+    border-radius: 12px;
+    padding: 11px 12px;
+    margin-bottom: 8px;
+    background: #fff;
+  }
+  .pt .policy .st { margin-left: auto; font-size: 10px; font-weight: 800; border-radius: 999px; padding: 3px 8px; background: var(--success-wash); color: #00834A; flex-shrink: 0; }
+  .pt .policy .st.warn { background: #FFF4D6; color: #B27700; }
+  .dir-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .dir-item {
+    border: 1px solid var(--hairline);
+    border-radius: 12px;
+    padding: 10px 6px;
+    text-align: center;
+    font-size: 10.5px;
+    font-weight: 700;
+    color: var(--ink);
+    background: #fff;
+  }
+  .dir-item .ico { display:block; font-size: 18px; margin-bottom: 4px; }
+
+  /* annotation panel */
+  .panel {
+    background: #fff;
+    border: 1px solid var(--hairline);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 20px;
+  }
+  .panel .screenno {
+    display: inline-block;
+    background: var(--wash);
+    border: 1px solid var(--wash-border);
+    color: var(--navy);
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 800;
+    padding: 4px 11px;
+  }
+  .panel h2 { font-size: 19px; font-weight: 700; margin-top: 10px; letter-spacing: -0.2px; }
+  .panel .block { margin-top: 16px; }
+  .panel .block .cap {
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    color: var(--ink-2);
+    margin-bottom: 7px;
+  }
+  .panel ul { list-style: none; }
+  .panel li {
+    font-size: 13.5px;
+    padding-left: 16px;
+    position: relative;
+    margin-bottom: 6px;
+    color: var(--ink);
+  }
+  .panel li::before {
+    content: "";
+    position: absolute;
+    left: 0; top: 7px;
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--amber);
+  }
+  .why {
+    background: var(--wash);
+    border: 1px solid var(--wash-border);
+    border-radius: var(--radius);
+    padding: 12px 14px;
+    font-size: 13.5px;
+    color: var(--ink);
+    margin-top: 8px;
+  }
+  .why .pills { margin-bottom: 6px; display: flex; gap: 6px; }
+  .shotref { margin-top: 16px; border-top: 1px solid var(--hairline); padding-top: 14px; }
+  .shotref .cap { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.6px; color: var(--ink-2); margin-bottom: 8px; }
+  .shotref .shots img { width: 100%; border-radius: 10px; border: 1px solid var(--hairline); display: block; margin-bottom: 8px; }
+  .shotref .note { font-size: 11.5px; color: var(--ink-mute); margin-top: 6px; }
+  .navrow { display: flex; gap: 8px; margin-top: 18px; align-items: center; }
+  .navbtn {
+    border: 1px solid var(--hairline);
+    background: #fff;
+    border-radius: 999px;
+    padding: 8px 16px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: var(--font);
+    color: var(--ink);
+  }
+  .navbtn:disabled { opacity: 0.4; cursor: default; }
+  .navbtn.main { background: var(--primary); border-color: var(--primary); color: #fff; }
+  .dots { display: flex; gap: 6px; margin-left: auto; }
+  .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--hairline); cursor: pointer; }
+  .dot.on { background: var(--primary); }
+  footer {
+    max-width: 1060px;
+    margin: 0 auto;
+    padding: 0 24px 48px;
+    font-size: 12px;
+    color: var(--ink-2);
+  }
+  footer .card { background: #fff; }
+  footer a { color: var(--primary); }
+</style>
+</head>
+<body>
+
+<header class="bar">
+  <h1>Prototipe asuransi: PhonePe, Kakao, Paytm</h1>
+  <div class="sub">Satu HP yang bisa di-tap layar per layar. Tombol panah di dalem app buat balik, tombol bawah buat lanjut. Di sebelah kanan ada isinya apa aja dan kenapa dibikin gitu.</div>
+  <div class="badge-row">
+    <span class="badge">Tap layar per layar</span>
+    <span class="badge">Back beneran</span>
+    <span class="badge">Tiap layar ada catatan</span>
+  </div>
+  <div class="app-pills" id="appPills">
+    <button class="app-pill on" data-app="phonepe">PhonePe</button>
+    <button class="app-pill" data-app="kakao">Kakao</button>
+    <button class="app-pill" data-app="paytm">Paytm</button>
+  </div>
+</header>
+
+<main>
+  <div class="stage">
+
+    <div class="phone-wrap">
+      <div class="phone" id="phoneEl">
+        <div class="screen">
+          <div class="statusbar">
+            <span>9:41</span>
+            <span class="batt">▲ ▮</span>
+          </div>
+          <div class="apphead" id="appHead">
+            <button class="backbtn" id="backBtn" aria-label="Balik">‹</button>
+            <div>
+              <div class="appname" id="appName">PhonePe</div>
+              <div class="appsub" id="appSub">Belanja asuransi</div>
+            </div>
+          </div>
+
+          <div class="appbody on" data-app="phonepe" data-idx="0">
+            <div class="pp-top">
+              <div>
+                <div class="pp-h1">Insurance</div>
+                <div class="pp-sub">Secure what you love</div>
+              </div>
+              <button class="pp-mypoli">My Policies</button>
+            </div>
+            <div class="pp-grid">
+              <div class="pp-col">
+                <div class="pp-card">
+                  <div class="pt">Bike</div>
+                  <div class="ps">Starts @ ₹538/year</div>
+                  <span class="pic">🛵</span>
+                </div>
+                <div class="pp-card tall">
+                  <div class="pt">Health</div>
+                  <div class="ps">Monthly plans starts @ ₹264/month</div>
+                  <span class="pp-tag">Lowest Price Promise</span>
+                  <span class="pic">🩹</span>
+                </div>
+                <div class="pp-card">
+                  <div class="pt">Personal Accident</div>
+                  <div class="ps">Starts @ ₹25/year</div>
+                  <span class="pic">🎒</span>
+                </div>
+              </div>
+              <div class="pp-col">
+                <div class="pp-card">
+                  <div class="pt">Car</div>
+                  <div class="ps">Starts @ ₹2094/year</div>
+                  <span class="pic">🚗</span>
+                </div>
+                <div class="pp-card">
+                  <div class="pt">Term life</div>
+                  <div class="ps">₹1 Crore Cover @ ₹506</div>
+                  <span class="pic">❤️</span>
+                </div>
+                <div class="pp-card">
+                  <div class="pt">Savings/ULIP</div>
+                  <div class="ps">Market linked returns</div>
+                  <span class="pp-tag">NFO Live</span>
+                  <span class="pic">🛡️</span>
+                </div>
+                <div class="pp-card">
+                  <div class="pt">Travel</div>
+                  <div class="ps">Medical + trip cover</div>
+                  <span class="pp-tag">Free E-Sim</span>
+                  <span class="pic">🌍</span>
+                </div>
+              </div>
+            </div>
+            <div class="pp-explore-h">Explore other insurances</div>
+            <div class="pp-explore">
+              <div class="pp-circ"><div class="c">👵</div><div class="n">Pension</div></div>
+              <div class="pp-circ"><div class="c">🔐</div><div class="n">Cyber Insurance</div></div>
+              <div class="pp-circ"><div class="c">🏪</div><div class="n">Shop</div></div>
+              <div class="pp-circ"><div class="c">🏥</div><div class="n">Hospital cash</div></div>
+              <div class="pp-circ"><div class="c">🏠</div><div class="n">Home Insurance</div></div>
+            </div>
+            <button class="cta" data-next>Lihat harga asuransi mobil</button>
+            <div class="hint">Ketuk tombol ungu buat lanjut</div>
+          </div>
+
+          <div class="appbody" data-app="phonepe" data-idx="1">
+            <div class="bar-brand">
+              <div class="big">Isi satu kolom</div>
+              <div class="sm">Nomor plat cukup. Model dan tahun ketik sendiri.</div>
+            </div>
+            <input class="fld" value="B 1234 KUA" readonly>
+            <input class="fld" value="Avanza 2019" readonly>
+            <div class="card">
+              <div class="t">Belum perlu daftar</div>
+              <div class="d">Nggak perlu upload dokumen di awal. Harga keluar dulu, data belakangan.</div>
+            </div>
+            <button class="cta" data-next>Lihat harga</button>
+            <div class="hint">Ketuk buat ambil penawaran</div>
+          </div>
+
+          <div class="appbody" data-app="phonepe" data-idx="2">
+            <div class="bar-brand">
+              <div class="big">Banding harga</div>
+              <div class="sm">Penawaran banyak asuransi muncul sekaligus.</div>
+            </div>
+            <div class="quote-row">
+              <div class="logo-dot">M1</div>
+              <div><div class="t" style="font-size:13px;font-weight:700">Mitra asuransi 1</div><div class="muted">All risk · 3 tahun</div></div>
+              <div class="price">Rp1,8 jt<span class="per">per tahun</span></div>
+            </div>
+            <div class="quote-row">
+              <div class="logo-dot">M2</div>
+              <div><div class="t" style="font-size:13px;font-weight:700">Mitra asuransi 2</div><div class="muted">TLO · 1 tahun</div></div>
+              <div class="price">Rp1,2 jt<span class="per">per tahun</span></div>
+            </div>
+            <div class="quote-row">
+              <div class="logo-dot">M3</div>
+              <div><div class="t" style="font-size:13px;font-weight:700">Mitra asuransi 3</div><div class="muted">All risk · 1 tahun</div></div>
+              <div class="price">Rp2,1 jt<span class="per">per tahun</span></div>
+            </div>
+            <div class="money" style="margin-top:4px">≈ Rp538 per hari</div>
+            <button class="cta" data-next>Pilih dan bayar</button>
+            <div class="hint">Ketuk buat ke pembayaran</div>
+          </div>
+
+          <div class="appbody" data-app="phonepe" data-idx="3">
+            <div class="bar-brand">
+              <div class="big">Bayar</div>
+              <div class="sm">UPI, dan bisa dicicil bulanan.</div>
+            </div>
+            <div class="money" style="margin-bottom:10px">Total Rp1.800.000 · ≈ Rp150.000 per bulan</div>
+            <button class="switch" data-toggle>
+              Bayar bulanan lewat autopay
+              <span class="knob"></span>
+            </button>
+            <div class="card">
+              <div class="t">Kenapa ada pilihan bulanan</div>
+              <div class="d">Angka kecil per bulan lebih ringan daripada angka besar per tahun.</div>
+            </div>
+            <button class="cta" data-next>Bayar sekarang</button>
+            <div class="hint">Ketuk buat bayar</div>
+          </div>
+
+          <div class="appbody" data-app="phonepe" data-idx="4">
+            <div class="bar-brand">
+              <div class="big">Data diri sesudah bayar</div>
+              <div class="sm">KYC diminta belakangan, bukan di awal.</div>
+            </div>
+            <input class="fld" value="NIK 3174••••••••••" readonly>
+            <input class="fld" value="nama@email.com" readonly>
+            <div class="ok-card">
+              <div class="tick">✓</div>
+              <div style="font-weight:800">Polis jadi di bawah 2 menit</div>
+              <div class="muted">Langsung masuk ke app, bisa dibuka kapan aja.</div>
+            </div>
+            <button class="cta" data-restart>Ulangi dari layar 1</button>
+            <div class="hint">Sampai akhir, ketuk buat muter lagi</div>
+          </div>
+
+          <div class="appbody" data-app="kakao" data-idx="0">
+            <div class="tabbar">
+              <button class="tab">Chat</button>
+              <button class="tab on">All</button>
+              <button class="tab">Call</button>
+            </div>
+            <div style="font-size:12px;font-weight:800;color:var(--kk-ink);margin-bottom:8px">Asuransi ada di dalam chat, bukan app terpisah</div>
+            <div class="chatline">
+              <div class="avatar">🛡️</div>
+              <div class="grow">
+                <div style="font-size:13px;font-weight:700">Kakao Pay Insurance</div>
+                <div class="muted">Menu asuransi lewat tab “All”</div>
+              </div>
+            </div>
+            <div class="chatline">
+              <div class="avatar">✈️</div>
+              <div class="grow">
+                <div style="font-size:13px;font-weight:700">Liburan kamu</div>
+                <div class="bubble" style="margin-top:4px">Asuransi travel mulai 1.000 won</div>
+              </div>
+            </div>
+            <button class="cta" data-next>Buka menu asuransi</button>
+            <div class="hint">Ketuk buat masuk</div>
+          </div>
+
+          <div class="appbody" data-app="kakao" data-idx="1">
+            <div style="font-size:15px;font-weight:800;margin-bottom:3px">Mau lindungin yang mana?</div>
+            <div class="muted" style="margin-bottom:10px">Satu produk per momen, bukan per lini.</div>
+            <div class="grid2">
+              <button class="tile" style="border-color:var(--kk-ink)"><span class="ico">🧳</span>Liburan</button>
+              <button class="tile"><span class="ico">📱</span>Hape</button>
+              <button class="tile"><span class="ico">🐾</span>Hewan</button>
+              <button class="tile"><span class="ico">🚗</span>Mobil</button>
+            </div>
+            <div class="card" style="margin-top:10px">
+              <div class="t">Travel: 1,5 juta pendaftaran di tahun pertama</div>
+              <div class="d">Produk khusus kejadian, gampang diingat.</div>
+            </div>
+            <button class="cta" data-next>Pilih liburan</button>
+            <div class="hint">Ketuk buat atur harganya</div>
+          </div>
+
+          <div class="appbody" data-app="kakao" data-idx="2">
+            <div style="font-size:15px;font-weight:800;margin-bottom:3px">Atur sendiri</div>
+            <div class="muted" style="margin-bottom:10px">Yang ditanggung naik-turun, harganya ikut gerak.</div>
+            <div class="slider-box">
+              <div class="lab"><span>Yang kamu tanggung (deductible)</span><span>25%</span></div>
+              <div class="slider-track"><div class="fill"></div><div class="knob2"></div></div>
+              <div class="tiny">10% sampai 40%</div>
+            </div>
+            <div class="slider-box">
+              <div class="lab" style="margin-bottom:8px"><span>Pilih 1 sampai 5 perbaikan</span></div>
+              <div class="choice-row">
+                <button class="choice">1</button>
+                <button class="choice on">2</button>
+                <button class="choice">3</button>
+                <button class="choice">4</button>
+                <button class="choice">5</button>
+              </div>
+            </div>
+            <div class="money">Premi ≈ Rp60.000 per bulan</div>
+            <button class="cta" data-next>Lanjut bayar di chat</button>
+            <div class="hint">Ketuk buat ke pembayaran</div>
+          </div>
+
+          <div class="appbody" data-app="kakao" data-idx="3">
+            <div style="font-size:15px;font-weight:800;margin-bottom:3px">Bayar di chat</div>
+            <div class="muted" style="margin-bottom:10px">Lewat Kakao Pay, nggak pindah app.</div>
+            <div class="card">
+              <div class="row">
+                <div class="grow"><div class="t">Asuransi travel 7 hari</div><div class="d">Premi 10.000 won</div></div>
+                <div class="money">10.000 ₩</div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="t">Metode: Kakao Pay</div>
+              <div class="d">Saldo dan kartu tersimpan di app chat.</div>
+            </div>
+            <button class="cta" data-next>Bayar 10.000 won</button>
+            <div class="hint">Ketuk buat bayar</div>
+          </div>
+
+          <div class="appbody" data-app="kakao" data-idx="4">
+            <div style="font-size:15px;font-weight:800;margin-bottom:3px">Polis keluar, pengingat nyampe sendiri</div>
+            <div class="muted" style="margin-bottom:10px">Kabar datang sebagai pesan, bukan notifikasi app yang kelewat.</div>
+            <div class="msg">
+              <div class="who">Kakao Pay Insurance</div>
+              Polis kamu aktif sampai 22 Okt 2026. Simpan ya, tinggal buka di chat ini.
+            </div>
+            <div class="msg">
+              <div class="who">Pengingat</div>
+              Polis mau habis 3 hari lagi. Perpanjang sekali ketuk di sini.
+            </div>
+            <div class="ok-card">
+              <div class="tick">✓</div>
+              <div style="font-weight:800">Klaim rata-rata 1 hari kerja</div>
+              <div class="muted">Kecepatan ini yang dipajang di halaman jual.</div>
+            </div>
+            <button class="cta" data-restart>Ulangi dari layar 1</button>
+            <div class="hint">Sampai akhir, ketuk buat muter lagi</div>
+          </div>
+
+          <div class="appbody" data-app="paytm" data-idx="0">
+            <div class="hero">
+              <div class="big">Insurance ka Super Market</div>
+              <div class="sm">Banding, beli, perpanjang, bantuan klaim. Satu pintu.</div>
+            </div>
+            <div class="grid2" style="gap:8px">
+              <button class="verb"><span class="ico">⚖️</span>Banding</button>
+              <button class="verb"><span class="ico">🛒</span>Beli</button>
+              <button class="verb"><span class="ico">🔁</span>Perpanjang</button>
+              <button class="verb"><span class="ico">💬</span>Bantuan</button>
+            </div>
+            <div class="card" style="margin-top:10px">
+              <div class="row">
+                <div class="grow"><div class="t">Bayar premi polis lama</div><div class="d">50+ perusahaan, tanpa beli polis baru.</div></div>
+                <span style="font-size:16px">›</span>
+              </div>
+            </div>
+            <button class="cta" data-next>Banding asuransi mobil</button>
+            <div class="hint">Ketuk buat mulai banding</div>
+          </div>
+
+          <div class="appbody" data-app="paytm" data-idx="1">
+            <div class="hero">
+              <div class="big">Mulai Rp6 per hari</div>
+              <div class="sm">Angka kecil di depan, bukan jutaan per tahun.</div>
+            </div>
+            <input class="fld" value="DL01CRXXXX" readonly>
+            <div class="card">
+              <div class="t">Isi nomor plat, langsung lanjut</div>
+              <div class="d">Tanpa dokumen buat beli. Ada tombol kalau mau lanjut tanpa nomor plat.</div>
+            </div>
+            <div class="row" style="gap:6px;margin-bottom:4px">
+              <span class="pill" style="background:var(--pt-soft);color:var(--pt-navy)">Compare harga</span>
+              <span class="pill" style="background:var(--pt-soft);color:var(--pt-navy)">Polis instan</span>
+              <span class="pill" style="background:var(--pt-soft);color:var(--pt-navy)">Tanpa telepon spam</span>
+            </div>
+            <button class="cta" data-next>Lihat penawaran</button>
+            <div class="hint">Ketuk buat banding</div>
+          </div>
+
+          <div class="appbody" data-app="paytm" data-idx="2">
+            <div style="font-size:15px;font-weight:800;margin-bottom:3px">Banding + tambahan</div>
+            <div class="muted" style="margin-bottom:10px">Harga dari banyak asuransi, tambahan tinggal dicentang.</div>
+            <div class="quote-row">
+              <div class="logo-dot">M1</div>
+              <div><div style="font-size:13px;font-weight:700">Mitra asuransi 1</div><div class="muted">All risk</div></div>
+              <div class="price">Rp1,8 jt<span class="per">per tahun</span></div>
+            </div>
+            <div class="quote-row">
+              <div class="logo-dot">M2</div>
+              <div><div style="font-size:13px;font-weight:700">Mitra asuransi 2</div><div class="muted">All risk</div></div>
+              <div class="price">Rp1,6 jt<span class="per">per tahun</span></div>
+            </div>
+            <button class="addrow" data-toggle>
+              <span class="chk">✓</span>
+              Nol depresiasi (nilai mobil nggak turun pas klaim)
+            </button>
+            <button class="cta" data-next>Bayar premi</button>
+            <div class="hint">Ketuk buat bayar</div>
+          </div>
+
+          <div class="appbody" data-app="paytm" data-idx="3">
+            <div style="font-size:15px;font-weight:800;margin-bottom:3px">Polis &amp; kabar</div>
+            <div class="muted" style="margin-bottom:10px">Satu lemari buat semua polis. Kabar keluar lewat email dan WhatsApp.</div>
+            <div class="policy">
+              <div class="logo-dot">🚗</div>
+              <div class="grow"><div style="font-size:13px;font-weight:700">Asuransi mobil</div><div class="muted">Aktif s/d Mar 2027</div></div>
+              <span class="st">Aktif</span>
+            </div>
+            <div class="policy">
+              <div class="logo-dot">🏥</div>
+              <div class="grow"><div style="font-size:13px;font-weight:700">Asuransi kesehatan</div><div class="muted">Perpanjang 5 hari lagi</div></div>
+              <span class="st warn">Segera</span>
+            </div>
+            <div class="msg" style="background:var(--pt-soft);border:1px solid var(--wash-border);border-radius:12px;padding:10px 12px;font-size:12.5px;margin-bottom:8px">
+              <b>WhatsApp:</b> Status klaim kamu: dibayar. Rata-rata 1 hari kerja.
+            </div>
+            <button class="cta" data-next>Bayar premi polis lama</button>
+            <div class="hint">Ketuk buat ke direktori bayar</div>
+          </div>
+
+          <div class="appbody" data-app="paytm" data-idx="4">
+            <div style="font-size:15px;font-weight:800;margin-bottom:3px">Bayar premi polis lama</div>
+            <div class="muted" style="margin-bottom:10px">Puluhan asuransi bisa dibayar di sini. Ini alasan orang balik tiap bulan.</div>
+            <div class="dir-grid">
+              <div class="dir-item"><span class="ico">🏛️</span>LIC</div>
+              <div class="dir-item"><span class="ico">📮</span>Postal Life</div>
+              <div class="dir-item"><span class="ico">🏦</span>SBI Life</div>
+              <div class="dir-item"><span class="ico">🏢</span>HDFC Life</div>
+              <div class="dir-item"><span class="ico">🌟</span>Tata AIA</div>
+              <div class="dir-item"><span class="ico">✳️</span>ICICI Prudential</div>
+              <div class="dir-item"><span class="ico">🔺</span>Bajaj Allianz</div>
+              <div class="dir-item"><span class="ico">🎯</span>Max Life</div>
+              <div class="dir-item"><span class="ico">＋</span>50+ lainnya</div>
+            </div>
+            <button class="cta" data-restart>Ulangi dari layar 1</button>
+            <div class="hint">Sampai akhir, ketuk buat muter lagi</div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="panel" id="panel">
+      <span class="screenno" id="screenNo">Layar 1 dari 5</span>
+      <h2 id="screenTitle">Hub asuransi</h2>
+
+      <div class="block">
+        <div class="cap">Isinya apa aja</div>
+        <ul id="isiList"></ul>
+      </div>
+
+      <div class="block">
+        <div class="cap">Kenapa dibikin gitu</div>
+        <div class="why">
+          <div class="pills" id="whyPills"></div>
+          <div id="whyText"></div>
+        </div>
+      </div>
+
+      <div class="shotref" id="shotRef">
+        <div class="cap">Layar asli</div>
+        <div class="shots" id="shotImgs"></div>
+        <div class="note" id="shotNote"></div>
+      </div>
+
+      <div class="navrow">
+        <button class="navbtn" id="prevBtn">‹ Balik</button>
+        <button class="navbtn main" id="nextBtn">Lanjut ›</button>
+        <div class="dots" id="dots"></div>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<footer>
+  <div class="card">
+    <div style="font-weight:700;margin-bottom:6px">Catatan</div>
+    Isi tiap layar ngikutin alur yang udah ada di file benchmark (angka, urutan langkah, dan pola P0/P1/P2). Layar yang difoto aslinya nongol di panel kanan biar bisa dibandingin. Nama mitra asuransi ditulis generik kalau datanya nggak ada di sumber. Ini prototipe buat lihat interaksi, bukan app beneran.
+    <div style="margin-top:8px">Buka <a href="Benchmark%20Asuransi%20PhonePe%20Kakao%20Paytm.html">benchmark lengkapnya</a> buat angka dan sumbernya.</div>
+    <div style="margin-top:8px">Foto layar aslinya ada di folder <b>layar-asli-prototipe</b> di sebelah file ini, lengkap sama <b>SUMBER.txt</b>-nya. Yang belum ada fotonya: alur isi plat di PhonePe, alur chat beli di Kakao, layar banding harga di Paytm.</div>
+  </div>
+</footer>
+
+<script>
+  const APPS = {
+    phonepe: { name: "PhonePe", sub: "Belanja asuransi", cls: "pp", count: 5 },
+    kakao:   { name: "Kakao Pay Insurance", sub: "Dalem chat", cls: "kk", count: 5 },
+    paytm:   { name: "Paytm Insurance", sub: "Super market", cls: "pt", count: 5 }
+  };
+
+  const DATA = {
+    phonepe: [
+      {
+        title: "Insurance, layar asli PhonePe",
+        isi: [
+          "Tujuh jenis: Bike, Car, Health, Term life, Savings/ULIP, Personal Accident, Travel",
+          "Harga mulai kelihatan langsung di kartu, misal Bike mulai ₹538 per tahun",
+          "My Policies di pojok kanan atas, insuransi lain di bagian Explore"
+        ],
+        pills: [["p0", "P0"]],
+        why: "Harga dipajang sebelum orang ngisi apa pun. Tiap kartu jual dirinya sendiri, termasuk tag kayak Lowest Price Promise dan Free E-Sim.",
+        img: ["benchmark-asuransi-gambar/phonepe-home.png", "layar-asli-prototipe/phonepe_insurance_hub.png"],
+        note: "Kiri: halaman web insurance.phonepe.com (layar app dark yang lo kirim jadi acuan isi kartunya). Kanan: hub asuransi asli, kategori Motor, Life, Health, Others."
+      },
+      {
+        title: "Isi satu kolom",
+        isi: [
+          "Nomor plat dan model kendaraan doang",
+          "Nggak perlu daftar atau upload dokumen",
+          "Harga keluar sebelum data diminta"
+        ],
+        pills: [["p0", "P0"]],
+        why: "Tiap kolom tambahan di awal bikin orang kabur. Satu kolom dulu, sisanya nyusul.",
+        img: "layar-asli-prototipe/phonepe_member_selection.png",
+        note: "Form asli PhonePe: pilih siapa yang diasuransikan plus tanggal lahir. Cuma isian, tanpa upload dokumen."
+      },
+      {
+        title: "Banding harga",
+        isi: [
+          "Penawaran banyak asuransi muncul sekaligus",
+          "Harga per tahun dan setara per hari",
+          "Pilih satu, langsung ke bayar"
+        ],
+        pills: [["p1", "P1"]],
+        why: "Angka kecil di depan lebih gampang dicerna dibanding jutaan per tahun. Otak orang lebih gampang nyernanya.",
+        img: "layar-asli-prototipe/phonepe_quote_comparison.png",
+        note: "Layar banding asli: Star Health, Aditya Birla, Care. Tiap kartu kasih harga, rasio klaim, dan radio buat pilih."
+      },
+      {
+        title: "Bayar, bisa bulanan",
+        isi: [
+          "Bayar lewat UPI",
+          "Sekaligus atau dicicil bulanan lewat autopay",
+          "Total dan harga per bulan keduanya kelihatan"
+        ],
+        pills: [["p0", "P0"]],
+        why: "Angka kecil per bulan ngalahin angka besar per tahun. Nyambung sama kebiasaan transaksi kecil di dompet digital.",
+        img: "layar-asli-prototipe/phonepe_review_buy.png",
+        note: "Layar Review and buy asli: premi Rp6.930 per tahun di bawah, tombol BUY. Ringkasan cover, masa berlaku, nominee, dan centang syarat sebelum bayar."
+      },
+      {
+        title: "Data diri sesudah bayar",
+        isi: [
+          "KYC diminta setelah pembayaran, bukan di awal",
+          "Polis jadi di bawah 2 menit",
+          "Polis langsung masuk app"
+        ],
+        pills: [["p0", "P0"]],
+        why: "Geser data diri ke belakang itu P0 kita. Orang udah bayar, dia nggak akan kabur gara-gara diminta NIK.",
+        img: "layar-asli-prototipe/phonepe_health_declaration.png",
+        note: "Form deklarasi kesehatan asli: pertanyaan ya/tidak, CONTINUE di bawah. Ini bagian isian yang diminta di tengah alur, bukan sebelum harga keluar."
+      }
+    ],
+    kakao: [
+      {
+        title: "Asuransi di dalam chat",
+        isi: [
+          "Menu asuransi lewat tab All di KakaoTalk",
+          "Bukan app terpisah yang harus di-download",
+          "Obrolan perpanjangan masuk ke chat yang sama"
+        ],
+        pills: [["p0", "P0"]],
+        why: "Jual di tempat orang udah buka tiap hari. Pengingat harus nyampe tanpa orang buka app.",
+        img: ["benchmark-asuransi-gambar/kakao-steps.jpg", "layar-asli-prototipe/kakao_insurance_diagnosis.png"],
+        note: "Kiri: alur beli tiga langkah. Kanan: layar 보험 asli di app Kakao Pay, tab diagnosis premi dibanding rata-rata. Alur chat-nya sendiri belum ada foto publiknya."
+      },
+      {
+        title: "Pilih momen, bukan lini",
+        isi: [
+          "Liburan, hape, hewan, mobil",
+          "Satu produk per kejadian",
+          "Travel tembus 1,5 juta pendaftaran di tahun pertama"
+        ],
+        pills: [["p1", "P1"]],
+        why: "Satu SKU per kejadian lebih gampang diomongin dan diingat daripada asuransi umum.",
+        img: "benchmark-asuransi-gambar/kakao-travel.jpg",
+        note: "Produk travel mereka, nomor satu di katalog."
+      },
+      {
+        title: "Atur sendiri harganya",
+        isi: [
+          "Deductible digeser 10 sampai 40 persen",
+          "Pilih 1 sampai 5 perbaikan",
+          "Premi ikut gerak langsung di layar"
+        ],
+        pills: [["p1", "P1"]],
+        why: "Orang yang megang tuas sendiri ngerasa pegang. Dia pilih premi yang pas di kantong tanpa kita bikin produk baru.",
+        img: null
+      },
+      {
+        title: "Bayar di chat",
+        isi: [
+          "Bayar lewat Kakao Pay, nggak pindah app",
+          "Pola langkah: pilih, isi ringan, bayar",
+          "Polis langsung keluar di app"
+        ],
+        pills: [["p0", "P0"]],
+        why: "Tiga langkah, selesai di satu tempat. Tiap pindah app buang orang.",
+        img: null
+      },
+      {
+        title: "Pengingat datang sendiri",
+        isi: [
+          "Polis aktif dan pengingat perpanjangan lewat pesan AlimTalk",
+          "Status klaim masuk ke chat yang sama",
+          "Klaim rata-rata 1 hari kerja dipajang di situ"
+        ],
+        pills: [["p1", "P1"]],
+        why: "Perpanjangan kelewat = polis mati pas orang paling butuh. Dan klaim itu north star kita, jadi kecepatannya ditulis terang-terangan.",
+        img: null
+      }
+    ],
+    paytm: [
+      {
+        title: "Satu pintu, empat kata kerja",
+        isi: [
+          "Banding, beli, perpanjang, bantuan klaim",
+          "Banner harga jangkar: mulai Rp6 per hari",
+          "Pintu bayar premi polis lama di layar yang sama"
+        ],
+        pills: [["p2", "P2"]],
+        why: "Empat kata kerja lebih gampang dipahami daripada menu asuransi yang tersebar di banyak tempat.",
+        img: ["benchmark-asuransi-gambar/paytm-home-hero.png", "layar-asli-prototipe/paytm_insurance_category.png"],
+        note: "Kiri: judul asli mereka Insurance ka Super Market. Kanan: layar asli pilih kategori asuransi, cuma Car dan Bike."
+      },
+      {
+        title: "Harga jangkar di depan mata",
+        isi: [
+          "Banner Rp6 per hari, bukan jutaan per tahun",
+          "Isi nomor plat, langsung lanjut",
+          "Janji: tanpa telepon spam"
+        ],
+        pills: [["p1", "P1"]],
+        why: "Taruh angka per hari di depan. Otak orang lebih gampang nangkep angka kecil.",
+        img: "benchmark-asuransi-gambar/paytm-car-hero.png",
+        note: "Halaman jual asuransi mobil mereka."
+      },
+      {
+        title: "Banding plus tambahan",
+        isi: [
+          "Harga dari banyak asuransi sekaligus",
+          "Tambahan kayak nol depresiasi tinggal dicentang",
+          "Centang, harga ikut naik, langsung kelihatan"
+        ],
+        pills: [["p1", "P1"]],
+        why: "Bandingin asuransinya, bukan cuma harganya. Rekam jejak dan opsi tambahan bikin orang percaya sebelum bayar.",
+        img: null
+      },
+      {
+        title: "Polis dan kabar",
+        isi: [
+          "Semua polis kumpul di satu lemari My Policies",
+          "Status klaim dan kabar perpanjangan lewat email dan WhatsApp",
+          "Bukan cuma notifikasi di dalam app"
+        ],
+        pills: [["p1", "P1"]],
+        why: "Kabar harus nyampe tanpa orang buka app. Sama kayak pesan chat, bukan banner yang kelewat.",
+        img: "layar-asli-prototipe/paytm_your_money.png",
+        note: "Panel Your Money asli: baris Car Insurance dan Health Insurance nempel di halaman utama app, bukan tersembunyi di menu."
+      },
+      {
+        title: "Bayar premi polis lama",
+        isi: [
+          "Direktori puluhan asuransi: LIC, Tata AIG, Bajaj, dan lainnya",
+          "Bayar perpanjangan tanpa beli polis baru",
+          "50+ perusahaan, dicek Okt 2026"
+        ],
+        pills: [["p0", "P0"]],
+        why: "Bayar premi polis lama jadi alasan orang balik tiap bulan. Frekuensi naik tanpa iklan.",
+        img: "benchmark-asuransi-gambar/paytm-premium-dir-hero.png",
+        note: "Direktori bayar premi asli mereka."
+      }
+    ]
+  };
+
+  let app = "phonepe";
+  const idx = { phonepe: 0, kakao: 0, paytm: 0 };
+
+  const appPills = document.getElementById("appPills");
+  const backBtn = document.getElementById("backBtn");
+  const appName = document.getElementById("appName");
+  const appSub = document.getElementById("appSub");
+  const phoneEl = document.getElementById("phoneEl");
+  const screenNo = document.getElementById("screenNo");
+  const screenTitle = document.getElementById("screenTitle");
+  const isiList = document.getElementById("isiList");
+  const whyPills = document.getElementById("whyPills");
+  const whyText = document.getElementById("whyText");
+  const shotRef = document.getElementById("shotRef");
+  const shotImgs = document.getElementById("shotImgs");
+  const shotNote = document.getElementById("shotNote");
+  const prevBtn = document.getElementById("prevBtn");
+  const nextBtn = document.getElementById("nextBtn");
+  const dots = document.getElementById("dots");
+
+  function bodies(appKey) {
+    return [...document.querySelectorAll('.appbody[data-app="' + appKey + '"]')]
+      .sort((a, b) => +a.dataset.idx - +b.dataset.idx);
+  }
+
+  function render() {
+    const meta = APPS[app];
+    const i = idx[app];
+    const d = DATA[app][i];
+
+    phoneEl.querySelector(".screen").className = "screen " + meta.cls;
+    appName.textContent = meta.name;
+    appSub.textContent = meta.sub;
+
+    document.querySelectorAll(".appbody").forEach(b => b.classList.remove("on"));
+    const list = bodies(app);
+    list.forEach((b, n) => b.classList.toggle("on", n === i));
+    list.forEach(b => { b.scrollTop = 0; });
+
+    backBtn.disabled = i === 0;
+    screenNo.textContent = "Layar " + (i + 1) + " dari " + meta.count;
+    screenTitle.textContent = d.title;
+    isiList.innerHTML = d.isi.map(t => "<li>" + t + "</li>").join("");
+    whyPills.innerHTML = d.pills.map(p => '<span class="pill ' + p[0] + '">' + p[1] + "</span>").join("");
+    whyText.textContent = d.why;
+
+    if (d.img) {
+      const list = Array.isArray(d.img) ? d.img : [d.img];
+      shotImgs.innerHTML = list.map(s => '<img src="' + s + '" alt="">').join("");
+      shotNote.textContent = d.note || "";
+      shotRef.style.display = "block";
+    } else {
+      shotRef.style.display = "none";
+    }
+
+    dots.innerHTML = "";
+    for (let n = 0; n < meta.count; n++) {
+      const s = document.createElement("span");
+      s.className = "dot" + (n === i ? " on" : "");
+      s.addEventListener("click", () => { idx[app] = n; render(); });
+      dots.appendChild(s);
+    }
+
+    prevBtn.disabled = i === 0;
+    nextBtn.disabled = i === meta.count - 1;
+
+    appPills.querySelectorAll(".app-pill").forEach(b =>
+      b.classList.toggle("on", b.dataset.app === app));
+  }
+
+  function go(delta) {
+    const i = idx[app];
+    const n = i + delta;
+    if (n < 0 || n >= APPS[app].count) return;
+    idx[app] = n;
+    render();
+  }
+
+  appPills.addEventListener("click", e => {
+    const b = e.target.closest(".app-pill");
+    if (!b) return;
+    app = b.dataset.app;
+    render();
+  });
+
+  backBtn.addEventListener("click", () => go(-1));
+  prevBtn.addEventListener("click", () => go(-1));
+  nextBtn.addEventListener("click", () => go(1));
+
+  document.querySelectorAll("[data-next]").forEach(b =>
+    b.addEventListener("click", () => go(1)));
+  document.querySelectorAll("[data-restart]").forEach(b =>
+    b.addEventListener("click", () => { idx[app] = 0; render(); }));
+  document.querySelectorAll("[data-toggle]").forEach(b =>
+    b.addEventListener("click", e => e.stopPropagation()));
+
+  document.addEventListener("keydown", e => {
+    if (e.key === "ArrowRight") go(1);
+    if (e.key === "ArrowLeft") go(-1);
+  });
+
+  render();
+</script>
+</body>
+</html>

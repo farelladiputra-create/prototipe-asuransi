@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Benchmark asuransi: PhonePe, Kakao, Paytm</title>
+<style>
+  :root {
+    --primary: #108EE9;
+    --primary-strong: #0061D3;
+    --navy: #0F479E;
+    --success: #00CE64;
+    --success-wash: #DEF9EB;
+    --amber: #F48D1C;
+    --yellow: #FEAE06;
+    --orange: #EA501B;
+    --orange-wash: #FFEAE9;
+    --ink: #313131;
+    --ink-2: #727272;
+    --ink-mute: #A4A4A4;
+    --hairline: #EBEBEB;
+    --canvas: #F5F5F5;
+    --surface: #FFFFFF;
+    --wash: #E9F5FE;
+    --wash-border: #BADFFA;
+    --radius: 12px;
+    --shadow: 0 8px 32px rgba(0,0,0,0.08);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Noto Sans', 'SF Pro Text', system-ui, -apple-system, Roboto, sans-serif;
+    background: var(--canvas);
+    color: var(--ink);
+    font-size: 14px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+  .bar {
+    background: var(--primary);
+    color: #fff;
+    padding: 20px 24px 48px;
+  }
+  .bar-inner { max-width: 720px; margin: 0 auto; }
+  .bar h1 { font-size: 20px; font-weight: 600; letter-spacing: 0; }
+  .bar p { font-size: 13px; opacity: 0.9; margin-top: 4px; }
+  .badge-row { display: flex; gap: 8px; margin-top: 14px; flex-wrap: wrap; }
+  .bar-pill {
+    background: rgba(255,255,255,0.18);
+    border: 1px solid rgba(255,255,255,0.35);
+    border-radius: 9999px;
+    padding: 5px 12px;
+    font-size: 11px;
+    font-weight: 600;
+  }
+  main { max-width: 720px; margin: 0 auto; padding: 0 16px 64px; }
+  .overlap {
+    background: var(--surface);
+    border: 1px solid var(--hairline);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 20px;
+    margin-top: -28px;
+    position: relative;
+  }
+  .overlap h2 { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+  .overlap p { color: var(--ink-2); font-size: 13px; }
+  .section { margin-top: 32px; }
+  .section-label {
+    display: inline-block;
+    background: rgba(0,0,0,0.08);
+    color: var(--ink-2);
+    font-size: 12px;
+    border-radius: 10px;
+    padding: 7px 16px;
+    margin-bottom: 16px;
+  }
+  h3.sec {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 12px;
+  }
+  h4.app {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+  h4.app span.sub {
+    font-weight: 400;
+    font-size: 12px;
+    color: var(--ink-2);
+  }
+  .triad {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+  @media (max-width: 640px) { .triad { grid-template-columns: 1fr; } }
+  .tri-card {
+    background: var(--surface);
+    border: 1px solid var(--hairline);
+    border-radius: var(--radius);
+    padding: 16px;
+  }
+  .tri-card .who {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--navy);
+  }
+  .tri-card .how {
+    font-size: 13px;
+    font-weight: 600;
+    margin-top: 4px;
+  }
+  .tri-card .det {
+    font-size: 12px;
+    color: var(--ink-2);
+    margin-top: 6px;
+  }
+  .tri-card .num {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--primary);
+    margin-top: 10px;
+    line-height: 1.2;
+  }
+  .tri-card .numlab { font-size: 11px; color: var(--ink-2); margin-top: 2px; }
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+  }
+  @media (max-width: 640px) { .stats { grid-template-columns: repeat(2, 1fr); } }
+  .stat {
+    background: var(--surface);
+    border: 1px solid var(--hairline);
+    border-radius: var(--radius);
+    padding: 16px 14px;
+  }
+  .stat .num {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--navy);
+    line-height: 1.2;
+  }
+  .stat .lab {
+    font-size: 12px;
+    color: var(--ink-2);
+    margin-top: 4px;
+  }
+  .stat .src {
+    font-size: 10px;
+    color: var(--ink-mute);
+    margin-top: 6px;
+  }
+  .shots {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+  @media (max-width: 640px) { .shots { grid-template-columns: 1fr; } }
+  .shot {
+    background: var(--surface);
+    border: 1px solid var(--hairline);
+    border-radius: var(--radius);
+    padding: 10px;
+  }
+  .shot img {
+    width: 100%;
+    display: block;
+    border-radius: 8px;
+    border: 1px solid var(--hairline);
+    background: #fff;
+  }
+  .shot.tall img {
+    height: 380px;
+    object-fit: cover;
+    object-position: top center;
+  }
+  .shot .cap {
+    font-size: 11px;
+    color: var(--ink-2);
+    margin-top: 8px;
+    line-height: 1.45;
+  }
+  .flow {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 8px;
+  }
+  .flow.four { grid-template-columns: repeat(4, 1fr); }
+  @media (max-width: 640px) {
+    .flow, .flow.four { grid-template-columns: 1fr 1fr; }
+  }
+  .step {
+    background: var(--surface);
+    border: 1px solid var(--hairline);
+    border-radius: var(--radius);
+    padding: 14px 12px;
+  }
+  .step .n {
+    width: 26px; height: 26px;
+    border-radius: 50%;
+    background: var(--wash);
+    border: 2px solid var(--wash-border);
+    color: var(--primary);
+    font-size: 12px;
+    font-weight: 600;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 8px;
+  }
+  .step .t { font-size: 13px; font-weight: 600; }
+  .step .d { font-size: 12px; color: var(--ink-2); margin-top: 4px; }
+  .note-strip {
+    margin-top: 12px;
+    background: var(--wash);
+    border: 1px solid var(--wash-border);
+    border-radius: var(--radius);
+    padding: 12px 14px;
+    font-size: 12px;
+    color: var(--navy);
+  }
+  .cards { display: flex; flex-direction: column; gap: 13px; }
+  .pcard {
+    background: var(--wash);
+    border: 1px solid var(--wash-border);
+    border-radius: var(--radius);
+    padding: 16px 18px 16px 16px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 12px;
+    align-items: start;
+  }
+  .pcard h4 { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+  .pcard .what { font-size: 13px; color: var(--ink); margin-bottom: 8px; }
+  .pcard .why { font-size: 12px; color: var(--ink-2); }
+  .pills { display: flex; flex-direction: column; gap: 6px; align-items: flex-end; }
+  .pill {
+    height: 24px;
+    border-radius: 9999px;
+    padding: 0 12px;
+    font-size: 11px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    white-space: nowrap;
+  }
+  .pill.p0 { background: var(--orange-wash); color: var(--orange); }
+  .pill.p1 { background: #FEF0DE; color: #F07F00; }
+  .pill.p2 { background: var(--wash); color: var(--primary); }
+  .pill.mint { background: var(--success-wash); color: var(--success); }
+  .amount {
+    background: var(--surface);
+    border-bottom: 3px solid #7AC2F6;
+    border-radius: 8px;
+    padding: 4px 10px;
+    font-size: 12px;
+    color: var(--navy);
+    font-weight: 400;
+    display: inline-block;
+    margin-top: 4px;
+  }
+  .amount b { font-weight: 700; }
+  table.cmp {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--surface);
+    border: 1px solid var(--hairline);
+    border-radius: var(--radius);
+    overflow: hidden;
+    font-size: 13px;
+  }
+  table.cmp th {
+    text-align: left;
+    background: var(--wash);
+    color: var(--navy);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--wash-border);
+  }
+  table.cmp td {
+    padding: 12px;
+    border-bottom: 1px solid var(--hairline);
+    vertical-align: top;
+    color: var(--ink);
+  }
+  table.cmp tr:last-child td { border-bottom: none; }
+  table.cmp td.num { font-weight: 600; color: var(--navy); white-space: nowrap; }
+  table.cmp td.dim { color: var(--ink-2); font-size: 12px; }
+  .foot {
+    margin-top: 40px;
+    font-size: 11px;
+    color: var(--ink-mute);
+    line-height: 1.6;
+  }
+  .foot a { color: var(--primary); text-decoration: none; }
+  .amber-dot {
+    display: inline-block;
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--yellow);
+    margin-right: 6px;
+  }
+  html { scroll-behavior: smooth; }
+  section.app-sec { scroll-margin-top: 12px; }
+  .jump-row {
+    display: flex;
+    gap: 8px;
+    margin-top: 14px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .jump-row .lab { font-size: 11px; opacity: 0.85; }
+  a.bar-pill {
+    text-decoration: none;
+    color: #fff;
+    display: inline-flex;
+    align-items: center;
+  }
+  a.bar-pill:hover { background: rgba(255,255,255,0.32); }
+  .legend {
+    font-size: 12px;
+    color: var(--ink-2);
+    margin-top: 12px;
+  }
+  .legend b { color: var(--ink); }
+  .tri-card .pill { align-self: flex-start; margin-bottom: 8px; }
+  .verdict {
+    margin-top: 12px;
+    background: var(--success-wash);
+    border: 1px solid var(--hairline);
+    border-radius: var(--radius);
+    padding: 12px 14px;
+    font-size: 13px;
+    color: var(--navy);
+  }
+  .verdict b { font-weight: 700; }
+</style>
+</head>
+<body>
+
+<div class="bar">
+  <div class="bar-inner">
+    <h1>Benchmark asuransi: PhonePe, Kakao, Paytm</h1>
+    <p>Tiga app dari India dan Korea, dibandingin buat tim DANA Siaga. Disusun 15 Okt 2026.</p>
+    <div class="badge-row">
+      <span class="bar-pill">Marketplace cepat</span>
+      <span class="bar-pill">Insurer di dalam chat</span>
+      <span class="bar-pill">Supermarket bayar premi</span>
+    </div>
+    <div class="jump-row">
+      <span class="lab">Lompat ke:</span>
+      <a class="bar-pill" href="#phonepe">PhonePe</a>
+      <a class="bar-pill" href="#kakao">Kakao</a>
+      <a class="bar-pill" href="#paytm">Paytm</a>
+    </div>
+  </div>
+</div>
+
+<main>
+
+  <div class="overlap">
+    <h2>Intinya</h2>
+    <p>Tiga app ini jual asuransi dengan tiga cara beda. PhonePe bikin beli asuransi secepat beli pulsa: satu kolom, harga keluar, bayar, polis jadi. Kakao jual langsung dari dalam chat yang orang buka tiap hari, lengkap dengan pengingat yang nyampe sendiri. Paytm jadi tempat bayar premi buat 50+ asuransi, jadi orang balik tiap bulan tanpa harus dijualin. Buat kita: yang di depan cuma yang bikin penasaran harga, pengingat harus nyampe lewat chat, dan perpanjangan itu penjualan termurah.</p>
+  </div>
+
+  <section class="section">
+    <span class="section-label">Tiga strategi, satu layar</span>
+    <div class="triad">
+      <div class="tri-card">
+        <div class="who">PhonePe (India)</div>
+        <div class="how">Marketplace cepat</div>
+        <div class="det">Izin broker penuh, 29+ asuransi, data diri diminta belakangan.</div>
+        <div class="num">16 jt</div>
+        <div class="numlab">polis terjual, per 31 Mar 2025</div>
+      </div>
+      <div class="tri-card">
+        <div class="who">Kakao (Korea)</div>
+        <div class="how">Insurer sendiri, jual di chat</div>
+        <div class="det">Punya perusahaan asuransi sendiri sejak Okt 2022, masuk lewat KakaoTalk.</div>
+        <div class="num">6 jt</div>
+        <div class="numlab">polis kumulatif, per Nov 2025</div>
+      </div>
+      <div class="tri-card">
+        <div class="who">Paytm (India)</div>
+        <div class="how">Supermarket + tempat bayar premi</div>
+        <div class="det">Banding, beli, perpanjang, plus bayar premi polis lama 50+ asuransi.</div>
+        <div class="num">31,5 jt</div>
+        <div class="numlab">polis kumulatif, per RHP 2021</div>
+      </div>
+    </div>
+    <div class="legend">Label prioritas dipakai di seluruh dokumen: <b>P0</b> paling duluan, <b>P1</b> nyusul, <b>P2</b> belakangan.</div>
+  </section>
+
+  <section class="section">
+    <span class="section-label">Tiga langkah pertama</span>
+    <div class="triad">
+      <div class="tri-card">
+        <span class="pill p0">P0</span>
+        <div class="how">Geser data diri ke belakang</div>
+        <div class="det">Orang lihat harga dulu, isi data sesudah bayar. Tiap kolom tambahan bikin orang kabur.</div>
+      </div>
+      <div class="tri-card">
+        <span class="pill p0">P0</span>
+        <div class="how">Cicilan bulanan</div>
+        <div class="det">Angka kecil per bulan ngalahin angka besar per tahun. Nyambung sama kebiasaan dompet digital.</div>
+      </div>
+      <div class="tri-card">
+        <span class="pill p0">P0</span>
+        <div class="how">Pengingat perpanjangan di chat</div>
+        <div class="det">Perpanjangan kelewat = polis mati pas orang paling butuh. Pengingat harus nyampe tanpa buka app.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PHONEPE ============ -->
+  <section class="section app-sec" id="phonepe">
+    <span class="section-label">App 1 dari 3</span>
+    <h4 class="app">PhonePe <span class="sub">India, app bayar yang jadi penjual asuransi</span></h4>
+
+    <div class="shots" style="grid-template-columns: 1fr; margin-bottom: 16px;">
+      <div class="shot">
+        <img src="benchmark-asuransi-gambar/phonepe-home.png" alt="Halaman depan asuransi PhonePe dengan kartu Health, Term, Car, Bike">
+        <div class="cap">Halaman depan asuransi PhonePe: empat kartu jenis (Health, Term Life, Car, Bike) langsung kelihatan, tanpa login dulu.</div>
+      </div>
+    </div>
+
+    <div class="stats">
+      <div class="stat">
+        <div class="num">16 jt</div>
+        <div class="lab">polis terjual</div>
+        <div class="src">per 31 Mar 2025</div>
+      </div>
+      <div class="stat">
+        <div class="num">29+</div>
+        <div class="lab">perusahaan asuransi di platform</div>
+        <div class="src">per Mar 2025</div>
+      </div>
+      <div class="stat">
+        <div class="num">20-25%</div>
+        <div class="lab">pangsa asuransi motor digital</div>
+        <div class="src">Redseer, DRHP FY25</div>
+      </div>
+      <div class="stat">
+        <div class="num">₹2.000 cr</div>
+        <div class="lab">total premi 5 tahun</div>
+        <div class="src">sekitar 20 miliar rupee</div>
+      </div>
+    </div>
+
+    <div class="flow" style="margin-top: 16px;">
+      <div class="step">
+        <div class="n">1</div>
+        <div class="t">Buka hub</div>
+        <div class="d">Menu Asuransi di dalam app bayar, ada kartu per jenis</div>
+      </div>
+      <div class="step">
+        <div class="n">2</div>
+        <div class="t">Isi satu kolom</div>
+        <div class="d">Motor: cukup nomor plat. Model dan tahun ketarik sendiri</div>
+      </div>
+      <div class="step">
+        <div class="n">3</div>
+        <div class="t">Banding harga</div>
+        <div class="d">Langsung muncul penawaran dari banyak asuransi sekaligus</div>
+      </div>
+      <div class="step">
+        <div class="n">4</div>
+        <div class="t">Bayar</div>
+        <div class="d">UPI. Kesehatan bisa cicilan bulanan lewat autopay</div>
+      </div>
+      <div class="step">
+        <div class="n">5</div>
+        <div class="t">Baru data diri</div>
+        <div class="d">KYC diminta sesudah bayar, bukan di awal. Quote jadi polis di bawah 2 menit</div>
+      </div>
+    </div>
+    <div class="note-strip">
+      Polanya: geser tembok paling males (data diri) ke belakang. Yang di depan cuma yang bikin orang penasaran harga.
+    </div>
+
+    <div class="cards" style="margin-top: 16px;">
+      <div class="pcard">
+        <div>
+          <h4><span class="amber-dot"></span>Satu kolom dulu, sisanya nyusul</h4>
+          <div class="what">Nomor plat kendaraan cukup buat keluarin harga. Nggak perlu daftar, nggak perlu upload dokumen di awal.</div>
+          <div class="why">Buat DANA: sebelum bayar, tanya sesedikit mungkin. Nomor polis, nomor HP, atau data kendaraan yang udah ada di app.</div>
+          <span class="amount">Klaim mereka: quote jadi polis <b>di bawah 2 menit</b></span>
+        </div>
+        <div class="pills">
+          <span class="pill p0">P0</span>
+          <span class="pill mint">Cocok buat kita</span>
+        </div>
+      </div>
+
+      <div class="pcard">
+        <div>
+          <h4><span class="amber-dot"></span>Cicilan bulanan, bukan cuma tahunan</h4>
+          <div class="what">Premi kesehatan bisa dibayar bulanan lewat autopay. Dijual sebagai app asuransi kesehatan pertama di India yang fokus bayar bulanan.</div>
+          <div class="why">Buat DANA: angka bulanan terasa jauh lebih kecil dari angka tahunan. Cocok sama dompet digital yang emang kebiasaan transaksi kecil.</div>
+          <span class="amount">Diluncurkan <b>Jul 2023</b></span>
+        </div>
+        <div class="pills">
+          <span class="pill p0">P0</span>
+          <span class="pill mint">Cocok buat kita</span>
+        </div>
+      </div>
+
+      <div class="pcard">
+        <div>
+          <h4><span class="amber-dot"></span>Harga jangkar di depan mata</h4>
+          <div class="what">Iklan dan halaman produk nempel angka kecil: motor mulai ₹538 per tahun, asuransi kesehatan mulai ₹12 per hari, hemat sampai ₹50.000 dibanding lewat dealer.</div>
+          <div class="why">Buat DANA: taruh angka rupiah per hari di depan, jangan angka jutaan per tahun. Otak orang lebih gampang nyernya.</div>
+        </div>
+        <div class="pills">
+          <span class="pill p1">P1</span>
+        </div>
+      </div>
+
+      <div class="pcard">
+        <div>
+          <h4><span class="amber-dot"></span>Bandingin asuransinya, bukan cuma harganya</h4>
+          <div class="what">Sebelum jual, mereka nunjukin rekam jejak tiap asuransi: berapa banyak klaim yang dibayar. Edukasi jadi bagian dari alur, bukan artikel terpisah.</div>
+          <div class="why">Buat DANA: kalau orang udah percaya asuransinya, dia nggak ragu bayar. Apalagi klaim itu north star kita.</div>
+        </div>
+        <div class="pills">
+          <span class="pill p1">P1</span>
+          <span class="pill mint">Nyambung klaim</span>
+        </div>
+      </div>
+
+      <div class="pcard">
+        <div>
+          <h4><span class="amber-dot"></span>Perpanjang tanpa drama</h4>
+          <div class="what">Bisa perpanjang mulai 60 hari sebelum polis habis. Dokumen polis langsung masuk app, bisa dibuka ulang kapan aja. Ada tombol perpanjang sekali klik.</div>
+          <div class="why">Buat DANA: perpanjangan itu penjualan termurah. Ingatkan lebih awal, bikin tombolnya kelihatan.</div>
+        </div>
+        <div class="pills">
+          <span class="pill p1">P1</span>
+        </div>
+      </div>
+
+      <div class="pcard">
+        <div>
+          <h4><span class="amber-dot"></span>Bantuan orang, bukan cuma formulir</h4>
+          <div class="what">Ada pendamping yang bisa dihubungi 24 jam buat bantu beli dan klaim. Untuk klaim luar negeri, dukungannya disebut cover di 220+ negara.</div>
+          <div class="why">Buat DANA: yang bikin orang kabur dari asuransi biasanya takut nggak dibantu pas klaim. Bantuan yang kelihatan sejak awal meredam itu.</div>
+        </div>
+        <div class="pills">
+          <span class="pill p2">P2</span>
+        </div>
+      </div>
+    </div>
+    <div class="verdict"><b>Kesimpulan PhonePe:</b> buang halangan di depan, taruh angka kecil di depan. Dua P0 kita, data diri ke belakang dan cicilan bulanan, datang dari sini.</div>
+  </section>
+
+  <!-- ============ KAKAO ============ -->
+  <section class="section app-sec" id="kakao">
+    <span class="section-label">App 2 dari 3</span>
+    <h4 class="app">Kakao Pay Insurance <span class="sub">Korea, asuransi jual dari dalam app chat</span></h4>
+
+    <div class="shots" style="margin-bottom: 16px;">
+      <div class="shot">
+        <img src="benchmark-asuransi-gambar/kakao-steps.jpg" alt="Tiga layar alur beli asuransi travel di dalam KakaoTalk">
+        <div class="cap">Alur beli tiga langkah di dalam KakaoTalk: pilih, isi ringan, bayar. Bukan app terpisah.</div>
+      </div>
+      <div class="shot">
+        <img src="benchmark-asuransi-gambar/kakao-travel.jpg" alt="Grafik statistik asuransi travel Kakao">
+        <div class="cap">Asuransi travel jadi produk nomor satu mereka, 1,5 juta pendaftaran di tahun pertama.</div>
+      </div>
+      <div class="shot">
+        <img src="benchmark-asuransi-gambar/kakao-reward.jpg" alt="Ilustrasi bonus dan reward asuransi Kakao">
+        <div class="cap">Insentif nempel di produk: celengan bonus buat asuransi pengemudi, bukan cuma polis kering.</div>
+      </div>
+    </div>
+
+    <div class="stats">
+      <div class="stat">
+        <div class="num">6 jt</div>
+        <div class="lab">polis kumulatif (3 tahun)</div>
+        <div class="src">rilis pers, 10 Nov 2025</div>
+      </div>
+      <div class="stat">
+        <div class="num">1,5 jt</div>
+        <div class="lab">pendaftaran travel di tahun pertama</div>
+        <div class="src">PRNewswire, Agu 2024</div>
+      </div>
+      <div class="stat">
+        <div class="num">1 hari</div>
+        <div class="lab">bayar klaim asuransi hape (rata-rata)</div>
+        <div class="src">Digital Today, Sep 2025</div>
+      </div>
+      <div class="stat">
+        <div class="num">10.000</div>
+        <div class="lab">polis hewan peliharaan dalam 4 bulan</div>
+        <div class="src">rilis pers, 13 Agu 2026</div>
+      </div>
+    </div>
+
+    <div class="flow" style="margin-top: 16px;">
+      <div class="step">
+        <div class="n">1</div>
+        <div class="t">Buka chat</div>
+        <div class="d">Menu asuransi ada di tab "All" KakaoTalk, tanpa app terpisah</div>
+      </div>
+      <div class="step">
+        <div class="n">2</div>
+        <div class="t">Pilih momen</div>
+        <div class="d">Tujuan dan tanggal liburan, atau hape, hewan, mobil</div>
+      </div>
+      <div class="step">
+        <div class="n">3</div>
+        <div class="t">Auth singkat</div>
+        <div class="d">Tanpa form panjang, cukup otorisasi ringan</div>
+      </div>
+      <div class="step">
+        <div class="n">4</div>
+        <div class="t">Bayar di chat</div>
+        <div class="d">Lewat Kakao Pay, polis langsung keluar di app</div>
+      </div>
+      <div class="step">
+        <div class="n">5</div>
+        <div class="t">Pengingat datang sendiri</div>
+        <div class="d">Perpanjangan dan kabar klaim dikirim sebagai pesan AlimTalk</div>
+      </div>
+    </div>
+    <div class="note-strip">
+      Polanya: asuransi nempel di tempat yang udah dibuka orang tiap hari. Beli di chat, diingatkan di chat, klaim lewat chat.
+    </div>
+
+    <div class="cards" style="margin-top: 16px;">
+      <div class="pcard">
+        <div>
+          <h4><span class="amber-dot"></span>Jual di tempat orang udah buka tiap hari</h4>
+          <div class="what">Asuransi masuk lewat tab "All" di KakaoTalk, bukan app baru. Pengingat perpanjangan dan status klaim dikirim sebagai pesan AlimTalk, langsung ke thread chat.</div>
+          <div class="why">Buat DANA: pintu asuransi, status klaim, dan pengingat perpanjangan harus ada di home DANA dan chat, bukan halaman yang harus dibuka sengaja.</div>
+          <span class="amount">6 jt polis kumulatif <b>dari dalam app chat</b></span>
+        </div>
+        <div class="pills">
+          <span class="pill p0">P0</span>
+          <span class="pill mint">Cocok buat kita</span>
+        </div>
+      </div>
+
+      <div class="pcard">
+        <div>
+          <h4><span class="amber-dot"></span>Orang geser sendiri harganya</h4>
+          <div class="what">Asuransi hape: pilih 1 sampai 5 perbaikan, atur sendiri bagian yang ditanggung (deductible) 10-40%. Produk tetap, harga yang gerak.</div>
+          <div class="why">Buat DANA: orang yang megang tuas sendiri ngerasa pegang, dan dia pilih premi yang pas di kantong tanpa kita bikin produk baru.</div>
+          <span class="amount">Premi <b>₩5.516 per bulan</b> (tanpa rider baterai)</span>
+        </div>
+        <div class="pills">
+          <span class="pill p1">P1</span>
+        </div>
+      </div>
+
+      <div class="pcard">
+        <div>
+          <h4><span class="amber-dot"></span>Kecepatan klaim ditulis di halaman jual</h4>
+          <div class="what">"Bayar rata-rata 1 hari kerja" (1,96 jam kalau dokumen lengkap) dipajang di halaman produk. Ulasan 98% positif dari sekitar 5.500 reviewer.</div>
+          <div class="why">Buat DANA: klaim itu north star kita. Angka kecepatan yang kelihatan sebelum bayar bikin orang berani bayar.</div>
+        </div>
+        <div class="pills">
+          <span class="pill p1">P1</span>
+          <span class="pill mint">Nyambung klaim</span>
+        </div>
+      </div>
+
+      <div class="pcard">
+        <div>
+          <h4><span class="amber-dot"></span>Satu produk per momen, bukan per lini</h4>
+          <div class="what">Mereka nambah kategori berdasarkan kejadian: hewan peliharaan, bayi, sewa rumah (jeonse), liburan panjang. Hewan peliharaan tembus 10.000 polis dalam 4 bulan.</div>
+          <div class="why">Buat DANA: satu SKU per kejadian (travel, hape, pet) lebih gampang diomongin dan diingat daripada "asuransi umum".</div>
+        </div>
+        <div class="pills">
+          <span class="pill p1">P1</span>
+        </div>
+      </div>
+    </div>
+    <div class="verdict"><b>Kesimpulan Kakao:</b> jual di tempat orang udah buka tiap hari, dan pajang kecepatan klaim di halaman jual. Klaim itu north star kita.</div>
+  </section>
+
+  <!-- ============ PAYTM ============ -->
+  <section class="section app-sec" id="paytm">
+    <span class="section-label">App 3 dari 3</span>
+    <h4 class="app">Paytm Insurance <span class="sub">India, supermarket sekaligus tempat bayar premi</span></h4>
+
+    <div class="shots" style="grid-template-columns: 1fr; margin-bottom: 16px;">
+      <div class="shot">
+        <img src="benchmark-asuransi-gambar/paytm-home-hero.png" alt="Halaman depan asuransi Paytm dengan tulisan Insurance ka Super Market">
+        <div class="cap">Judul depan mereka: "Insurance ka Super Market". Banding, beli, perpanjang, bantuan klaim, satu pintu.</div>
+      </div>
+      <div class="shot">
+        <img src="benchmark-asuransi-gambar/paytm-car-hero.png" alt="Halaman asuransi mobil Paytm dengan premi enam rupee per hari">
+        <div class="cap">Asuransi mobil: premi dijungkit jadi ₹6 per hari, lalu tinggal isi nomor plat, tombol Proses di sebelahnya.</div>
+      </div>
+      <div class="shot">
+        <img src="benchmark-asuransi-gambar/paytm-premium-dir-hero.png" alt="Direktori bayar premi Paytm dengan logo banyak asuransi">
+        <div class="cap">Direktori bayar premi: puluhan asuransi (LIC, Tata AIG, Bajaj, dan lainnya) bisa dibayar di sini tanpa beli polis baru. Ini alasan orang balik.</div>
+      </div>
+    </div>
+
+    <div class="stats">
+      <div class="stat">
+        <div class="num">31,5 jt</div>
+        <div class="lab">polis kumulatif terjual</div>
+        <div class="src">RHP via Motilal Oswal, 2021</div>
+      </div>
+      <div class="stat">
+        <div class="num">11,3 jt</div>
+        <div class="lab">pelanggan asuransi unik</div>
+        <div class="src">RHP, 2021</div>
+      </div>
+      <div class="stat">
+        <div class="num">47</div>
+        <div class="lab">mitra asuransi terhubung</div>
+        <div class="src">RHP, 2021</div>
+      </div>
+      <div class="stat">
+        <div class="num">50+</div>
+        <div class="lab">halaman bayar premi di situs bayar mereka</div>
+        <div class="src">paytm.com, cek Okt 2026</div>
+      </div>
+    </div>
+
+    <div class="flow four" style="margin-top: 16px;">
+      <div class="step">
+        <div class="n">1</div>
+        <div class="t">Bagian asuransi</div>
+        <div class="d">Di dalam app bayar: motor, kesehatan, jiwa</div>
+      </div>
+      <div class="step">
+        <div class="n">2</div>
+        <div class="t">Banding + tambahan</div>
+        <div class="d">Harga dari banyak asuransi, tambahan (misal nol depresiasi) tinggal dicentang</div>
+      </div>
+      <div class="step">
+        <div class="n">3</div>
+        <div class="t">Bayar</div>
+        <div class="d">UPI atau kartu. Tanpa dokumen buat beli</div>
+      </div>
+      <div class="step">
+        <div class="n">4</div>
+        <div class="t">Polis & kabar</div>
+        <div class="d">Masuk "My Policies", status nyapa lewat email dan WhatsApp</div>
+      </div>
+    </div>
+    <div class="note-strip">
+      Polanya: di samping jual polis baru, mereka nerima bayar premi polis lama dari 50+ asuransi. Orang balik tiap bulan tanpa dijualin.
+    </div>
+
+    <div class="cards" style="margin-top: 16px;">
+      <div class="pcard">
+        <div>
+          <h4><span class="amber-dot"></span>Bayar premi polis lama jadi alasan balik</h4>
+          <div class="what">Direktori bayar premi buat 50+ asuransi (LIC, Star Health, SBI Life, dan lainnya). Orang bayar perpanjangan polis lama di sini tanpa beli apa pun yang baru.</div>
+          <div class="why">Buat DANA: frekuensi naik tanpa iklan. Orang yang rutin bayar premi di sini otomatis lihat penawaran baru setiap bulan.</div>
+          <span class="amount"><b>50+</b> halaman bayar premi</span>
+        </div>
+        <div class="pills">
+          <span class="pill p0">P0</span>
+          <span class="pill mint">Cocok buat kita</span>
+        </div>
+      </div>
+
+      <div class="pcard">
+        <div>
+          <h4><span class="amber-dot"></span>Satu tempat buat semua polis, kabar nyampe ke chat</h4>
+          <div class="what">"My Policies" kumpulin semua polis dan perpanjangan. Status klaim dan polis dikirim lewat email dan WhatsApp, bukan cuma notifikasi app.</div>
+          <div class="why">Buat DANA: orang perlu satu lemari buat lihat semua polisnya, dan kabar klaim harus nyampe tanpa dia buka app.</div>
+        </div>
+        <div class="pills">
+          <span class="pill p1">P1</span>
+        </div>
+      </div>
+
+      <div class="pcard">
+        <div>
+          <h4><span class="amber-dot"></span>Autopay lawan lupa bayar</h4>
+          <div class="what">Mereka dorong autodebet dan pembayaran otomatis (eNACH/UPI Autopay, BBPS) buat merchant, supaya premi nggak bolong dan polis nggak mati.</div>
+          <div class="why">Buat DANA: perpanjangan yang kelewat = polis mati = klaim ditolak pas orang paling butuh. Autodebet nyambung langsung ke nyawa polis.</div>
+        </div>
+        <div class="pills">
+          <span class="pill p1">P1</span>
+        </div>
+      </div>
+
+      <div class="pcard">
+        <div>
+          <h4><span class="amber-dot"></span>Nama pintunya jujur: supermarket</h4>
+          <div class="what">"Insurance ka Super Market": banding, beli, perpanjang, bantuan klaim, empat kata kerja doang di depan. Nggak ada istilah teknis.</div>
+          <div class="why">Buat DANA: satu pintu dengan empat kata kerja ini lebih gampang dipahami daripada menu asuransi yang tersebar di banyak tempat.</div>
+        </div>
+        <div class="pills">
+          <span class="pill p2">P2</span>
+        </div>
+      </div>
+    </div>
+    <div class="verdict"><b>Kesimpulan Paytm:</b> perpanjangan jadi kebiasaan bulanan. Bayar premi polis lama bikin orang balik tiap bulan tanpa dijualin.</div>
+  </section>
+
+  <!-- ============ BANDINGAN ============ -->
+  <section class="section">
+    <span class="section-label">Bandingan</span>
+    <h3 class="sec">Tiga app, tiga pelajaran</h3>
+    <table class="cmp">
+      <thead>
+        <tr>
+          <th>App</th>
+          <th>Cara jual</th>
+          <th>Angka kunci</th>
+          <th>Yang kita ambil</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><b>PhonePe</b></td>
+          <td class="dim">Marketplace broker, beli tanpa daftar dulu</td>
+          <td class="num">16 jt polis, 29+ asuransi</td>
+          <td class="dim">Lihat harga sebelum isi data diri</td>
+        </tr>
+        <tr>
+          <td><b>Kakao</b></td>
+          <td class="dim">Insurer sendiri, jual di dalam app chat</td>
+          <td class="num">6 jt polis, klaim 1 hari</td>
+          <td class="dim">Distribusi di tempat orang udah buka, kecepatan klaim dipajang</td>
+        </tr>
+        <tr>
+          <td><b>Paytm</b></td>
+          <td class="dim">Supermarket plus tempat bayar premi polis lama</td>
+          <td class="num">31,5 jt polis, 50+ halaman bayar</td>
+          <td class="dim">Perpanjangan sebagai kebiasaan bulanan</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="note-strip">
+      Pola bareng ketiganya: yang menang bukan app paling keren, tapi yang makin sedikit halangan di depan dan makin rajin nyampein pengingat.
+    </div>
+  </section>
+
+  <!-- ============ AKSI ============ -->
+  <section class="section">
+    <span class="section-label">Langkah selanjutnya</span>
+    <h3 class="sec">Yang bisa dikerjain, urut prioritas</h3>
+    <table class="cmp">
+      <thead>
+        <tr>
+          <th>Prioritas</th>
+          <th>Yang dikerjain</th>
+          <th>Ngikut siapa</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="pill p0">P0</span></td>
+          <td><b>Geser data diri ke belakang</b><br><span class="dim">Cek alur beli sekarang: berapa kolom yang ditanya sebelum orang lihat harga?</span></td>
+          <td class="dim">PhonePe: KYC sesudah bayar, quote jadi polis di bawah 2 menit</td>
+        </tr>
+        <tr>
+          <td><span class="pill p0">P0</span></td>
+          <td><b>Cicilan bulanan</b><br><span class="dim">Lihat apakah SKU kesehatan kita bisa dibayar bulanan lewat autodebet yang udah ada.</span></td>
+          <td class="dim">PhonePe: autopay bulanan sejak Jul 2023</td>
+        </tr>
+        <tr>
+          <td><span class="pill p0">P0</span></td>
+          <td><b>Pengingat perpanjangan lewat chat</b><br><span class="dim">Perpanjangan dan status klaim dikirim ke chat/push yang orang baca, bukan cuma notifikasi di dalam app.</span></td>
+          <td class="dim">Kakao (AlimTalk), Paytm (WhatsApp dan email)</td>
+        </tr>
+        <tr>
+          <td><span class="pill p0">P0</span></td>
+          <td><b>Bayar premi polis lama jadi fitur home</b><br><span class="dim">Orang bisa bayar perpanjangan polis lama di DANA, termasuk polis dari asuransi lain.</span></td>
+          <td class="dim">Paytm: direktori 50+ asuransi</td>
+        </tr>
+        <tr>
+          <td><span class="pill p1">P1</span></td>
+          <td><b>Harga jangkar per hari</b><br><span class="dim">Di halaman produk, ganti framing tahunan dengan rupiah per hari.</span></td>
+          <td class="dim">PhonePe (₹538 per tahun, ₹12 per hari), Paytm (₹6 per hari)</td>
+        </tr>
+        <tr>
+          <td><span class="pill p1">P1</span></td>
+          <td><b>Tulis kecepatan klaim dan rekam jejak mitra</b><br><span class="dim">Angka rata-rata waktu bayar klaim dan % klaim dibayar, dipajang sebelum orang bayar.</span></td>
+          <td class="dim">Kakao (1 hari kerja), PhonePe (rekam jejak tiap asuransi)</td>
+        </tr>
+        <tr>
+          <td><span class="pill p1">P1</span></td>
+          <td><b>Slider harga sendiri</b><br>          <span class="dim">Orang atur sendiri perlindungan vs premi, harganya gerak langsung di layar.</span></td>
+          <td class="dim">Kakao: setor sendiri 10-40%, pilih 1-5 perbaikan</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <div class="foot">
+    Sumber PhonePe: insurance.phonepe.com (angka polis per 31 Mar 2025), rilis pers PhonePe (izin broker Agu 2021, cicilan bulanan Jul 2023), Financial Express 28 Jan 2026, Redseer via DRHP FY25.<br>
+    Sumber Kakao: rilis pers Kakao Pay Insurance (6 jt polis 10 Nov 2025; pet 10.000 polis 13 Agu 2026), PRNewswire 27 Agu 2024 (travel 1,5 jt tahun pertama), Digital Today 19 Sep 2025 (klaim hape), Kakao Pay PR 19 Jan 2024 (banding 10 asuransi mobil).<br>
+    Sumber Paytm: paytminsurance.co.in halaman disclosures (lisensi broker IRDAI s.d. 16 Feb 2029), RHP 2021 via Motilal Oswal (11,3 jt pelanggan, 31,5 jt polis, 47 asuransi), Mint 14 Jun 2021, paytm.com/insurance-premium-payment (50+ halaman, cek Okt 2026).<br>
+    Catatan: angka India pakai rupee, sudah dikonversi kasar ke rupiah di tempat yang perlu. Gambar layar disimpan di folder benchmark-asuransi-gambar, sebelah file ini. Font di halaman ini masih huruf system; nama font asli dari tim desain DANA belum dikonfirmasi.
+  </div>
+
+</main>
+
+</body>
+</html>
