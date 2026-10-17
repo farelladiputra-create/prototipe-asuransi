@@ -655,6 +655,22 @@
   }
   .dir-item .ico { display:block; font-size: 18px; margin-bottom: 4px; }
 
+  /* helpers mock layar */
+  .radio { width: 16px; height: 16px; border-radius: 50%; border: 2px solid #7C3AED; flex-shrink: 0; }
+  .checkrow { display: flex; align-items: center; gap: 10px; padding: 10px 0; font-size: 12px; font-weight: 600; color: var(--ink); }
+  .checkrow .box { width: 18px; height: 18px; border-radius: 5px; border: 1.5px solid #ccc; display: flex; align-items: center; justify-content: center; font-size: 12px; color: var(--navy); flex-shrink: 0; }
+  .pp .checkrow { color: #fff; }
+  .pp .checkrow .box { border-color: #7C3AED; color: #7C3AED; }
+  .member-row { display: flex; align-items: center; gap: 10px; padding: 10px 0; border-bottom: 1px solid #2A2A2E; }
+  .member-row .check { width: 22px; height: 22px; border-radius: 5px; border: 1.5px solid #5A5A60; display: flex; align-items: center; justify-content: center; font-size: 13px; color: #fff; flex-shrink: 0; }
+  .member-row .check.on { background: #22C55E; border-color: #22C55E; }
+  .rv .giftbox { width: 74px; height: 74px; border-radius: 20px; background: #1E66F2; display: flex; align-items: center; justify-content: center; font-size: 34px; margin: 14px auto 0; }
+  .pt .ym-tile { border: 1px solid var(--hairline); border-radius: 12px; padding: 14px 10px; text-align: center; background: #fff; font-size: 11.5px; font-weight: 700; color: var(--ink); }
+  .pt .ym-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 12px; }
+  .pt .ym-item { border: 1px solid var(--hairline); border-radius: 12px; padding: 14px 12px; background: #fff; display: flex; gap: 10px; align-items: center; }
+  .tofield { display: flex; align-items: center; gap: 6px; font-size: 13px; color: #666; padding: 10px 0; border-bottom: 1px solid #eee; }
+  .tofield b { color: #000; font-weight: 800; }
+
   /* annotation panel */
   .panel {
     background: #fff;
@@ -779,193 +795,238 @@
           <div class="appbody on" data-app="phonepe" data-idx="0">
             <div class="pp-top">
               <div>
-                <div class="pp-h1">Insurance</div>
-                <div class="pp-sub">Secure what you love</div>
+                <div class="pp-h1">insurance</div>
+                <div class="pp-sub">secure what you love</div>
               </div>
-              <button class="pp-mypoli">My Policies</button>
+              <button class="pp-mypoli">my policies</button>
             </div>
-            <div class="pp-grid">
-              <div class="pp-col">
-                <div class="pp-card">
-                  <div class="pt">Bike</div>
-                  <div class="ps">Starts @ ₹538/year</div>
-                  <span class="pic">🛵</span>
-                </div>
-                <div class="pp-card tall">
-                  <div class="pt">Health</div>
-                  <div class="ps">Monthly plans starts @ ₹264/month</div>
-                  <span class="pp-tag">Lowest Price Promise</span>
-                  <span class="pic">🩹</span>
-                </div>
-                <div class="pp-card">
-                  <div class="pt">Personal Accident</div>
-                  <div class="ps">Starts @ ₹25/year</div>
-                  <span class="pic">🎒</span>
-                </div>
-              </div>
-              <div class="pp-col">
-                <div class="pp-card">
-                  <div class="pt">Car</div>
-                  <div class="ps">Starts @ ₹2094/year</div>
-                  <span class="pic">🚗</span>
-                </div>
-                <div class="pp-card">
-                  <div class="pt">Term life</div>
-                  <div class="ps">₹1 Crore Cover @ ₹506</div>
-                  <span class="pic">❤️</span>
-                </div>
-                <div class="pp-card">
-                  <div class="pt">Savings/ULIP</div>
-                  <div class="ps">Market linked returns</div>
-                  <span class="pp-tag">NFO Live</span>
-                  <span class="pic">🛡️</span>
-                </div>
-                <div class="pp-card">
-                  <div class="pt">Travel</div>
-                  <div class="ps">Medical + trip cover</div>
-                  <span class="pp-tag">Free E-Sim</span>
-                  <span class="pic">🌍</span>
-                </div>
-              </div>
+            <div class="quote-row">
+              <div class="logo-dot">🛵</div>
+              <div class="grow"><div style="font-size:13px;font-weight:700">bike</div><div class="muted">starts @ ₹538/yr</div></div>
+              <div class="price">₹538<span class="per">per tahun</span></div>
             </div>
-            <div class="pp-explore-h">Explore other insurances</div>
+            <div class="quote-row">
+              <div class="logo-dot">🚗</div>
+              <div class="grow"><div style="font-size:13px;font-weight:700">car</div><div class="muted">starts @ ₹2094/yr</div></div>
+              <div class="price">₹2094<span class="per">per tahun</span></div>
+            </div>
+            <div class="quote-row">
+              <div class="logo-dot">🩹</div>
+              <div class="grow"><div style="font-size:13px;font-weight:700">health</div><div class="muted">monthly plans starts @ ₹264</div><span class="pp-tag">lowest price promise</span></div>
+              <div class="price">₹264<span class="per">per bulan</span></div>
+            </div>
+            <div class="quote-row">
+              <div class="logo-dot">❤️</div>
+              <div class="grow"><div style="font-size:13px;font-weight:700">term life</div><div class="muted">₹1 crore cover @ ₹506</div></div>
+              <div class="price">₹506<span class="per">per tahun</span></div>
+            </div>
+            <div class="quote-row">
+              <div class="logo-dot">🛡️</div>
+              <div class="grow"><div style="font-size:13px;font-weight:700">savings/ulip</div><div class="muted">market linked returns</div><span class="pp-tag">nfo live</span></div>
+              <div class="price">mulai<span class="per">investasi</span></div>
+            </div>
+            <div class="quote-row">
+              <div class="logo-dot">🎒</div>
+              <div class="grow"><div style="font-size:13px;font-weight:700">personal accident</div><div class="muted">starts @ ₹25/yr</div></div>
+              <div class="price">₹25<span class="per">per tahun</span></div>
+            </div>
+            <div class="quote-row">
+              <div class="logo-dot">🌍</div>
+              <div class="grow"><div style="font-size:13px;font-weight:700">travel</div><div class="muted">medical + trip cover</div><span class="pp-tag">free e-sim</span></div>
+              <div class="price">mulai<span class="per">1.000 ₩</span></div>
+            </div>
+            <div class="pp-explore-h">explore other insurances</div>
             <div class="pp-explore">
-              <div class="pp-circ"><div class="c">👵</div><div class="n">Pension</div></div>
-              <div class="pp-circ"><div class="c">🔐</div><div class="n">Cyber Insurance</div></div>
-              <div class="pp-circ"><div class="c">🏪</div><div class="n">Shop</div></div>
-              <div class="pp-circ"><div class="c">🏥</div><div class="n">Hospital cash</div></div>
-              <div class="pp-circ"><div class="c">🏠</div><div class="n">Home Insurance</div></div>
+              <div class="pp-circ"><div class="c">👵</div><div class="n">pension</div></div>
+              <div class="pp-circ"><div class="c">🔐</div><div class="n">cyber insurance</div></div>
+              <div class="pp-circ"><div class="c">🏪</div><div class="n">shop</div></div>
+              <div class="pp-circ"><div class="c">🏥</div><div class="n">hospital cash</div></div>
+              <div class="pp-circ"><div class="c">🏠</div><div class="n">home insurance</div></div>
             </div>
-            <button class="cta" data-next>Lihat harga asuransi mobil</button>
-            <div class="hint">Ketuk tombol ungu buat lanjut</div>
+            <button class="cta" data-next>lihat harga asuransi mobil</button>
+            <div class="hint">ketuk buat lanjut</div>
           </div>
 
           <div class="appbody" data-app="phonepe" data-idx="1">
             <div class="bar-brand">
-              <div class="big">Isi satu kolom</div>
-              <div class="sm">Nomor plat cukup. Model dan tahun ketik sendiri.</div>
+              <div class="big">isi satu kolom</div>
+              <div class="sm">nomor plat dulu. model sama tahun ketik sendiri.</div>
             </div>
-            <input class="fld" value="B 1234 KUA" readonly>
-            <input class="fld" value="Avanza 2019" readonly>
+            <input class="fld" value="b 1234 kua" readonly>
+            <div class="row" style="gap:8px">
+              <input class="fld" value="avanza" readonly>
+              <input class="fld" value="2019" readonly>
+            </div>
             <div class="card">
-              <div class="t">Belum perlu daftar</div>
-              <div class="d">Nggak perlu upload dokumen di awal. Harga keluar dulu, data belakangan.</div>
+              <div class="t">belum perlu daftar</div>
+              <div class="d">nggak perlu upload dokumen di awal. harga keluar dulu, data belakangan.</div>
             </div>
-            <button class="cta" data-next>Lihat harga</button>
-            <div class="hint">Ketuk buat ambil penawaran</div>
+            <button class="cta" data-next>lihat harga</button>
+            <div class="hint">ketuk buat ambil penawaran</div>
           </div>
 
           <div class="appbody" data-app="phonepe" data-idx="2">
-            <div class="bar-brand">
-              <div class="big">Banding harga</div>
-              <div class="sm">Penawaran banyak asuransi muncul sekaligus.</div>
+            <div class="pp-h1" style="font-size:20px;margin-bottom:10px">plans for you</div>
+            <div class="card">
+              <div class="row" style="justify-content:space-between">
+                <div class="t">your selection</div>
+                <span class="tiny" style="color:#7C3AED;font-weight:800">modify</span>
+              </div>
+              <div class="d">members : self</div>
+              <div class="d">cover amount : ₹10,00,000</div>
             </div>
             <div class="quote-row">
-              <div class="logo-dot">M1</div>
-              <div><div class="t" style="font-size:13px;font-weight:700">Mitra asuransi 1</div><div class="muted">All risk · 3 tahun</div></div>
-              <div class="price">Rp1,8 jt<span class="per">per tahun</span></div>
+              <span class="radio"></span>
+              <div class="logo-dot">⭐</div>
+              <div class="grow"><div style="font-size:13px;font-weight:700">star health</div><div class="muted">cashless 2 hours claim approval</div><div class="muted">claim settled ratio 90%</div></div>
+              <div class="price">₹6,930<span class="per">per tahun</span></div>
             </div>
             <div class="quote-row">
-              <div class="logo-dot">M2</div>
-              <div><div class="t" style="font-size:13px;font-weight:700">Mitra asuransi 2</div><div class="muted">TLO · 1 tahun</div></div>
-              <div class="price">Rp1,2 jt<span class="per">per tahun</span></div>
+              <span class="radio"></span>
+              <div class="logo-dot">🟥</div>
+              <div class="grow"><div style="font-size:13px;font-weight:700">aditya birla health</div><div class="muted">cashless 2 hours claim approval</div><div class="muted">claim settled ratio 96%</div></div>
+              <div class="price">₹6,943<span class="per">per tahun</span></div>
             </div>
             <div class="quote-row">
-              <div class="logo-dot">M3</div>
-              <div><div class="t" style="font-size:13px;font-weight:700">Mitra asuransi 3</div><div class="muted">All risk · 1 tahun</div></div>
-              <div class="price">Rp2,1 jt<span class="per">per tahun</span></div>
+              <span class="radio"></span>
+              <div class="logo-dot">🟨</div>
+              <div class="grow"><div style="font-size:13px;font-weight:700">care health</div><div class="muted">cashless 1 hour claim approval</div><div class="muted">claim settled ratio 90%</div></div>
+              <div class="price">₹8,163<span class="per">per tahun</span></div>
             </div>
-            <div class="money" style="margin-top:4px">≈ Rp538 per hari</div>
-            <button class="cta" data-next>Pilih dan bayar</button>
-            <div class="hint">Ketuk buat ke pembayaran</div>
+            <div class="money" style="margin-top:4px">≈ ₹19 per hari</div>
+            <button class="cta" data-next>select plan</button>
+            <div class="hint">ketuk buat ke bayar</div>
           </div>
 
           <div class="appbody" data-app="phonepe" data-idx="3">
-            <div class="bar-brand">
-              <div class="big">Bayar</div>
-              <div class="sm">UPI, dan bisa dicicil bulanan.</div>
-            </div>
-            <div class="money" style="margin-bottom:10px">Total Rp1.800.000 · ≈ Rp150.000 per bulan</div>
-            <button class="switch" data-toggle>
-              Bayar bulanan lewat autopay
-              <span class="knob"></span>
-            </button>
+            <div class="pp-h1" style="font-size:20px;margin-bottom:10px">review and buy</div>
             <div class="card">
-              <div class="t">Kenapa ada pilihan bulanan</div>
-              <div class="d">Angka kecil per bulan lebih ringan daripada angka besar per tahun.</div>
+              <div class="d">cover amount</div>
+              <div class="t">₹10,00,000</div>
+              <div class="d" style="margin-top:6px">policy term</div>
+              <div class="t">1 year</div>
+              <div class="d" style="margin-top:6px">insured members : 1</div>
             </div>
-            <button class="cta" data-next>Bayar sekarang</button>
-            <div class="hint">Ketuk buat bayar</div>
+            <div class="card">
+              <div class="d">name : self</div>
+              <div class="d">date of birth : -</div>
+              <div class="d">gender : -</div>
+            </div>
+            <div class="card">
+              <div class="t">additional details</div>
+              <div class="d">policy buyer email : -</div>
+              <div class="d">address : -</div>
+              <div class="d" style="margin-top:6px">nominee name : -</div>
+              <div class="d">nominee relation : -</div>
+              <div class="d">nominee dob : -</div>
+            </div>
+            <div class="card">
+              <div class="t">bayar</div>
+              <div class="d">lewat upi</div>
+              <div class="d">sekaligus atau dicicil bulanan lewat autopay</div>
+            </div>
+            <div class="checkrow">
+              <span class="box">✓</span>
+              <span>i agree to the terms and conditions</span>
+            </div>
+            <div class="row" style="margin-top:6px">
+              <div class="grow">
+                <div style="font-size:13px;font-weight:800">₹6,930</div>
+                <div class="tiny">premium/year (incl. gst)</div>
+              </div>
+              <div class="tiny" style="color:#7C3AED;font-weight:800">≈ ₹578 per bulan</div>
+            </div>
+            <button class="cta" data-next>buy</button>
+            <div class="hint">ketuk buat bayar</div>
           </div>
 
           <div class="appbody" data-app="phonepe" data-idx="4">
-            <div class="bar-brand">
-              <div class="big">Data diri sesudah bayar</div>
-              <div class="sm">KYC diminta belakangan, bukan di awal.</div>
+            <div class="pp-h1" style="font-size:18px;margin-bottom:10px">select the persons you want to insure</div>
+            <div class="member-row">
+              <div class="logo-dot">👤</div>
+              <div class="grow"><div style="font-size:13px;font-weight:700">myself</div><div class="muted">date of birth</div><div style="font-size:12px;font-weight:700">06/05/1982</div></div>
+              <span class="check on">✓</span>
             </div>
-            <input class="fld" value="NIK 3174••••••••••" readonly>
-            <input class="fld" value="nama@email.com" readonly>
-            <div class="ok-card">
-              <div class="tick">✓</div>
-              <div style="font-weight:800">Polis jadi di bawah 2 menit</div>
-              <div class="muted">Langsung masuk ke app, bisa dibuka kapan aja.</div>
+            <div class="member-row">
+              <div class="logo-dot">💑</div>
+              <div class="grow"><div style="font-size:13px;font-weight:700">spouse</div><div class="muted">date of birth</div></div>
+              <span class="check"></span>
             </div>
-            <button class="cta" data-restart>Ulangi dari layar 1</button>
-            <div class="hint">Sampai akhir, ketuk buat muter lagi</div>
+            <div class="member-row">
+              <div class="logo-dot">👨‍👩‍👧</div>
+              <div class="grow"><div style="font-size:13px;font-weight:700">children</div><div class="muted">dependent children from 3 months to 25 years</div></div>
+              <span class="check"></span>
+            </div>
+            <div class="member-row">
+              <div class="logo-dot">👪</div>
+              <div class="grow"><div style="font-size:13px;font-weight:700">parents and in laws</div></div>
+              <span class="check"></span>
+            </div>
+            <div class="card" style="margin-top:10px">
+              <div class="t">kyc diminta setelah bayar</div>
+              <div class="d">orang udah bayar, dia nggak akan kabur gara-gara diminta nik.</div>
+            </div>
+            <button class="cta" data-restart>ulangi dari layar 1</button>
+            <div class="hint">sampai akhir, ketuk buat muter lagi</div>
           </div>
 
           <div class="appbody" data-app="kakao" data-idx="0">
             <div class="tabbar">
-              <button class="tab">Chat</button>
-              <button class="tab on">All</button>
-              <button class="tab">Call</button>
+              <button class="tab">chat</button>
+              <button class="tab on">all</button>
+              <button class="tab">call</button>
             </div>
-            <div style="font-size:12px;font-weight:800;color:var(--kk-ink);margin-bottom:8px">Asuransi ada di dalam chat, bukan app terpisah</div>
             <div class="chatline">
               <div class="avatar">🛡️</div>
               <div class="grow">
-                <div style="font-size:13px;font-weight:700">Kakao Pay Insurance</div>
-                <div class="muted">Menu asuransi lewat tab “All”</div>
+                <div style="font-size:13px;font-weight:700">kakao pay insurance</div>
+                <div class="bubble" style="margin-top:4px">asuransi ada di dalam chat, bukan app terpisah</div>
               </div>
             </div>
             <div class="chatline">
               <div class="avatar">✈️</div>
               <div class="grow">
-                <div style="font-size:13px;font-weight:700">Liburan kamu</div>
-                <div class="bubble" style="margin-top:4px">Asuransi travel mulai 1.000 won</div>
+                <div style="font-size:13px;font-weight:700">liburan kamu</div>
+                <div class="bubble" style="margin-top:4px">asuransi travel mulai 1.000 won</div>
               </div>
             </div>
-            <button class="cta" data-next>Buka menu asuransi</button>
-            <div class="hint">Ketuk buat masuk</div>
+            <div class="card" style="margin-top:10px">
+              <div class="t">bukan app terpisah</div>
+              <div class="d">obrolan perpanjangan masuk ke chat yang sama.</div>
+            </div>
+            <button class="cta" data-next>buka menu asuransi</button>
+            <div class="hint">ketuk buat masuk</div>
           </div>
 
           <div class="appbody" data-app="kakao" data-idx="1">
-            <div style="font-size:15px;font-weight:800;margin-bottom:3px">Mau lindungin yang mana?</div>
-            <div class="muted" style="margin-bottom:10px">Satu produk per momen, bukan per lini.</div>
-            <div class="grid2">
-              <button class="tile" style="border-color:var(--kk-ink)"><span class="ico">🧳</span>Liburan</button>
-              <button class="tile"><span class="ico">📱</span>Hape</button>
-              <button class="tile"><span class="ico">🐾</span>Hewan</button>
-              <button class="tile"><span class="ico">🚗</span>Mobil</button>
+            <div style="font-size:15px;font-weight:800;margin-bottom:3px">pilih momen, bukan lini</div>
+            <div class="muted" style="margin-bottom:10px">satu produk per kejadian.</div>
+            <div class="card" style="text-align:center;padding:16px 12px">
+              <div style="font-size:34px">✈️</div>
+              <div class="t" style="font-size:15px;margin-top:6px">overseas travel insurance</div>
+              <div class="d" style="margin-top:4px">asuransi liburan kamu, mulai 1.000 won</div>
+              <div class="d" style="margin-top:8px;font-weight:700">1,5 juta pendaftaran di tahun pertama</div>
             </div>
-            <div class="card" style="margin-top:10px">
-              <div class="t">Travel: 1,5 juta pendaftaran di tahun pertama</div>
-              <div class="d">Produk khusus kejadian, gampang diingat.</div>
+            <div class="grid2" style="margin-top:10px">
+              <button class="tile"><span class="ico">📱</span>hape</button>
+              <button class="tile"><span class="ico">🐾</span>hewan</button>
+              <button class="tile"><span class="ico">🚗</span>mobil</button>
+              <button class="tile"><span class="ico">🏠</span>rumah</button>
             </div>
-            <button class="cta" data-next>Pilih liburan</button>
-            <div class="hint">Ketuk buat atur harganya</div>
+            <button class="cta" data-next>atur harganya</button>
+            <div class="hint">ketuk buat lanjut</div>
           </div>
 
           <div class="appbody" data-app="kakao" data-idx="2">
-            <div style="font-size:15px;font-weight:800;margin-bottom:3px">Atur sendiri</div>
-            <div class="muted" style="margin-bottom:10px">Yang ditanggung naik-turun, harganya ikut gerak.</div>
+            <div style="font-size:15px;font-weight:800;margin-bottom:3px">atur sendiri harganya</div>
+            <div class="muted" style="margin-bottom:10px">yang ditanggung naik-turun, premi ikut gerak.</div>
             <div class="slider-box">
-              <div class="lab"><span>Yang kamu tanggung (deductible)</span><span>25%</span></div>
+              <div class="lab"><span>yang kamu tanggung (deductible)</span><span>25%</span></div>
               <div class="slider-track"><div class="fill"></div><div class="knob2"></div></div>
               <div class="tiny">10% sampai 40%</div>
             </div>
             <div class="slider-box">
-              <div class="lab" style="margin-bottom:8px"><span>Pilih 1 sampai 5 perbaikan</span></div>
+              <div class="lab" style="margin-bottom:8px"><span>pilih 1 sampai 5 perbaikan</span></div>
               <div class="choice-row">
                 <button class="choice">1</button>
                 <button class="choice on">2</button>
@@ -974,229 +1035,250 @@
                 <button class="choice">5</button>
               </div>
             </div>
-            <div class="money">Premi ≈ Rp60.000 per bulan</div>
-            <button class="cta" data-next>Lanjut bayar di chat</button>
-            <div class="hint">Ketuk buat ke pembayaran</div>
+            <div class="money">premi ≈ 60.000 per bulan</div>
+            <button class="cta" data-next>lanjut bayar di chat</button>
+            <div class="hint">ketuk buat ke pembayaran</div>
           </div>
 
           <div class="appbody" data-app="kakao" data-idx="3">
-            <div style="font-size:15px;font-weight:800;margin-bottom:3px">Bayar di chat</div>
-            <div class="muted" style="margin-bottom:10px">Lewat Kakao Pay, nggak pindah app.</div>
+            <div style="font-size:15px;font-weight:800;margin-bottom:3px">bayar di chat</div>
+            <div class="muted" style="margin-bottom:10px">lewat kakao pay, nggak pindah app.</div>
+            <div class="msg">
+              <div class="who">asuransi travel 7 hari</div>
+              premi 10.000 won · polis keluar di app
+            </div>
             <div class="card">
               <div class="row">
-                <div class="grow"><div class="t">Asuransi travel 7 hari</div><div class="d">Premi 10.000 won</div></div>
+                <div class="grow"><div class="t">asuransi travel 7 hari</div><div class="d">premi 10.000 won</div></div>
                 <div class="money">10.000 ₩</div>
               </div>
             </div>
             <div class="card">
-              <div class="t">Metode: Kakao Pay</div>
-              <div class="d">Saldo dan kartu tersimpan di app chat.</div>
+              <div class="t">metode: kakao pay</div>
+              <div class="d">saldo sama kartu tersimpan di app chat.</div>
             </div>
-            <button class="cta" data-next>Bayar 10.000 won</button>
-            <div class="hint">Ketuk buat bayar</div>
+            <button class="cta" data-next>bayar 10.000 won</button>
+            <div class="hint">ketuk buat bayar</div>
           </div>
 
           <div class="appbody" data-app="kakao" data-idx="4">
-            <div style="font-size:15px;font-weight:800;margin-bottom:3px">Polis keluar, pengingat nyampe sendiri</div>
-            <div class="muted" style="margin-bottom:10px">Kabar datang sebagai pesan, bukan notifikasi app yang kelewat.</div>
+            <div style="font-size:15px;font-weight:800;margin-bottom:3px">pengingat datang sendiri</div>
+            <div class="muted" style="margin-bottom:10px">kabar datang sebagai pesan, bukan notifikasi yang kelewat.</div>
             <div class="msg">
-              <div class="who">Kakao Pay Insurance</div>
-              Polis kamu aktif sampai 22 Okt 2026. Simpan ya, tinggal buka di chat ini.
+              <div class="who">kakao pay insurance</div>
+              polis kamu aktif sampai 22 okt 2026. simpan ya, tinggal buka di chat ini.
             </div>
             <div class="msg">
-              <div class="who">Pengingat</div>
-              Polis mau habis 3 hari lagi. Perpanjang sekali ketuk di sini.
+              <div class="who">pengingat</div>
+              polis mau habis 3 hari lagi. perpanjang sekali ketuk di sini.
             </div>
             <div class="ok-card">
               <div class="tick">✓</div>
-              <div style="font-weight:800">Klaim rata-rata 1 hari kerja</div>
-              <div class="muted">Kecepatan ini yang dipajang di halaman jual.</div>
+              <div style="font-weight:800">klaim rata-rata 1 hari kerja</div>
+              <div class="muted">kecepatan ini yang dipajang di halaman jual.</div>
             </div>
-            <button class="cta" data-restart>Ulangi dari layar 1</button>
-            <div class="hint">Sampai akhir, ketuk buat muter lagi</div>
+            <button class="cta" data-restart>ulangi dari layar 1</button>
+            <div class="hint">sampai akhir, ketuk buat muter lagi</div>
           </div>
 
           <div class="appbody" data-app="paytm" data-idx="0">
             <div class="hero">
-              <div class="big">Insurance ka Super Market</div>
-              <div class="sm">Banding, beli, perpanjang, bantuan klaim. Satu pintu.</div>
+              <div class="big">insurance ka super market</div>
+              <div class="sm">banding, beli, perpanjang, bantuan klaim. satu pintu.</div>
             </div>
             <div class="grid2" style="gap:8px">
-              <button class="verb"><span class="ico">⚖️</span>Banding</button>
-              <button class="verb"><span class="ico">🛒</span>Beli</button>
-              <button class="verb"><span class="ico">🔁</span>Perpanjang</button>
-              <button class="verb"><span class="ico">💬</span>Bantuan</button>
+              <button class="verb"><span class="ico">⚖️</span>banding</button>
+              <button class="verb"><span class="ico">🛒</span>beli</button>
+              <button class="verb"><span class="ico">🔁</span>perpanjang</button>
+              <button class="verb"><span class="ico">💬</span>bantuan</button>
             </div>
             <div class="card" style="margin-top:10px">
               <div class="row">
-                <div class="grow"><div class="t">Bayar premi polis lama</div><div class="d">50+ perusahaan, tanpa beli polis baru.</div></div>
+                <div class="grow"><div class="t">bayar premi polis lama</div><div class="d">50+ perusahaan, tanpa beli polis baru.</div></div>
                 <span style="font-size:16px">›</span>
               </div>
             </div>
-            <button class="cta" data-next>Banding asuransi mobil</button>
-            <div class="hint">Ketuk buat mulai banding</div>
+            <div class="row" style="gap:6px;margin-top:10px">
+              <span class="pill" style="background:var(--pt-soft);color:var(--pt-navy)">mulai rp6 per hari</span>
+            </div>
+            <button class="cta" data-next>banding asuransi mobil</button>
+            <div class="hint">ketuk buat mulai banding</div>
           </div>
 
           <div class="appbody" data-app="paytm" data-idx="1">
             <div class="hero">
-              <div class="big">Mulai Rp6 per hari</div>
-              <div class="sm">Angka kecil di depan, bukan jutaan per tahun.</div>
+              <div class="big">car insurance</div>
+              <div class="sm">starting at only ₹6 per day*</div>
             </div>
-            <input class="fld" value="DL01CRXXXX" readonly>
+            <input class="fld" value="dl01crxxxx" readonly>
+            <div class="row" style="gap:6px;margin-bottom:10px">
+              <span class="pill" style="background:var(--pt-soft);color:var(--pt-navy)">compare and buy at best price</span>
+              <span class="pill" style="background:var(--pt-soft);color:var(--pt-navy)">instant policy issuance</span>
+              <span class="pill" style="background:var(--pt-soft);color:var(--pt-navy)">no unwanted calls. we promise!</span>
+            </div>
             <div class="card">
-              <div class="t">Isi nomor plat, langsung lanjut</div>
-              <div class="d">Tanpa dokumen buat beli. Ada tombol kalau mau lanjut tanpa nomor plat.</div>
+              <div class="t">isi nomor plat, langsung lanjut</div>
+              <div class="d">ada tombol kalau mau lanjut tanpa nomor plat.</div>
             </div>
-            <div class="row" style="gap:6px;margin-bottom:4px">
-              <span class="pill" style="background:var(--pt-soft);color:var(--pt-navy)">Compare harga</span>
-              <span class="pill" style="background:var(--pt-soft);color:var(--pt-navy)">Polis instan</span>
-              <span class="pill" style="background:var(--pt-soft);color:var(--pt-navy)">Tanpa telepon spam</span>
-            </div>
-            <button class="cta" data-next>Lihat penawaran</button>
-            <div class="hint">Ketuk buat banding</div>
+            <button class="cta" data-next>proceed</button>
+            <div class="hint">ketuk buat banding</div>
           </div>
 
           <div class="appbody" data-app="paytm" data-idx="2">
-            <div style="font-size:15px;font-weight:800;margin-bottom:3px">Banding + tambahan</div>
-            <div class="muted" style="margin-bottom:10px">Harga dari banyak asuransi, tambahan tinggal dicentang.</div>
+            <div style="font-size:15px;font-weight:800;margin-bottom:3px">banding + tambahan</div>
+            <div class="muted" style="margin-bottom:10px">harga dari banyak asuransi, tambahan tinggal dicentang.</div>
             <div class="quote-row">
               <div class="logo-dot">M1</div>
-              <div><div style="font-size:13px;font-weight:700">Mitra asuransi 1</div><div class="muted">All risk</div></div>
-              <div class="price">Rp1,8 jt<span class="per">per tahun</span></div>
+              <div class="grow"><div style="font-size:13px;font-weight:700">mitra asuransi 1</div><div class="muted">all risk</div></div>
+              <div class="price">rp1,8 jt<span class="per">per tahun</span></div>
             </div>
             <div class="quote-row">
               <div class="logo-dot">M2</div>
-              <div><div style="font-size:13px;font-weight:700">Mitra asuransi 2</div><div class="muted">All risk</div></div>
-              <div class="price">Rp1,6 jt<span class="per">per tahun</span></div>
+              <div class="grow"><div style="font-size:13px;font-weight:700">mitra asuransi 2</div><div class="muted">all risk</div></div>
+              <div class="price">rp1,6 jt<span class="per">per tahun</span></div>
             </div>
             <button class="addrow" data-toggle>
               <span class="chk">✓</span>
-              Nol depresiasi (nilai mobil nggak turun pas klaim)
+              nol depresiasi (nilai mobil nggak turun pas klaim)
             </button>
-            <button class="cta" data-next>Bayar premi</button>
-            <div class="hint">Ketuk buat bayar</div>
+            <button class="addrow" data-toggle>
+              <span class="chk"></span>
+              roadside assistance 24 jam
+            </button>
+            <div class="money" style="margin-top:4px">≈ rp6 per hari</div>
+            <button class="cta" data-next>bayar premi</button>
+            <div class="hint">ketuk buat bayar</div>
           </div>
 
           <div class="appbody" data-app="paytm" data-idx="3">
-            <div style="font-size:15px;font-weight:800;margin-bottom:3px">Polis &amp; kabar</div>
-            <div class="muted" style="margin-bottom:10px">Satu lemari buat semua polis. Kabar keluar lewat email dan WhatsApp.</div>
-            <div class="policy">
-              <div class="logo-dot">🚗</div>
-              <div class="grow"><div style="font-size:13px;font-weight:700">Asuransi mobil</div><div class="muted">Aktif s/d Mar 2027</div></div>
-              <span class="st">Aktif</span>
+            <div class="row" style="justify-content:space-between;margin-bottom:10px">
+              <div style="font-size:17px;font-weight:800">your money</div>
+              <span class="tiny" style="color:var(--pt);font-weight:800">view all</span>
             </div>
-            <div class="policy">
-              <div class="logo-dot">🏥</div>
-              <div class="grow"><div style="font-size:13px;font-weight:700">Asuransi kesehatan</div><div class="muted">Perpanjang 5 hari lagi</div></div>
-              <span class="st warn">Segera</span>
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px">
+              <div class="ym-tile">🥇<br>save with gold sip</div>
+              <div class="ym-tile">💳<br>get postpaid</div>
+              <div class="ym-tile">📈<br>start stock trading</div>
             </div>
-            <div class="msg" style="background:var(--pt-soft);border:1px solid var(--wash-border);border-radius:12px;padding:10px 12px;font-size:12.5px;margin-bottom:8px">
-              <b>WhatsApp:</b> Status klaim kamu: dibayar. Rata-rata 1 hari kerja.
+            <div class="ym-grid">
+              <div class="ym-item"><span style="font-size:20px">🚗</span><div><div style="font-size:12.5px;font-weight:700">car insurance</div><div class="muted">aktif s/d mar 2027</div></div></div>
+              <div class="ym-item"><span style="font-size:20px">🏥</span><div><div style="font-size:12.5px;font-weight:700">health insurance</div><div class="muted">perpanjang 5 hari lagi</div></div></div>
+              <div class="ym-item"><span style="font-size:20px">📊</span><div><div style="font-size:12.5px;font-weight:700">stock &amp; mutual fund</div><div class="muted">invest in ₹0 commission</div></div></div>
+              <div class="ym-item"><span style="font-size:20px">💳</span><div><div style="font-size:12.5px;font-weight:700">get credit card</div><div class="muted">apply in app</div></div></div>
             </div>
-            <button class="cta" data-next>Bayar premi polis lama</button>
-            <div class="hint">Ketuk buat ke direktori bayar</div>
+            <div class="card" style="margin-top:10px">
+              <div class="t">kabar lewat email sama whatsapp</div>
+              <div class="d">status klaim sama perpanjangan, bukan notifikasi di dalam app.</div>
+            </div>
+            <button class="cta" data-next>bayar premi polis lama</button>
+            <div class="hint">ketuk buat ke direktori</div>
           </div>
 
           <div class="appbody" data-app="paytm" data-idx="4">
-            <div style="font-size:15px;font-weight:800;margin-bottom:3px">Bayar premi polis lama</div>
-            <div class="muted" style="margin-bottom:10px">Puluhan asuransi bisa dibayar di sini. Ini alasan orang balik tiap bulan.</div>
+            <div class="card" style="margin-bottom:10px">
+              <div class="t">pay insurance premium</div>
+              <input class="fld" placeholder="insurer" style="margin-top:8px" readonly>
+              <button class="cta" style="margin-top:10px;background:var(--pt)" disabled>proceed to pay</button>
+            </div>
+            <div style="font-size:15px;font-weight:800;margin-bottom:8px">insurer</div>
             <div class="dir-grid">
-              <div class="dir-item"><span class="ico">🏛️</span>LIC</div>
-              <div class="dir-item"><span class="ico">📮</span>Postal Life</div>
-              <div class="dir-item"><span class="ico">🏦</span>SBI Life</div>
-              <div class="dir-item"><span class="ico">🏢</span>HDFC Life</div>
-              <div class="dir-item"><span class="ico">🌟</span>Tata AIA</div>
-              <div class="dir-item"><span class="ico">✳️</span>ICICI Prudential</div>
-              <div class="dir-item"><span class="ico">🔺</span>Bajaj Allianz</div>
-              <div class="dir-item"><span class="ico">🎯</span>Max Life</div>
+              <div class="dir-item"><span class="ico">🏛️</span>lic</div>
+              <div class="dir-item"><span class="ico">📮</span>postal life</div>
+              <div class="dir-item"><span class="ico">🏦</span>sbi life</div>
+              <div class="dir-item"><span class="ico">🏢</span>hdfc life</div>
+              <div class="dir-item"><span class="ico">🌟</span>tata aia</div>
+              <div class="dir-item"><span class="ico">✳️</span>icici prudential</div>
+              <div class="dir-item"><span class="ico">🔺</span>bajaj allianz</div>
+              <div class="dir-item"><span class="ico">🎯</span>axis max</div>
               <div class="dir-item"><span class="ico">＋</span>50+ lainnya</div>
             </div>
-            <button class="cta" data-restart>Ulangi dari layar 1</button>
-            <div class="hint">Sampai akhir, ketuk buat muter lagi</div>
+            <button class="cta" data-restart>ulangi dari layar 1</button>
+            <div class="hint">sampai akhir, ketuk buat muter lagi</div>
           </div>
 
           <div class="appbody" data-app="revolut" data-idx="0">
             <div style="display:flex;gap:12px;align-items:center;margin-bottom:12px">
-              <div class="avatar">F</div>
+              <div class="avatar">f</div>
               <div>
-                <div class="big">Farell</div>
-                <div class="sub2">Profil kamu</div>
+                <div class="big">farell</div>
+                <div class="sub2">profil kamu</div>
               </div>
             </div>
             <div class="menu-list">
-              <div class="menu-row"><span>Cards</span><span class="go">›</span></div>
-              <div class="menu-row"><span>Payments</span><span class="go">›</span></div>
-              <div class="menu-row hl"><span>Invite friends</span><span class="go" style="color:#1E66F2">›</span></div>
-              <div class="menu-row"><span>Revolut Junior</span><span class="go">›</span></div>
-              <div class="menu-row"><span>Wealth</span><span class="go">›</span></div>
+              <div class="menu-row"><span>cards</span><span class="go">›</span></div>
+              <div class="menu-row"><span>payments</span><span class="go">›</span></div>
+              <div class="menu-row hl"><span>invite friends</span><span class="go" style="color:#1E66F2">›</span></div>
+              <div class="menu-row"><span>revolut junior</span><span class="go">›</span></div>
+              <div class="menu-row"><span>wealth</span><span class="go">›</span></div>
             </div>
-            <button class="cta" data-next>Undang teman</button>
-            <div class="hint">Ketuk buat lanjut</div>
+            <div class="note">syarat campaign tertulis di bawah layar undangan.</div>
+            <button class="cta" data-next>undang teman</button>
+            <div class="hint">ketuk buat lanjut</div>
           </div>
 
           <div class="appbody" data-app="revolut" data-idx="1">
             <div class="hero-blue">
-              <div class="big2">Earn 45 SGD for each friend you invite!</div>
-              <div class="timer">⏱&nbsp; Ends in 14 days</div>
+              <div class="big2">earn 45 sgd for each friend you invite!</div>
+              <div class="timer">⏱&nbsp; ends in 14 days</div>
             </div>
-            <div class="note">Your friends have until Nov 15 to join and finish the steps.</div>
-            <button class="cta" data-next>Invite friends</button>
-            <div class="hint">Ketuk buat lanjut</div>
+            <div class="giftbox">🎁</div>
+            <div class="note">your friends have until nov 15 to join and finish the steps.</div>
+            <button class="cta" data-next>invite friends</button>
+            <div class="hint">ketuk buat lanjut</div>
           </div>
 
           <div class="appbody" data-app="revolut" data-idx="2">
-            <div class="big" style="margin-top:12px">Yang temanmu harus lakukan</div>
+            <div class="big" style="margin-top:12px">yang temanmu harus lakukan</div>
             <div class="steps">
-              <div class="rowline done"><span class="n">✓</span><div class="b"><div class="tt">Sign up with your link</div><div class="dd">And verify their identity</div></div></div>
-              <div class="rowline done"><span class="n">✓</span><div class="b"><div class="tt">Add money to their account</div><div class="dd">Via debit card or bank transfer</div></div></div>
-              <div class="rowline"><span class="n">3</span><div class="b"><div class="tt">Order a physical card</div><div class="dd">Add it to Apple Pay or Google Pay</div></div></div>
-              <div class="rowline"><span class="n">4</span><div class="b"><div class="tt">Make 3 purchases of 10 SGD</div><div class="dd">Card spending only, count yourself</div></div></div>
+              <div class="rowline done"><span class="n">✓</span><div class="b"><div class="tt">sign up with your link</div><div class="dd">and verify their identity</div></div></div>
+              <div class="rowline done"><span class="n">✓</span><div class="b"><div class="tt">add money to their account</div><div class="dd">via debit card or bank transfer</div></div></div>
+              <div class="rowline"><span class="n">3</span><div class="b"><div class="tt">order a physical card</div><div class="dd">add it to apple pay or google pay</div></div></div>
+              <div class="rowline"><span class="n">4</span><div class="b"><div class="tt">make 3 purchases of 10 sgd</div><div class="dd">card spending only</div></div></div>
             </div>
-            <button class="cta" data-next>Lanjut undang</button>
-            <div class="hint">Ketuk buat lanjut</div>
+            <button class="cta" data-next>lanjut undang</button>
+            <div class="hint">ketuk buat lanjut</div>
           </div>
 
           <div class="appbody" data-app="revolut" data-idx="3">
             <div class="transfer-top">
-              <span class="big">Transfer</span>
-              <span class="new-btn">＋ New</span>
+              <span class="big">transfer</span>
+              <span class="new-btn">＋ new</span>
             </div>
-            <div class="mini-search">🔍&nbsp; Name, @Revtag, phone, email</div>
-            <div class="promo-tile"><span class="gift">🎁</span><span>Earn S$45 for each friend you invite!</span><span class="x">✕</span></div>
-            <div class="tx-item"><span class="av">👤</span><div><div class="tt">+65 9036 6027</div><div class="dd">You requested S$0.50</div></div></div>
-            <div class="tx-item"><span class="av">👤</span><div><div class="tt">•••• ••••</div><div class="dd">You sent S$1</div></div></div>
-            <button class="cta" data-next>Mundur ke profil</button>
-            <div class="hint">Ketuk buat lanjut</div>
+            <div class="mini-search">🔍&nbsp; name, @revtag, phone, email</div>
+            <div class="promo-tile"><span class="gift">🎁</span><span>earn s$45 for each friend you invite!</span><span class="x">✕</span></div>
+            <div class="tx-item"><span class="av">👤</span><div><div class="tt">+65 9036 6027</div><div class="dd">you requested s$0.50</div></div></div>
+            <div class="tx-item"><span class="av">👤</span><div><div class="tt">•••• ••••</div><div class="dd">you sent s$1</div></div></div>
+            <button class="cta" data-next>mundur ke profil</button>
+            <div class="hint">ketuk buat lanjut</div>
           </div>
 
           <div class="appbody" data-app="revolut" data-idx="4">
-            <div class="big" style="margin-top:12px">Aturan mainnya</div>
+            <div class="big" style="margin-top:12px">aturan mainnya</div>
             <div class="steps">
-              <div class="rowline"><span class="tt">Maksimal 5 teman berhasil per periode campaign</span></div>
-              <div class="rowline"><span class="tt">Teman nggak dapet cash, cuma yang ngundang</span></div>
-              <div class="rowline"><span class="tt">Hadiah dikonversi ke mata uang akun kamu</span></div>
-              <div class="rowline"><span class="tt">Yang dihitung cuma belanja pakai kartu, bukan top-up</span></div>
+              <div class="rowline done"><span class="n">✓</span><div class="b"><div class="tt">maksimal 5 teman berhasil per periode campaign</div></div></div>
+              <div class="rowline done"><span class="n">✓</span><div class="b"><div class="tt">teman nggak dapet cash, cuma yang ngundang</div></div></div>
+              <div class="rowline done"><span class="n">✓</span><div class="b"><div class="tt">hadiah dikonversi ke mata uang akun kamu</div></div></div>
             </div>
-            <button class="cta" data-restart>Ulangi dari layar 1</button>
-            <div class="hint">Sampai akhir, ketuk buat muter lagi</div>
+            <button class="cta" data-restart>ulangi dari layar 1</button>
+            <div class="hint">sampai akhir, ketuk buat muter lagi</div>
           </div>
 
           <div class="appbody" data-app="alipay" data-idx="0">
-            <div class="searchbar">🔍&nbsp; Ketik <b>赚钱红包</b> di kotak pencarian</div>
+            <div class="searchbar">🔍&nbsp; ketik <b>赚钱红包</b> di kotak pencarian</div>
             <div class="quick">
               <div class="q"><span class="ic">🧧</span>赚钱红包升级</div>
               <div class="q"><span class="ic">💳</span>惠支付</div>
               <div class="q"><span class="ic">📱</span>充值中心</div>
               <div class="q"><span class="ic">⚡</span>生活缴费</div>
             </div>
-            <div class="note" style="margin-top:12px">Atau tap kartu 惠支付 di beranda, dua-duanya masuk ke halaman yang sama.</div>
+            <div class="note" style="margin-top:12px">atau tap kartu 惠支付 di beranda, dua-duanya masuk ke halaman yang sama.</div>
             <button class="cta" data-next>立即赚赏金</button>
-            <div class="hint">Ketuk buat lanjut</div>
+            <div class="hint">ketuk buat lanjut</div>
           </div>
 
           <div class="appbody" data-app="alipay" data-idx="1">
             <div class="share-title">支付宝发红包 你赚赏金</div>
-            <div class="sub2">Pilih cara share, temanmu tinggal scan atau ketik</div>
+            <div class="sub2">pilih cara share, temanmu tinggal scan atau ketik</div>
             <div class="share-grid">
               <div class="s"><span class="ic">🔳</span>二维码</div>
               <div class="s"><span class="ic">💬</span>微信群</div>
@@ -1207,8 +1289,8 @@
               <div class="s"><span class="ic">🔢</span>搜索码</div>
               <div class="s"><span class="ic">＋</span>更多</div>
             </div>
-            <button class="cta" data-next>Bagikan kode undangan</button>
-            <div class="hint">Ketuk buat lanjut</div>
+            <button class="cta" data-next>bagikan kode undangan</button>
+            <div class="hint">ketuk buat lanjut</div>
           </div>
 
           <div class="appbody" data-app="alipay" data-idx="2">
@@ -1219,191 +1301,205 @@
               <div class="pb">打开支付宝[扫一扫] &nbsp;·&nbsp; 最高99元</div>
             </div>
             <button class="cta" data-next>保存图片</button>
-            <div class="hint">Poster buat tempel di kasir</div>
+            <div class="hint">poster buat tempel di kasir</div>
           </div>
 
           <div class="appbody" data-app="alipay" data-idx="3">
-            <div class="big" style="margin-top:12px">Yang temanmu lakukan</div>
+            <div class="big" style="margin-top:12px">yang temanmu lakukan</div>
             <div class="steps">
-              <div class="rowline done"><span class="n">✓</span><div class="b"><div class="tt">Buka kode pakai app Alipay</div><div class="dd">QR di-scan dari app lain nggak masuk</div></div></div>
-              <div class="rowline done"><span class="n">✓</span><div class="b"><div class="tt">Klaim angpao</div><div class="dd">Berlaku 3 hari, jangan sampai lewat</div></div></div>
-              <div class="rowline"><span class="n">3</span><div class="b"><div class="tt">Bayar di warung pakai Alipay</div><div class="dd">Angpao otomatis ngepotong di kasir</div></div></div>
-              <div class="rowline"><span class="n">4</span><div class="b"><div class="tt">赏金 masuk ke saldo</div><div class="dd">Jumlahnya random, langsung cair</div></div></div>
+              <div class="rowline done"><span class="n">✓</span><div class="b"><div class="tt">buka kode pakai app alipay</div><div class="dd">qr di-scan dari app lain nggak masuk</div></div></div>
+              <div class="rowline done"><span class="n">✓</span><div class="b"><div class="tt">klaim angpao</div><div class="dd">berlaku 3 hari, jangan sampai lewat</div></div></div>
+              <div class="rowline"><span class="n">3</span><div class="b"><div class="tt">bayar di warung pakai alipay</div><div class="dd">angpao otomatis ngepotong di kasir</div></div></div>
+              <div class="rowline"><span class="n">4</span><div class="b"><div class="tt">赏金 masuk ke saldo</div><div class="dd">jumlahnya random, langsung cair</div></div></div>
             </div>
-            <button class="cta" data-next>Lanjut</button>
-            <div class="hint">Ketuk buat lanjut</div>
+            <button class="cta" data-next>lanjut</button>
+            <div class="hint">ketuk buat lanjut</div>
           </div>
 
           <div class="appbody" data-app="alipay" data-idx="4">
-            <div class="big" style="margin-top:12px">Skala di belakang layar</div>
+            <div class="big" style="margin-top:12px">skala di belakang layar</div>
             <div class="stats">
-              <div class="stat"><b>1,3 miliar</b><span>pengguna Alipay + mitra dompet</span></div>
+              <div class="stat"><b>1,3 miliar</b><span>pengguna alipay + mitra dompet</span></div>
               <div class="stat"><b>80 juta</b><span>merchant terdaftar</span></div>
-              <div class="stat"><b>¥1 miliar</b><span>dana sendiri Alipay buat kampanye 2017</span></div>
+              <div class="stat"><b>¥1 miliar</b><span>dana sendiri alipay buat kampanye 2017</span></div>
               <div class="stat"><b>10 juta</b><span>batas pembayaran hadiah per siklus</span></div>
             </div>
-            <button class="cta" data-restart>Ulangi dari layar 1</button>
-            <div class="hint">Sampai akhir, ketuk buat muter lagi</div>
+            <button class="cta" data-restart>ulangi dari layar 1</button>
+            <div class="hint">sampai akhir, ketuk buat muter lagi</div>
           </div>
 
           <div class="appbody" data-app="paypal" data-idx="0">
             <div class="hero-blue">
-              <div class="big2">Get $10 for referring a friend</div>
-              <div class="ps">Invite a friend who doesn't have PayPal and you can get $10 each.</div>
+              <div class="big2">get $10 for referring a friend</div>
+              <div class="ps">invite a friend who doesn't have paypal and you can get $10 each.</div>
             </div>
-            <div class="note">Satu halaman undangan khusus, bukan menu di dalam app. Linknya yang disebar, bukan tombolnya.</div>
-            <button class="cta" data-next>Get Started</button>
-            <div class="hint">Ketuk buat lanjut</div>
+            <div class="note">satu halaman undangan aja, nggak perlu menu di dalam app. linknya yang disebar, bukan tombolnya.</div>
+            <button class="cta" data-next>get started</button>
+            <div class="hint">ketuk buat lanjut</div>
           </div>
 
           <div class="appbody" data-app="paypal" data-idx="1">
-            <div class="big" style="margin-top:12px">Dua pihak dapet, bukan cuma kamu</div>
+            <div class="big" style="margin-top:12px">dua pihak dapet, bukan cuma kamu</div>
             <div class="steps">
-              <div class="rowline"><span class="tt">AS: 1.000 poin PayPal Rewards tiap referral, dua pihak</span></div>
-              <div class="rowline"><span class="tt">Kanada: $10 CAD per pihak, berlaku 90 hari</span></div>
-              <div class="rowline"><span class="tt">Maksimal 10 teman per tahun (10.000 poin)</span></div>
+              <div class="rowline"><span class="tt">as: 1.000 poin paypal rewards tiap referral, dua pihak</span></div>
+              <div class="rowline"><span class="tt">kanada: $10 cad per pihak, berlaku 90 hari</span></div>
+              <div class="rowline"><span class="tt">maksimal 10 teman per tahun (10.000 poin)</span></div>
             </div>
-            <button class="cta" data-next>Lanjut</button>
-            <div class="hint">Ketuk buat lanjut</div>
+            <button class="cta" data-next>lanjut</button>
+            <div class="hint">ketuk buat lanjut</div>
           </div>
 
           <div class="appbody" data-app="paypal" data-idx="2">
-            <div class="big" style="margin-top:12px">Yang temanmu harus lakukan</div>
+            <div class="big" style="margin-top:12px">yang temanmu harus lakukan</div>
             <div class="steps">
-              <div class="rowline done"><span class="n">✓</span><div class="b"><div class="tt">Daftar akun pribadi lewat link</div><div class="dd">Bukan akun lama, harus baru</div></div></div>
-              <div class="rowline done"><span class="n">✓</span><div class="b"><div class="tt">Hubungkan bank atau kartu</div><div class="dd">Verifikasi nomor HP juga</div></div></div>
-              <div class="rowline"><span class="n">3</span><div class="b"><div class="tt">Belanja minimal $5</div><div class="dd">Dalam 30 hari setelah daftar</div></div></div>
+              <div class="rowline done"><span class="n">✓</span><div class="b"><div class="tt">daftar akun pribadi lewat link</div><div class="dd">bukan akun lama, harus baru</div></div></div>
+              <div class="rowline done"><span class="n">✓</span><div class="b"><div class="tt">hubungkan bank atau kartu</div><div class="dd">verifikasi nomor hp juga</div></div></div>
+              <div class="rowline"><span class="n">3</span><div class="b"><div class="tt">belanja minimal $5</div><div class="dd">dalam 30 hari setelah daftar</div></div></div>
             </div>
-            <button class="cta" data-next>Lanjut</button>
-            <div class="hint">Ketuk buat lanjut</div>
+            <button class="cta" data-next>lanjut</button>
+            <div class="hint">ketuk buat lanjut</div>
           </div>
 
           <div class="appbody" data-app="paypal" data-idx="3">
-            <div class="big" style="margin-top:12px">Poinnya langsung kepake di checkout</div>
+            <div class="big" style="margin-top:12px">poinnya langsung kepake di checkout</div>
             <div class="steps">
               <div class="rowline"><span class="tt">1.000 poin = nilai redeem di checkout</span></div>
-              <div class="rowline"><span class="tt">Poin bisa dipakai bayar, bukan cuma diumumkan</span></div>
-              <div class="rowline"><span class="tt">Integrasi Honey: poin nempel di kebiasaan belanja</span></div>
+              <div class="rowline"><span class="tt">poin bisa dipakai bayar, bukan cuma diumumkan</span></div>
+              <div class="rowline"><span class="tt">integrasi honey: poin nempel di kebiasaan belanja</span></div>
             </div>
-            <button class="cta" data-next>Lanjut</button>
-            <div class="hint">Ketuk buat lanjut</div>
+            <button class="cta" data-next>lanjut</button>
+            <div class="hint">ketuk buat lanjut</div>
           </div>
 
           <div class="appbody" data-app="paypal" data-idx="4">
-            <div class="big" style="margin-top:12px">Skala di belakang layar</div>
+            <div class="big" style="margin-top:12px">skala di belakang layar</div>
             <div class="stats">
               <div class="stat"><b>439 juta</b><span>akun aktif</span></div>
-              <div class="stat"><b>200 pasar</b><span>TPV $1,79 triliun (2025)</span></div>
+              <div class="stat"><b>200 pasar</b><span>tpv $1,79 triliun (2025)</span></div>
+              <div class="stat"><b>referral</b><span>mesin pertumbuhan, bukan promo sampingan</span></div>
+              <div class="stat"><b>jalan terus</b><span>referral nempel di bisnis inti</span></div>
             </div>
-            <button class="cta" data-restart>Ulangi dari layar 1</button>
-            <div class="hint">Sampai akhir, ketuk buat muter lagi</div>
+            <button class="cta" data-restart>ulangi dari layar 1</button>
+            <div class="hint">sampai akhir, ketuk buat muter lagi</div>
           </div>
 
           <div class="appbody" data-app="cashapp" data-idx="0">
             <div class="sheet">
-              <div class="t">Invite Friends, Get $15</div>
-              <div class="s">You have 45 friends on Cash App</div>
-              <div class="ml">Our ML-powered suggestions</div>
-              <div class="contact"><span class="av">👤</span><div><div class="nm">Ben Barnes</div><div class="ph">(123) 555-1234</div></div><span class="get">Get $15</span></div>
-              <div class="contact"><span class="av">👤</span><div><div class="nm">Candace Charleston</div><div class="ph">(123) 555-4567</div></div><span class="get">Get $15</span></div>
-              <div class="contact"><span class="av">👤</span><div><div class="nm">Hannah Hill</div><div class="ph">(123) 555-9010</div></div><span class="get">Get $15</span></div>
+              <div style="text-align:center;font-size:26px;margin-bottom:10px">👤＋</div>
+              <div class="t" style="font-size:18px">invite friends, get $15</div>
+              <div class="s">you have 45 friends on cash app</div>
+              <div class="tofield"><b>to:</b> name, phone, or email</div>
+              <div class="ml">suggested</div>
+              <div class="contact"><span class="av">👤</span><div><div class="nm">ben barnes</div><div class="ph">(123) 555-1234</div></div><span class="get">get $15</span></div>
+              <div class="contact"><span class="av">👤</span><div><div class="nm">candace charleston</div><div class="ph">(123) 555-4567</div></div><span class="get">get $15</span></div>
+              <div class="contact"><span class="av">👤</span><div><div class="nm">hannah hill</div><div class="ph">(123) 555-9010</div></div><span class="get">get $15</span></div>
+              <div class="ml" style="color:#666">contacts</div>
+              <div class="contact"><span class="av">👤</span><div><div class="nm">aaron austen</div><div class="ph">(123) 555-8080</div></div><span class="get">get $15</span></div>
             </div>
-            <button class="cta" data-next>Undang lewat Promos</button>
-            <div class="hint">Ketuk buat lanjut</div>
+            <button class="cta" data-next>undang lewat promos</button>
+            <div class="hint">ketuk buat lanjut</div>
           </div>
 
           <div class="appbody" data-app="cashapp" data-idx="1">
-            <div class="big" style="margin-top:12px">ML milihkan siapa yang diundang</div>
-            <div class="steps">
-              <div class="rowline"><span class="tt">Suggested: kontak yang paling mungkin daftar</span></div>
-              <div class="rowline"><span class="tt">Semua kontak, urut alfabet</span></div>
-              <div class="rowline"><span class="tt">Satu tombol Get $15 per orang</span></div>
+            <div class="sheet">
+              <div class="t">invite friends, get $15</div>
+              <div class="s">you have 45 friends on cash app</div>
+              <div class="ml">our ml-powered suggestions</div>
+              <div class="contact"><span class="av">👤</span><div><div class="nm">ben barnes</div><div class="ph">(123) 555-1234</div></div><span class="get">get $15</span></div>
+              <div class="contact"><span class="av">👤</span><div><div class="nm">candace charleston</div><div class="ph">(123) 555-4567</div></div><span class="get">get $15</span></div>
+              <div class="contact"><span class="av">👤</span><div><div class="nm">hannah hill</div><div class="ph">(123) 555-9010</div></div><span class="get">get $15</span></div>
+              <div class="ml" style="color:#666">contacts</div>
+              <div class="contact"><span class="av">👤</span><div><div class="nm">aaron austen</div><div class="ph">(123) 555-8080</div></div><span class="get">get $15</span></div>
             </div>
-            <button class="cta" data-next>Lanjut</button>
-            <div class="hint">Ketuk buat lanjut</div>
+            <button class="cta" data-next>lanjut</button>
+            <div class="hint">ketuk buat lanjut</div>
           </div>
 
           <div class="appbody" data-app="cashapp" data-idx="2">
-            <div class="big" style="margin-top:12px">Yang temanmu harus lakukan</div>
+            <div class="big" style="margin-top:12px">yang temanmu harus lakukan</div>
             <div class="steps">
-              <div class="rowline done"><span class="n">✓</span><div class="b"><div class="tt">Masukkan kode referral</div><div class="dd">Kode unik kamu</div></div></div>
-              <div class="rowline done"><span class="n">✓</span><div class="b"><div class="tt">Hubungkan kartu debit</div><div class="dd">Bukan cuma daftar</div></div></div>
-              <div class="rowline"><span class="n">3</span><div class="b"><div class="tt">Kirim $5 dalam 14 hari</div><div class="dd">Transaksi kecil bukti aktif</div></div></div>
+              <div class="rowline done"><span class="n">✓</span><div class="b"><div class="tt">masukkan kode referral</div><div class="dd">kode unik kamu</div></div></div>
+              <div class="rowline done"><span class="n">✓</span><div class="b"><div class="tt">hubungkan kartu debit</div><div class="dd">bukan cuma daftar</div></div></div>
+              <div class="rowline"><span class="n">3</span><div class="b"><div class="tt">kirim $5 dalam 14 hari</div><div class="dd">transaksi kecil bukti aktif</div></div></div>
             </div>
-            <button class="cta" data-next>Lanjut</button>
-            <div class="hint">Ketuk buat lanjut</div>
+            <button class="cta" data-next>lanjut</button>
+            <div class="hint">ketuk buat lanjut</div>
           </div>
 
           <div class="appbody" data-app="cashapp" data-idx="3">
-            <div class="big" style="margin-top:12px">Hadiahnya dua pihak</div>
+            <div class="big" style="margin-top:12px">hadiahnya dua pihak</div>
             <div class="steps">
-              <div class="rowline"><span class="tt">Biasanya $5 sampai $15 per teman</span></div>
-              <div class="rowline"><span class="tt">Dua pihak dapat, bukan cuma yang ngundang</span></div>
-              <div class="rowline"><span class="tt">Cash App Fridays: giveaway berkala buat semua</span></div>
+              <div class="rowline"><span class="tt">biasanya $5 sampai $15 per teman</span></div>
+              <div class="rowline"><span class="tt">dua pihak dapat, bukan cuma yang ngundang</span></div>
+              <div class="rowline"><span class="tt">cash app fridays: giveaway berkala buat semua</span></div>
             </div>
-            <button class="cta" data-next>Lanjut</button>
-            <div class="hint">Ketuk buat lanjut</div>
+            <button class="cta" data-next>lanjut</button>
+            <div class="hint">ketuk buat lanjut</div>
           </div>
 
           <div class="appbody" data-app="cashapp" data-idx="4">
-            <div class="big" style="margin-top:12px">Skala di belakang layar</div>
+            <div class="big" style="margin-top:12px">skala di belakang layar</div>
             <div class="stats">
               <div class="stat"><b>53 juta</b><span>pengguna aktif bulanan (2023)</span></div>
-              <div class="stat"><b>≤ $10</b><span>CAC via referral, balik modal di bawah 1 tahun</span></div>
+              <div class="stat"><b>≤ $10</b><span>cac via referral, balik modal di bawah 1 tahun</span></div>
+              <div class="stat"><b>80.000</b><span>komentar per tweet giveaway</span></div>
+              <div class="stat"><b>$15</b><span>berani kasih, unit ekonominya sehat</span></div>
             </div>
-            <button class="cta" data-restart>Ulangi dari layar 1</button>
-            <div class="hint">Sampai akhir, ketuk buat muter lagi</div>
+            <button class="cta" data-restart>ulangi dari layar 1</button>
+            <div class="hint">sampai akhir, ketuk buat muter lagi</div>
           </div>
 
           <div class="appbody" data-app="nubank" data-idx="0">
             <div class="hero-purple">
               <div class="big2">105 amigos já usaram sua indicação</div>
-              <div class="ps">Indicar mais amigos</div>
+              <div class="ps">menu: kartu kredit → indicar amigos → convidar amigos</div>
             </div>
-            <div class="note">Menu: Kartu Kredit → Indicar amigos → Convidar amigos. Share lewat WhatsApp, email, atau sosial.</div>
-            <button class="cta" data-next>Convidar amigos</button>
-            <div class="hint">Ketuk buat lanjut</div>
+            <div class="note">share lewat whatsapp, email, atau sosial. link pribadi nubank.com.br/indicacao</div>
+            <button class="cta" data-next>indicar mais amigos</button>
+            <div class="hint">ketuk buat lanjut</div>
           </div>
 
           <div class="appbody" data-app="nubank" data-idx="1">
-            <div class="big" style="margin-top:12px">Yang ngundang bisa ngasih duit</div>
+            <div class="big" style="margin-top:12px">yang ngundang bisa ngasih duit</div>
             <div class="steps">
-              <div class="rowline"><span class="tt">Nggak ada cash untuk yang ngundang</span></div>
-              <div class="rowline"><span class="tt">Tapi kamu bisa kirimi teman R$1, R$5, atau R$15</span></div>
-              <div class="rowline"><span class="tt">Duitnya keluar dari saldomu</span></div>
+              <div class="rowline"><span class="tt">nggak ada cash untuk yang ngundang</span></div>
+              <div class="rowline"><span class="tt">tapi kamu bisa kirimi teman r$1, r$5, atau r$15</span></div>
+              <div class="rowline"><span class="tt">duitnya keluar dari saldomu</span></div>
             </div>
-            <button class="cta" data-next>Lanjut</button>
-            <div class="hint">Ketuk buat lanjut</div>
+            <button class="cta" data-next>lanjut</button>
+            <div class="hint">ketuk buat lanjut</div>
           </div>
 
           <div class="appbody" data-app="nubank" data-idx="2">
-            <div class="big" style="margin-top:12px">Yang temanmu harus lakukan</div>
+            <div class="big" style="margin-top:12px">yang temanmu harus lakukan</div>
             <div class="steps">
-              <div class="rowline done"><span class="n">✓</span><div class="b"><div class="tt">Buka link, masukkan CPF</div><div class="dd">Link pribadi nubank.com.br/indicacao</div></div></div>
-              <div class="rowline"><span class="n">2</span><div class="b"><div class="tt">Lolos analisis kredit</div><div class="dd">Referral dapat prioritas approva</div></div></div>
+              <div class="rowline done"><span class="n">✓</span><div class="b"><div class="tt">buka link, masukkan cpf</div><div class="dd">link pribadi nubank.com.br/indicacao</div></div></div>
+              <div class="rowline"><span class="n">2</span><div class="b"><div class="tt">lolos analisis kredit</div><div class="dd">referral dapat prioritas approva</div></div></div>
             </div>
-            <button class="cta" data-next>Lanjut</button>
-            <div class="hint">Ketuk buat lanjut</div>
+            <button class="cta" data-next>lanjut</button>
+            <div class="hint">ketuk buat lanjut</div>
           </div>
 
           <div class="appbody" data-app="nubank" data-idx="3">
             <div class="badge-card">
               <div class="shield">🛡️</div>
-              <div class="bt">Brasão do bom amigo</div>
-              <div class="bd">10 pessoas mudaram suas vidas financeiras graças a você. Isso merece ser reconhecido e celebrado com o brasão do bom amigo.</div>
+              <div class="bt">brasão do bom amigo</div>
+              <div class="bd">10 pessoas mudaram suas vidas financeiras graças a você. isso merece ser reconhecido e celebrado com o brasão do bom amigo.</div>
             </div>
-            <button class="cta" data-next>Lanjut</button>
-            <div class="hint">Ketuk buat lanjut</div>
+            <button class="cta" data-next>lanjut</button>
+            <div class="hint">ketuk buat lanjut</div>
           </div>
 
           <div class="appbody" data-app="nubank" data-idx="4">
-            <div class="big" style="margin-top:12px">Skala di belakang layar</div>
+            <div class="big" style="margin-top:12px">skala di belakang layar</div>
             <div class="stats">
-              <div class="stat"><b>112 juta</b><span>customer (Jan 2026)</span></div>
-              <div class="stat"><b>61%</b><span>populasi dewasa Brasil</span></div>
+              <div class="stat"><b>112 juta</b><span>customer (jan 2026)</span></div>
+              <div class="stat"><b>61%</b><span>populasi dewasa brasil</span></div>
+              <div class="stat"><b>~80%</b><span>dari 6 juta customer 2019 datang dari referral</span></div>
+              <div class="stat"><b>4 dari 5</b><span>customer baru datang dari teman</span></div>
             </div>
-            <button class="cta" data-restart>Ulangi dari layar 1</button>
-            <div class="hint">Sampai akhir, ketuk buat muter lagi</div>
+            <button class="cta" data-restart>ulangi dari layar 1</button>
+            <div class="hint">sampai akhir, ketuk buat muter lagi</div>
           </div>
 
         </div>
@@ -1467,485 +1563,485 @@
   const DATA = {
     phonepe: [
       {
-        title: "Insurance, layar asli PhonePe",
+        title: "hub asuransi",
         isi: [
-          "Tujuh jenis: Bike, Car, Health, Term life, Savings/ULIP, Personal Accident, Travel",
-          "Harga mulai kelihatan langsung di kartu, misal Bike mulai ₹538 per tahun",
-          "My Policies di pojok kanan atas, insuransi lain di bagian Explore"
+          "7 jenis: bike, car, health, term life, savings/ulip, personal accident, travel",
+          "harga mulai kelihatan di kartu, misal bike ₹538 per tahun",
+          "my policies di pojok kanan atas, sisanya di explore"
         ],
         pills: [["p0", "P0"]],
-        why: "Harga dipajang sebelum orang ngisi apa pun. Tiap kartu jual dirinya sendiri, termasuk tag kayak Lowest Price Promise dan Free E-Sim.",
+        why: "harga dipajang sebelum orang ngisi apa pun. tiap kartu jual dirinya sendiri, ada tag kayak lowest price promise sama free e-sim.",
         img: ["benchmark-asuransi-gambar/phonepe-home.png", "layar-asli-prototipe/phonepe_insurance_hub.png"],
-        note: "Kiri: halaman web insurance.phonepe.com (layar app dark yang lo kirim jadi acuan isi kartunya). Kanan: hub asuransi asli, kategori Motor, Life, Health, Others."
+        note: "kiri: halaman web insurance.phonepe.com. kanan: hub asli, kategori motor, life, health, others."
       },
       {
-        title: "Isi satu kolom",
+        title: "isi satu kolom",
         isi: [
-          "Nomor plat dan model kendaraan doang",
-          "Nggak perlu daftar atau upload dokumen",
-          "Harga keluar sebelum data diminta"
+          "nomor plat dan model kendaraan doang",
+          "nggak perlu daftar atau upload dokumen",
+          "harga keluar sebelum data diminta"
         ],
         pills: [["p0", "P0"]],
-        why: "Tiap kolom tambahan di awal bikin orang kabur. Satu kolom dulu, sisanya nyusul.",
+        why: "tiap kolom tambahan di awal bikin orang kabur. satu kolom dulu, sisanya nyusul.",
         img: "layar-asli-prototipe/phonepe_member_selection.png",
-        note: "Form asli PhonePe: pilih siapa yang diasuransikan plus tanggal lahir. Cuma isian, tanpa upload dokumen."
+        note: "form asli mereka buat data peserta. alur mobilnya minta plat, bentuk isiannya sejenis."
       },
       {
-        title: "Banding harga",
+        title: "banding harga",
         isi: [
-          "Penawaran banyak asuransi muncul sekaligus",
-          "Harga per tahun dan setara per hari",
-          "Pilih satu, langsung ke bayar"
+          "penawaran banyak asuransi muncul sekaligus",
+          "harga per tahun dan setara per hari",
+          "pilih satu, langsung ke bayar"
         ],
         pills: [["p1", "P1"]],
-        why: "Angka kecil di depan lebih gampang dicerna dibanding jutaan per tahun. Otak orang lebih gampang nyernanya.",
+        why: "angka kecil di depan lebih gampang dicerna daripada jutaan per tahun. otak orang nyernanya lebih cepet.",
         img: "layar-asli-prototipe/phonepe_quote_comparison.png",
-        note: "Layar banding asli: Star Health, Aditya Birla, Care. Tiap kartu kasih harga, rasio klaim, dan radio buat pilih."
+        note: "layar banding asli: star health ₹6.930, aditya birla ₹6.943, care ₹8.163. tiap kartu ada rasio klaim."
       },
       {
-        title: "Bayar, bisa bulanan",
+        title: "bayar, bisa bulanan",
         isi: [
-          "Bayar lewat UPI",
-          "Sekaligus atau dicicil bulanan lewat autopay",
-          "Total dan harga per bulan keduanya kelihatan"
+          "bayar lewat upi",
+          "sekaligus atau dicicil bulanan lewat autopay",
+          "total dan harga per bulan keduanya kelihatan"
         ],
         pills: [["p0", "P0"]],
-        why: "Angka kecil per bulan ngalahin angka besar per tahun. Nyambung sama kebiasaan transaksi kecil di dompet digital.",
+        why: "angka kecil per bulan ngalahin angka besar per tahun. nyambung sama kebiasaan transaksi kecil di dompet digital.",
         img: "layar-asli-prototipe/phonepe_review_buy.png",
-        note: "Layar Review and buy asli: premi Rp6.930 per tahun di bawah, tombol BUY. Ringkasan cover, masa berlaku, nominee, dan centang syarat sebelum bayar."
+        note: "layar review and buy asli: premi ₹6.930 per tahun, tombol buy, ringkasan cover."
       },
       {
-        title: "Data diri sesudah bayar",
+        title: "data diri sesudah bayar",
         isi: [
-          "KYC diminta setelah pembayaran, bukan di awal",
-          "Polis jadi di bawah 2 menit",
-          "Polis langsung masuk app"
+          "kyc diminta setelah pembayaran, bukan di awal",
+          "polis jadi di bawah 2 menit",
+          "polis langsung masuk app"
         ],
         pills: [["p0", "P0"]],
-        why: "Geser data diri ke belakang itu P0 kita. Orang udah bayar, dia nggak akan kabur gara-gara diminta NIK.",
+        why: "geser data diri ke belakang itu p0 kita. orang udah bayar, dia nggak akan kabur gara-gara diminta nik.",
         img: "layar-asli-prototipe/phonepe_health_declaration.png",
-        note: "Form deklarasi kesehatan asli: pertanyaan ya/tidak, CONTINUE di bawah. Ini bagian isian yang diminta di tengah alur, bukan sebelum harga keluar."
+        note: "form deklarasi kesehatan asli: pertanyaan ya/tidak, continue di bawah."
       }
     ],
     kakao: [
       {
-        title: "Asuransi di dalam chat",
+        title: "asuransi di dalam chat",
         isi: [
-          "Menu asuransi lewat tab All di KakaoTalk",
-          "Bukan app terpisah yang harus di-download",
-          "Obrolan perpanjangan masuk ke chat yang sama"
+          "menu asuransi lewat tab all di kakaotalk",
+          "bukan app terpisah yang harus di-download",
+          "obrolan perpanjangan masuk ke chat yang sama"
         ],
         pills: [["p0", "P0"]],
-        why: "Jual di tempat orang udah buka tiap hari. Pengingat harus nyampe tanpa orang buka app.",
-        img: ["benchmark-asuransi-gambar/kakao-steps.jpg", "layar-asli-prototipe/kakao_insurance_diagnosis.png"],
-        note: "Kiri: alur beli tiga langkah. Kanan: layar 보험 asli di app Kakao Pay, tab diagnosis premi dibanding rata-rata. Alur chat-nya sendiri belum ada foto publiknya."
+        why: "jual di tempat orang udah buka tiap hari. pengingat harus nyampe tanpa orang buka app.",
+        img: ["layar-asli-prototipe/kakao-steps.jpg", "layar-asli-prototipe/kakao_insurance_diagnosis.png"],
+        note: "kiri: alur beli tiga langkah. kanan: layar 보험 asli di app kakao pay, tab diagnosis premi vs rata-rata."
       },
       {
-        title: "Pilih momen, bukan lini",
+        title: "pilih momen, bukan lini",
         isi: [
-          "Liburan, hape, hewan, mobil",
-          "Satu produk per kejadian",
-          "Travel tembus 1,5 juta pendaftaran di tahun pertama"
+          "liburan, hape, hewan, mobil",
+          "satu produk per kejadian",
+          "travel tembus 1,5 juta pendaftaran di tahun pertama"
         ],
         pills: [["p1", "P1"]],
-        why: "Satu SKU per kejadian lebih gampang diomongin dan diingat daripada asuransi umum.",
+        why: "satu sku per kejadian lebih gampang diomongin dan diingat daripada asuransi umum.",
         img: "benchmark-asuransi-gambar/kakao-travel.jpg",
-        note: "Produk travel mereka, nomor satu di katalog."
+        note: "produk travel mereka, nomor satu di katalog."
       },
       {
-        title: "Atur sendiri harganya",
+        title: "atur sendiri harganya",
         isi: [
-          "Deductible digeser 10 sampai 40 persen",
-          "Pilih 1 sampai 5 perbaikan",
-          "Premi ikut gerak langsung di layar"
+          "deductible digeser 10 sampai 40 persen",
+          "pilih 1 sampai 5 perbaikan",
+          "premi ikut gerak langsung di layar"
         ],
         pills: [["p1", "P1"]],
-        why: "Orang yang megang tuas sendiri ngerasa pegang. Dia pilih premi yang pas di kantong tanpa kita bikin produk baru.",
+        why: "orang yang megang tuas sendiri ngerasa pegang. dia pilih premi yang pas di kantong tanpa kita bikin produk baru.",
         img: null
       },
       {
-        title: "Bayar di chat",
+        title: "bayar di chat",
         isi: [
-          "Bayar lewat Kakao Pay, nggak pindah app",
-          "Pola langkah: pilih, isi ringan, bayar",
-          "Polis langsung keluar di app"
+          "bayar lewat kakao pay, nggak pindah app",
+          "pola langkah: pilih, isi ringan, bayar",
+          "polis langsung keluar di app"
         ],
         pills: [["p0", "P0"]],
-        why: "Tiga langkah, selesai di satu tempat. Tiap pindah app buang orang.",
+        why: "tiga langkah, selesai di satu tempat. tiap pindah app buang orang.",
         img: null
       },
       {
-        title: "Pengingat datang sendiri",
+        title: "pengingat datang sendiri",
         isi: [
-          "Polis aktif dan pengingat perpanjangan lewat pesan AlimTalk",
-          "Status klaim masuk ke chat yang sama",
-          "Klaim rata-rata 1 hari kerja dipajang di situ"
+          "polis aktif dan pengingat perpanjangan lewat pesan alimtalk",
+          "status klaim masuk ke chat yang sama",
+          "klaim rata-rata 1 hari kerja dipajang di situ"
         ],
         pills: [["p1", "P1"]],
-        why: "Perpanjangan kelewat = polis mati pas orang paling butuh. Dan klaim itu north star kita, jadi kecepatannya ditulis terang-terangan.",
+        why: "perpanjangan kelewat = polis mati pas orang paling butuh. dan klaim itu north star kita, jadi kecepatannya ditulis terang-terangan.",
         img: null
       }
     ],
     paytm: [
       {
-        title: "Satu pintu, empat kata kerja",
+        title: "satu pintu, empat kata kerja",
         isi: [
-          "Banding, beli, perpanjang, bantuan klaim",
-          "Banner harga jangkar: mulai Rp6 per hari",
-          "Pintu bayar premi polis lama di layar yang sama"
+          "banding, beli, perpanjang, bantuan klaim",
+          "banner harga jangkar: mulai rp6 per hari",
+          "pintu bayar premi polis lama di layar yang sama"
         ],
         pills: [["p2", "P2"]],
-        why: "Empat kata kerja lebih gampang dipahami daripada menu asuransi yang tersebar di banyak tempat.",
-        img: ["benchmark-asuransi-gambar/paytm-home-hero.png", "layar-asli-prototipe/paytm_insurance_category.png"],
-        note: "Kiri: judul asli mereka Insurance ka Super Market. Kanan: layar asli pilih kategori asuransi, cuma Car dan Bike."
+        why: "empat kata kerja lebih gampang dipahami daripada menu asuransi yang tersebar di banyak tempat.",
+        img: ["layar-asli-prototipe/paytm-home-hero.png", "layar-asli-prototipe/paytm_insurance_category.png"],
+        note: "kiri: judul asli insurance ka super market. kanan: layar asli pilih kategori, cuma car dan bike."
       },
       {
-        title: "Harga jangkar di depan mata",
+        title: "harga jangkar di depan mata",
         isi: [
-          "Banner Rp6 per hari, bukan jutaan per tahun",
-          "Isi nomor plat, langsung lanjut",
-          "Janji: tanpa telepon spam"
+          "banner rp6 per hari, bukan jutaan per tahun",
+          "isi nomor plat, langsung lanjut",
+          "janji: tanpa telepon spam"
         ],
         pills: [["p1", "P1"]],
-        why: "Taruh angka per hari di depan. Otak orang lebih gampang nangkep angka kecil.",
+        why: "taruh angka per hari di depan. otak orang lebih gampang nangkep angka kecil.",
         img: "benchmark-asuransi-gambar/paytm-car-hero.png",
-        note: "Halaman jual asuransi mobil mereka."
+        note: "halaman jual asuransi mobil mereka."
       },
       {
-        title: "Banding plus tambahan",
+        title: "banding plus tambahan",
         isi: [
-          "Harga dari banyak asuransi sekaligus",
-          "Tambahan kayak nol depresiasi tinggal dicentang",
-          "Centang, harga ikut naik, langsung kelihatan"
+          "harga dari banyak asuransi sekaligus",
+          "tambahan kayak nol depresiasi tinggal dicentang",
+          "centang, harga ikut naik, langsung kelihatan"
         ],
         pills: [["p1", "P1"]],
-        why: "Bandingin asuransinya, bukan cuma harganya. Rekam jejak dan opsi tambahan bikin orang percaya sebelum bayar.",
+        why: "bandingin asuransinya, bukan cuma harganya. rekam jejak dan opsi tambahan bikin orang percaya sebelum bayar.",
         img: null
       },
       {
-        title: "Polis dan kabar",
+        title: "polis dan kabar",
         isi: [
-          "Semua polis kumpul di satu lemari My Policies",
-          "Status klaim dan kabar perpanjangan lewat email dan WhatsApp",
-          "Bukan cuma notifikasi di dalam app"
+          "semua polis kumpul di satu lemari my policies",
+          "status klaim dan kabar perpanjangan lewat email dan whatsapp",
+          "bukan cuma notifikasi di dalam app"
         ],
         pills: [["p1", "P1"]],
-        why: "Kabar harus nyampe tanpa orang buka app. Sama kayak pesan chat, bukan banner yang kelewat.",
+        why: "kabar harus nyampe tanpa orang buka app. sama kayak pesan chat, bukan banner yang kelewat.",
         img: "layar-asli-prototipe/paytm_your_money.png",
-        note: "Panel Your Money asli: baris Car Insurance dan Health Insurance nempel di halaman utama app, bukan tersembunyi di menu."
+        note: "panel your money asli: baris car insurance dan health insurance nempel di halaman utama."
       },
       {
-        title: "Bayar premi polis lama",
+        title: "bayar premi polis lama",
         isi: [
-          "Direktori puluhan asuransi: LIC, Tata AIG, Bajaj, dan lainnya",
-          "Bayar perpanjangan tanpa beli polis baru",
-          "50+ perusahaan, dicek Okt 2026"
+          "direktori puluhan asuransi: lic, tata aig, bajaj, dan lainnya",
+          "bayar perpanjangan tanpa beli polis baru",
+          "50+ perusahaan, dicek okt 2026"
         ],
         pills: [["p0", "P0"]],
-        why: "Bayar premi polis lama jadi alasan orang balik tiap bulan. Frekuensi naik tanpa iklan.",
+        why: "bayar premi polis lama jadi alasan orang balik tiap bulan. frekuensi naik tanpa iklan.",
         img: "benchmark-asuransi-gambar/paytm-premium-dir-hero.png",
-        note: "Direktori bayar premi asli mereka."
+        note: "direktori bayar premi asli mereka."
       }
     ],
     revolut: [
       {
-        title: "Masuk lewat profil",
+        title: "masuk lewat profil",
         isi: [
-          "Foto profil di pojok kiri atas layar Home",
-          "Tap Invite friends, nggak tersembunyi di settings",
-          "Syarat campaign tertulis di bawah layar undangan"
+          "foto profil di pojok kiri atas layar home",
+          "tap invite friends, nggak tersembunyi di settings",
+          "syarat campaign tertulis di bawah layar undangan"
         ],
         pills: [["p0", "P0"]],
-        why: "Titik awalnya sama kayak mau transfer: profil. Kalau undangan cuma muncul di promo, orang nggak pernah tau cara mulainya.",
+        why: "titik awalnya sama kayak mau transfer: profil. kalau undangan cuma muncul di promo, orang nggak pernah tau cara mulainya.",
         img: "layar-asli-referral/rv2.png",
-        note: "Layar undangan asli Revolut (iOS): Share link, slot kosong Your friend goes here. Foto menu profilnya sendiri belum ketemu di sumber publik."
+        note: "layar undangan asli (ios): share link, slot kosong your friend goes here. foto menu profilnya belum ketemu."
       },
       {
-        title: "Hadiah gede di depan, hitung mundur di bawah",
+        title: "hadiah gede di depan, hitung mundur di bawah",
         isi: [
-          "Satu angka besar: Earn 45 SGD per teman",
-          "Ends in 14 days, bukan cuma periode tanpa akhir",
-          "Teman punya tanggal pasti: daftar sampai Nov 15"
+          "satu angka besar: earn 45 sgd per teman",
+          "ends in 14 days, bukan cuma periode tanpa akhir",
+          "teman punya tanggal pasti: daftar sampai nov 15"
         ],
         pills: [["p0", "P0"]],
-        why: "Angka besar plus tekanan waktu bikin orang action hari itu juga. Undangan tanpa deadline itu undangan yang ditunda.",
+        why: "angka besar plus tekanan waktu bikin orang action hari itu juga. undangan tanpa deadline itu undangan yang ditunda.",
         img: "layar-asli-referral/rv1.png",
-        note: "Layar hadiah asli (contoh Singapore, Android): Ends in 14 days, checklist 4 langkah, tombol Invite friends."
+        note: "layar hadiah asli (contoh singapore): ends in 14 days, checklist 4 langkah."
       },
       {
-        title: "Teman harus ngapain, satu per satu",
+        title: "teman harus ngapain, satu per satu",
         isi: [
-          "Daftar pakai link + verifikasi identitas",
-          "Isi duit lewat kartu atau transfer bank",
-          "Pesan kartu fisik, daftarin ke Apple Pay",
-          "Belanja 3x minimal 10 SGD pakai kartu"
+          "daftar pakai link + verifikasi identitas",
+          "isi duit lewat kartu atau transfer bank",
+          "pesan kartu fisik, daftarin ke apple pay",
+          "belanja 3x minimal 10 sgd pakai kartu"
         ],
         pills: [["p1", "P1"]],
-        why: "Tiap langkah nyala hijau kalau sudah selesai. Orang ngerti tinggal berapa langkah lagi, jadi nggak nyerah di tengah jalan.",
+        why: "tiap langkah nyala hijau kalau sudah selesai. orang ngerti tinggal berapa langkah lagi, jadi nggak nyerah di tengah jalan.",
         img: "layar-asli-referral/rv1.png",
-        note: "Checklist asli dari layar yang sama: sign up, add money, order a physical card, make 3 purchases of 10 SGD."
+        note: "checklist asli: sign up, add money, order a physical card, make 3 purchases of 10 sgd."
       },
       {
-        title: "Undangan nempel di alur transfer",
+        title: "undangan nempel di alur transfer",
         isi: [
-          "Tile promo muncul di layar Transfer",
-          "Tulisan: Earn S$45 for each friend you invite!",
-          "Nggak perlu buka menu undangan dulu"
+          "tile promo muncul di layar transfer",
+          "tulisan: earn s$45 for each friend you invite!",
+          "nggak perlu buka menu undangan dulu"
         ],
         pills: [["p1", "P1"]],
-        why: "Saat orang lagi gerakin duit adalah saat paling pas ngajak teman. Iklan nyusul kebiasaan, bukan nyuruh orang nyari.",
+        why: "saat orang lagi gerakin duit adalah saat paling pas ngajak teman. iklan nyusul kebiasaan, bukan nyuruh orang nyari.",
         img: "layar-asli-referral/rv3.png",
-        note: "Layar Transfer asli (Android): promo undangan nempel di antara riwayat transfer, ada tombol tutupnya."
+        note: "layar transfer asli: promo undangan nempel di antara riwayat transfer."
       },
       {
-        title: "Aturan main yang jujur",
+        title: "aturan main yang jujur",
         isi: [
-          "Maksimal 5 teman berhasil per periode campaign",
-          "Teman nggak dapet cash, cuma yang ngundang",
-          "Hadiah dikonversi ke mata uang akun"
+          "maksimal 5 teman berhasil per periode campaign",
+          "teman nggak dapet cash, cuma yang ngundang",
+          "hadiah dikonversi ke mata uang akun"
         ],
         pills: [["p2", "P2"]],
-        why: "Batasan ditulis terang-terang. Orang percaya karena aturannya jelas, bukan dihibur sama angka yang berubah-ubah.",
+        why: "batasan ditulis terang-terang. orang percaya karena aturannya jelas, bukan dihibur sama angka yang berubah-ubah.",
         img: null
       }
     ],
     alipay: [
       {
-        title: "Masuknya dari beranda",
+        title: "masuknya dari beranda",
         isi: [
-          "Ketik 赚钱红包 di kotak pencarian halaman depan",
-          "Atau tap kartu 惠支付 yang tulisannya 赚钱红包升级",
-          "Dua-duanya masuk ke halaman yang sama"
+          "ketik 赚钱红包 di kotak pencarian halaman depan",
+          "atau tap kartu 惠支付 yang tulisannya 赚钱红包升级",
+          "dua-duanya masuk ke halaman yang sama"
         ],
         pills: [["p0", "P0"]],
-        why: "Titik masuknya nempel di kebiasaan harian orang: pencarian dan kartu promo di beranda. Nggak ada undian undian tersembunyi.",
+        why: "titik masuknya nempel di kebiasaan harian orang: pencarian dan kartu promo di beranda. nggak ada undian undian tersembunyi.",
         img: "layar-asli-referral/al3.png",
-        note: "Halaman panduan resmi Alipay: cari 赚钱红包 atau tap kartu 惠支付. Panduan resminya, bukan layar app langsung."
+        note: "halaman panduan resmi alipay: cari 赚钱红包 atau tap kartu 惠支付."
       },
       {
-        title: "Banyak cara share",
+        title: "banyak cara share",
         isi: [
-          "QR, kode pencarian (搜索码), kode nomor HP",
-          "WeChat, Moments, QQ, kirim langsung ke teman",
-          "Stiker QR buat tempel di kasir"
+          "qr, kode pencarian (搜索码), kode nomor hp",
+          "wechat, moments, qq, kirim langsung ke teman",
+          "stiker qr buat tempel di kasir"
         ],
         pills: [["p0", "P0"]],
-        why: "Orang share di mana pun dia hidup. QR buat offline, WeChat buat online, stiker buat warung. Satu undangan buat semua dunia.",
+        why: "orang share di mana pun dia hidup. qr buat offline, wechat buat online, stiker buat warung. satu undangan buat semua dunia.",
         img: "layar-asli-referral/al1.png",
-        note: "Panel share asli (iOS): QR, grup WeChat, Moments, QQ, teman, stiker QR, kode pencarian."
+        note: "panel share asli: qr, grup wechat, moments, qq, teman, stiker qr, kode pencarian."
       },
       {
-        title: "Poster angpao siap sebarkan",
+        title: "poster angpao siap sebarkan",
         isi: [
-          "Poster merah: 扫码领红包, angka sampai 99 yuan",
-          "Tombol 保存图片 plus unduh poster HD",
-          "Tempel di kasir, pelanggan scan sendiri"
+          "poster merah: 扫码领红包, angka sampai 99 yuan",
+          "tombol 保存图片 plus unduh poster hd",
+          "tempel di kasir, pelanggan scan sendiri"
         ],
         pills: [["p1", "P1"]],
-        why: "Undangan jadi aset fisik milik tempat jualan. Tiap pelanggan yang scan = satu undangan tanpa siapa pun perlu ngomong.",
+        why: "undangan jadi aset fisik milik temat jualan. tiap pelanggan yang scan = satu undangan tanpa siapa pun perlu ngomong.",
         img: "layar-asli-referral/al2.png",
-        note: "Layar poster asli (iOS): QR besar, tombol 保存图片, aturan harian tiap orang."
+        note: "layar poster asli: qr besar, tombol 保存图片, aturan harian."
       },
       {
-        title: "Teman klaim dulu, hadiah pas belanja",
+        title: "teman klaim dulu, hadiah pas belanja",
         isi: [
-          "Teman buka kode pakai app Alipay (scan dari app lain nggak masuk)",
-          "Klaim angpao, berlaku 3 hari",
-          "Bayar di warung pakai Alipay, 赏金 baru masuk setelahnya"
+          "teman buka kode pakai app alipay (scan dari app lain nggak masuk)",
+          "klaim angpao, berlaku 3 hari",
+          "bayar di warung pakai alipay, 赏金 baru masuk setelahnya"
         ],
         pills: [["p0", "P0"]],
-        why: "Hadiah cair kalau teman benar-benar jadi pelanggan, bukan cuma daftar. Dua pihak sama-sama dapat, jadi sharing terasa adil.",
+        why: "hadiah cair kalau teman benar-benar jadi pelanggan, bukan cuma daftar. dua pihak sama-sama dapat, jadi sharing terasa adil.",
         img: "layar-asli-referral/al3.png",
-        note: "Dari panduan resmi, langkah 2: teman pakai kode lalu bayar di toko. Foto layar teman mengklaim belum ketemu."
+        note: "dari panduan resmi, langkah 2: teman pakai kode lalu bayar di toko."
       },
       {
-        title: "Skala yang nggak perlu diragukan",
+        title: "skala yang nggak perlu diragukan",
         isi: [
           "1,3 miliar pengguna, 80 juta merchant",
-          "Kampanye 2017: Alipay masukin 1 miliar yuan dana sendiri",
-          "Batas 10 juta pembayaran hadiah per siklus"
+          "kampanye 2017: alipay masukin 1 miliar yuan dana sendiri",
+          "batas 10 juta pembayaran hadiah per siklus"
         ],
         pills: [["p2", "P2"]],
-        why: "Angka besar di belakang layar bikin orang percaya untuk ikut: udah ada yang menang sebelumnya, aturannya ketat antisipasi spam.",
+        why: "angka besar di belakang layar bikin orang percaya untuk ikut: udah ada yang menang sebelumnya, aturannya ketat antisipasi spam.",
         img: null
       }
     ],
     paypal: [
       {
-        title: "Undangan dari halaman khusus",
+        title: "undangan dari halaman khusus",
         isi: [
-          "Halaman undangan khusus: Get $10 for referring a friend",
-          "Tulis teman yang belum punya PayPal, dua pihak dapet $10",
-          "Tombol Get Started, syarat di bawah"
+          "halaman undangan khusus: get $10 for referring a friend",
+          "tulis teman yang belum punya paypal, dua pihak dapet $10",
+          "tombol get started, syarat di bawah"
         ],
         pills: [["p0", "P0"]],
-        why: "Satu halaman undangan aja, nggak perlu menu di dalam app. Linknya yang disebar, bukan tombolnya.",
+        why: "satu halaman undangan aja, nggak perlu menu di dalam app. linknya yang disebar, bukan tombolnya.",
         img: "layar-asli-referral/paypal_invite_1.png",
-        note: "Halaman undangan resmi PayPal (web): Get $10 for referring a friend, tombol Get Started."
+        note: "halaman undangan resmi paypal (web): get $10 for referring a friend."
       },
       {
-        title: "Dua pihak dapet, bukan cuma kamu",
+        title: "dua pihak dapet, bukan cuma kamu",
         isi: [
-          "AS: 1.000 poin PayPal Rewards tiap referral, dua pihak",
-          "Kanada: $10 CAD per pihak, berlaku 90 hari",
-          "Maksimal 10 teman per tahun (10.000 poin)"
+          "as: 1.000 poin paypal rewards tiap referral, dua pihak",
+          "kanada: $10 cad per pihak, berlaku 90 hari",
+          "maksimal 10 teman per tahun (10.000 poin)"
         ],
         pills: [["p0", "P0"]],
-        why: "Kedua pihak menang, jadi nggak ada alasan buat nggak ngajak. Cap 10 per tahun bikin orang pilih teman yang paling mungkin.",
+        why: "kedua pihak menang, jadi nggak ada alasan buat nggak ngajak. cap 10 per tahun bikin orang pilih teman yang paling mungkin.",
         img: "layar-asli-referral/paypal_invite_1.png",
-        note: "Syarat resmi: poin di AS, $10 CAD di Kanada, maksimal 10 referral per tahun."
+        note: "syarat resmi: poin di as, $10 cad di kanada, maks 10 referral per tahun."
       },
       {
-        title: "Teman harus ngapain",
+        title: "teman harus ngapain",
         isi: [
-          "Daftar akun pribadi lewat link",
-          "Hubungkan bank atau kartu",
-          "Verifikasi nomor HP",
-          "Belanja minimal $5 dalam 30 hari"
+          "daftar akun pribadi lewat link",
+          "hubungkan bank atau kartu",
+          "verifikasi nomor hp",
+          "belanja minimal $5 dalam 30 hari"
         ],
         pills: [["p1", "P1"]],
-        why: "Syaratnya jelas dan terukur: transaksi pertama, bukan cuma daftar. Hadiah cair kalau teman benar-benar pakai.",
+        why: "syaratnya jelas dan terukur: transaksi pertama, bukan cuma daftar. hadiah cair kalau teman benar-benar pakai.",
         img: null
       },
       {
-        title: "Poinnya langsung kepake di checkout",
+        title: "poinnya langsung kepake di checkout",
         isi: [
           "1.000 poin = nilai redeem di checkout",
-          "Poin bisa dipakai bayar, bukan cuma diumumkan",
-          "Integrasi Honey: poin nempel di kebiasaan belanja"
+          "poin bisa dipakai bayar, bukan cuma diumumkan",
+          "integrasi honey: poin nempel di kebiasaan belanja"
         ],
         pills: [["p1", "P1"]],
-        why: "Hadiah yang langsung kepake di kasir bikin orang ngerti nilainya. Poin yang mengendap di akun itu poin yang dilupakan.",
+        why: "hadiah yang langsung kepake di kasir bikin orang ngerti nilainya. poin yang mengendap di akun itu poin yang dilupakan.",
         img: "layar-asli-referral/paypal_invite_2.jpg",
-        note: "Layar app asli (App Store): kirim uang aman, checkout pakai PayPal."
+        note: "layar app asli: kirim uang aman, checkout pakai paypal."
       },
       {
-        title: "Skala yang nggak perlu diragukan",
+        title: "skala yang nggak perlu diragukan",
         isi: [
           "439 juta akun aktif",
-          "200 pasar, TPV $1,79 triliun (2025)",
-          "Referral = mesin pertumbuhan, bukan promo sampingan"
+          "200 pasar, tpv $1,79 triliun (2025)",
+          "referral = mesin pertumbuhan, bukan promo sampingan"
         ],
         pills: [["p2", "P2"]],
-        why: "Angka di belakang layar bikin orang percaya: udah ratusan juta pakai, referralnya jalan terus.",
+        why: "angka di belakang layar bikin orang percaya: udah ratusan juta pakai, referralnya jalan terus.",
         img: null
       }
     ],
     cashapp: [
       {
-        title: "Undang lewat menu Promos",
+        title: "undang lewat menu promos",
         isi: [
-          "Profil → Promos & invites",
-          "Get $ di samping nama kontak",
-          "Bisa ketik nomor atau share link"
+          "profil → promos & invites",
+          "get $ di samping nama kontak",
+          "bisa ketik nomor atau share link"
         ],
         pills: [["p0", "P0"]],
-        why: "Undangan nempel di kontak yang sudah ada. Orang ngajak teman yang benar-benar dia kenal, bukan orang asing.",
+        why: "undangan nempel di kontak yang sudah ada. orang ngajak teman yang benar-benar dia kenal, bukan orang asing.",
         img: "layar-asli-referral/cashapp_invite_1.png",
-        note: "Layar undangan asli: Invite Friends, Get $15, daftar kontak dengan tombol Get $15."
+        note: "layar undangan asli: invite friends, get $15, daftar kontak dengan tombol get $15."
       },
       {
-        title: "ML milihkan siapa yang diundang",
+        title: "ml milihkan siapa yang diundang",
         isi: [
-          "Suggested: kontak yang paling mungkin daftar",
-          "Semua kontak, urut alfabet",
-          "Satu tombol Get $15 per orang"
+          "suggested: kontak yang paling mungkin daftar",
+          "semua kontak, urut alfabet",
+          "satu tombol get $15 per orang"
         ],
         pills: [["p1", "P1"]],
-        why: "Mesin belajar milihkan kandidat terbaik, jadi orang nggak mikir lama. Undangan jadi satu ketuk.",
+        why: "mesin belajar milihkan kandidat terbaik, jadi orang nggak mikir lama. undangan jadi satu ketuk.",
         img: "layar-asli-referral/cashapp_invite_2.png",
-        note: "Layar yang sama dengan anotasi: Our ML-powered suggestions."
+        note: "layar yang sama dengan anotasi: our ml-powered suggestions."
       },
       {
-        title: "Teman harus ngapain",
+        title: "teman harus ngapain",
         isi: [
-          "Masukkan kode referral",
-          "Hubungkan kartu debit",
-          "Kirim $5 dalam 14 hari"
+          "masukkan kode referral",
+          "hubungkan kartu debit",
+          "kirim $5 dalam 14 hari"
         ],
         pills: [["p1", "P1"]],
-        why: "Syaratnya transaksi kecil: kirim $5. Cukup buat bukti teman itu aktif, bukan cuma daftar.",
+        why: "syaratnya transaksi kecil: kirim $5. cukup buat bukti teman itu aktif, bukan cuma daftar.",
         img: null
       },
       {
-        title: "Hadiahnya dua pihak",
+        title: "hadiahnya dua pihak",
         isi: [
-          "Biasanya $5 sampai $15 per teman",
-          "Dua pihak dapat, bukan cuma yang ngundang",
-          "Cash App Fridays: giveaway berkala buat semua"
+          "biasanya $5 sampai $15 per teman",
+          "dua pihak dapat, bukan cuma yang ngundang",
+          "cash app fridays: giveaway berkala buat semua"
         ],
         pills: [["p0", "P0"]],
-        why: "Dua pihak menang bikin undangan terasa adil. Fridays bikin orang balik tiap minggu, referral ikut kepancing.",
+        why: "dua pihak menang bikin undangan terasa adil. fridays bikin orang balik tiap minggu, referral ikut kepancing.",
         img: null
       },
       {
-        title: "Skala yang nggak perlu diragukan",
+        title: "skala yang nggak perlu diragukan",
         isi: [
           "53 juta pengguna aktif bulanan (2023)",
-          "CAC via referral maksimal $10, balik modal di bawah 1 tahun",
+          "cac via referral maks $10, balik modal di bawah 1 tahun",
           "80.000 komentar per tweet giveaway"
         ],
         pills: [["p2", "P2"]],
-        why: "Unit ekonominya sehat: referral murah, balik modal cepat. Itu kenapa mereka berani kasih $15.",
+        why: "unit ekonominya sehat: referral murah, balik modal cepat. itu kenapa mereka berani kasih $15.",
         img: null
       }
     ],
     nubank: [
       {
-        title: "Indicar amigos",
+        title: "indicar amigos",
         isi: [
-          "Menu: Kartu Kredit → Indicar amigos → Convidar amigos",
-          "Share lewat WhatsApp, email, sosial",
-          "Link pribadi nubank.com.br/indicacao"
+          "menu: kartu kredit → indicar amigos → convidar amigos",
+          "share lewat whatsapp, email, sosial",
+          "link pribadi nubank.com.br/indicacao"
         ],
         pills: [["p0", "P0"]],
-        why: "Undangan nempel di produk yang orang pakai tiap hari: kartu. Share lewat WhatsApp karena di Brasil itu jalan utama.",
+        why: "undangan nempel di produk yang orang pakai tiap hari: kartu. share lewat whatsapp karena di brasil itu jalan utama.",
         img: "layar-asli-referral/nubank_indica_1.png",
-        note: "Tiga layar asli: 105 amigos já usaram sua indicação, versi gelap, dan Brasão do bom amigo."
+        note: "tiga layar asli: 105 amigos já usaram sua indicação, versi gelap, dan brasão do bom amigo."
       },
       {
-        title: "Yang ngundang bisa ngasih duit",
+        title: "yang ngundang bisa ngasih duit",
         isi: [
-          "Nggak ada cash untuk yang ngundang",
-          "Tapi kamu bisa kirimi teman R$1, R$5, atau R$15",
-          "Duitnya keluar dari saldomu"
+          "nggak ada cash untuk yang ngundang",
+          "tapi kamu bisa kirimi teman r$1, r$5, atau r$15",
+          "duitnya keluar dari saldomu"
         ],
         pills: [["p1", "P1"]],
-        why: "Bentuknya beda: yang ngundang ngasih, bukan menerima. Rasa hadiahnya tetap ada, tapi arahnya ke teman.",
+        why: "bentuknya beda: yang ngundang ngasih, bukan menerima. rasa hadiahnya tetap ada, tapi arahnya ke teman.",
         img: null
       },
       {
-        title: "Teman harus ngapain",
+        title: "teman harus ngapain",
         isi: [
-          "Buka link, masukkan CPF",
-          "Lolos analisis kredit",
-          "Referral dapat prioritas approva"
+          "buka link, masukkan cpf",
+          "lolos analisis kredit",
+          "referral dapat prioritas approva"
         ],
         pills: [["p1", "P1"]],
-        why: "Syaratnya cuma satu hal yang beneran penting: teman jadi customer. Prioritas antrean jadi alasan ekstra buat pakai kode.",
+        why: "syaratnya cuma satu hal yang beneran penting: teman jadi customer. prioritas antrean jadi alasan ekstra buat pakai kode.",
         img: null
       },
       {
-        title: "Brasão do bom amigo",
+        title: "brasão do bom amigo",
         isi: [
-          "10 referral dapat lencana Brasão do bom amigo",
-          "Lencana tampil di profil, bisa dibanggakan",
-          "Gamifikasi antrean: aduhan soal keluar antrean ATM"
+          "10 referral dapat lencana brasão do bom amigo",
+          "lencana tampil di profil, bisa dibanggakan",
+          "gamifikasi antrean: aduhan soal keluar antrean atm"
         ],
         pills: [["p1", "P1"]],
-        why: "Lencana publik bikin status terlihat. Orang pengen dikasih tahu dia yang paling rajin ngajak.",
+        why: "lencana publik bikin status terlihat. orang pengen dikasih tahu dia yang paling rajin ngajak.",
         img: "layar-asli-referral/nubank_indica_1.png",
-        note: "Layar lencana asli: 10 pessoas mudaram suas vidas financeiras graças a você."
+        note: "layar lencana asli: 10 pessoas mudaram suas vidas financeiras graças a você."
       },
       {
-        title: "Skala yang nggak perlu diragukan",
+        title: "skala yang nggak perlu diragukan",
         isi: [
-          "112 juta customer (Jan 2026)",
-          "61% populasi dewasa Brasil",
+          "112 juta customer (jan 2026)",
+          "61% populasi dewasa brasil",
           "2019: sekitar 80% dari 6 juta customer datang dari referral"
         ],
         pills: [["p2", "P2"]],
-        why: "Referral bukan promo, itu fondasi pertumbuhan. Empat dari lima customer baru datang dari teman.",
+        why: "referral bukan promo, itu fondasi pertumbuhan. empat dari lima customer baru datang dari teman.",
         img: null
       }
     ]
